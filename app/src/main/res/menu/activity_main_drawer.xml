@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_theme"
+        android:icon="@drawable/svg_ic_theme"
+        android:title="@string/navigation_theme"/>
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/svg_ic_settings"
+        android:title="@string/navigation_settings"/>
+    <item
+        android:id="@+id/nav_share"
+        android:icon="@drawable/svg_ic_share"
+        android:title="@string/navigation_share"/>
+    <item
+        android:id="@+id/nav_evaluate"
+        android:icon="@drawable/svg_ic_evaluation"
+        android:title="@string/navigation_evaluate"/>
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/svg_ic_about"
+        android:title="@string/navigation_about"/>
+
+</menu>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/space2x">
+
+    <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        android:id="@+id/menu_location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?selectableItemBackground"
+        android:gravity="center"
+        android:paddingBottom="@dimen/four_dp"
+        android:paddingRight="@dimen/four_dp"
+        android:paddingTop="@dimen/four_dp"
+        android:text="@string/location_default"
+        android:textColor="@android:color/white"
+        app:drawableLeftCompat="@drawable/svg_ic_location"/>
+</FrameLayout>

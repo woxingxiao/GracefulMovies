@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/space2x"
+    android:paddingRight="@dimen/space2x"
+    android:paddingTop="@dimen/space2x">
+
+    <TextView
+        android:id="@+id/open_source_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_size_16sp"/>
+
+    <com.xw.project.gracefulmovies.view.widget.QuoteTextView
+        android:id="@+id/open_license_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/space"
+        android:layout_marginTop="@dimen/space"
+        android:padding="@dimen/space"
+        android:text="@string/app_name"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_px"
+        android:background="@color/color_division"/>
+</LinearLayout>

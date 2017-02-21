@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    android:id="@+id/nest_scroll_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".view.activity.AboutActivity"
+    tools:showIn="@layout/activity_about">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/space2x">
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/welcome"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_smile"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:layout_marginLeft="@dimen/space2x"
+            android:layout_marginTop="@dimen/space"
+            android:text="@string/welcome_detail"/>
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/make_friends"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_friend"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:layout_marginLeft="@dimen/space2x"
+            android:layout_marginTop="@dimen/space"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_weibo_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                app:srcCompat="@drawable/svg_ic_weibo"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_wechat_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                android:layout_marginLeft="@dimen/space2x"
+                app:srcCompat="@drawable/svg_ic_wechat"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_qq_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                android:layout_marginLeft="@dimen/space2x"
+                app:srcCompat="@drawable/svg_ic_qq"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_gmail_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                android:layout_marginLeft="@dimen/space2x"
+                app:srcCompat="@drawable/svg_ic_gmail"/>
+        </LinearLayout>
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/open_source_address"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_source"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/about_github_img"
+            android:layout_width="@dimen/space4x"
+            android:layout_height="@dimen/space4x"
+            android:layout_margin="@dimen/space2x"
+            android:layout_marginLeft="@dimen/space2x"
+            app:srcCompat="@drawable/svg_ic_github"/>
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/begging"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_reward"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:layout_marginLeft="@dimen/space2x"
+            android:layout_marginTop="@dimen/space"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_alipay_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                app:srcCompat="@drawable/svg_ic_alipay"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/about_wechat_pay_img"
+                android:layout_width="@dimen/space4x"
+                android:layout_height="@dimen/space4x"
+                android:layout_marginLeft="@dimen/space2x"
+                app:srcCompat="@drawable/svg_ic_wechat"/>
+        </LinearLayout>
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/open_source_permission"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_license"/>
+
+        <TextView
+            android:id="@+id/about_license_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space"
+            android:layout_marginLeft="@dimen/space2x"
+            android:layout_marginTop="@dimen/space"
+            tools:text="@string/license"/>
+
+        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/four_dp"
+            android:gravity="center"
+            android:text="@string/thanks"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_16sp"
+            app:TintDrawableWithTextColor="true"
+            app:drawableLeftCompat="@drawable/svg_ic_flower"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space2x"
+            android:layout_marginTop="@dimen/space"
+            android:text="@string/thanks_list"/>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

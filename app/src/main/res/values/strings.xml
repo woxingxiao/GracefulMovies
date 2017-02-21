@@ -1,0 +1,75 @@
+<resources>
+    <string name="app_name">简影讯</string>
+    <string name="app_slogan">简约精彩影讯</string>
+
+    <string name="api_key">your api key</string><!--todo: add your api key to request data-->
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="navigation_theme">主&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;题</string>
+    <string name="navigation_settings">设&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;置</string>
+    <string name="navigation_share">分&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;享</string>
+    <string name="navigation_evaluate">评&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;价</string>
+    <string name="navigation_about">关&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;于</string>
+    <string name="has_released">正在上映</string>
+    <string name="going_to_release">即将上映</string>
+    <string name="title_activity_about">关于</string>
+    <string name="day_night_mode">日夜模式</string>
+    <string name="day_mode">日间模式</string>
+    <string name="night_mode">夜间模式</string>
+    <string name="primary_color">主&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;色</string>
+    <string name="accent_color">配&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;色</string>
+    <string name="data_loading">正在加载</string>
+    <string name="has_no_data">暂无数据</string>
+    <string name="hour_min">时&#160;&#160;:&#160;&#160;分</string>
+    <string name="format_hour_min">%1$s&#160;&#160;:&#160;&#160;%2$s</string>
+    <string name="format_hour_min2">%1$s:%2$s</string>
+    <string name="grade">评&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;分</string>
+    <string name="release_date">上映日期</string>
+    <string name="type">类&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;型</string>
+    <string name="director">导&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;演</string>
+    <string name="starring">主&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;演</string>
+    <string name="story_brief">剧情简介</string>
+    <string name="release_info">上映信息</string>
+    <string name="location_default">位置</string>
+    <string name="permission_title">提示</string>
+    <string name="permission_msg">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。</string>
+    <string name="settings">设置</string>
+    <string name="cancel">取消</string>
+    <string name="revoke">撤销</string>
+    <string name="hint_located_city">定位成功，你所在的城市是：%s</string>
+    <string name="confirm">确定</string>
+    <string name="locate_again">重新定位</string>
+    <string name="welcome">谢天谢地你来了</string>
+    <string name="make_friends">交个朋友吧</string>
+    <string name="open_source_address">项目已开源，喜欢就star一个哦</string>
+    <string name="begging">老板随意打赏鼓励作者</string>
+    <string name="thanks">致谢</string>
+    <string name="welcome_detail">我是一枚展示当前城市正在上映和即将上映的热门电影的小小应用，万分荣幸入驻你的手机。
+        我虽然简单但是颜值高呀，我虽然善变（多色主题自由搭配）但是体贴（夜间模式护眼）呀，总有一种性格与你的气质相配。
+        简约，优雅，精彩，即看即走，全都来自处女座作者的“斤斤计较”。希望你喜欢。o(*￣︶￣*)o
+    </string>
+    <string name="weibo_name">萧声匿</string>
+    <string name="wechat_number">wo_xing_xiao</string>
+    <string name="qq_number">185578499</string>
+    <string name="gmail_address">Chauvet910@gmail.com</string>
+    <string name="github_page">https://github.com/woxingxiao/GracefulMovies</string>
+    <string name="alipay_name">185578499@qq.com</string>
+    <string name="hint_clipboard">%1$s“%2$s”已复制到粘贴板</string>
+    <string name="open_source_permission">开源许可</string>
+    <string name="license"><![CDATA[<u>LICENSE</u>]]></string>
+    <string name="thanks_list">强大的开源社区\n聚合数据提供数据支持\n高德提供城市定位支持\niconfont.cn的海量图标资源\n特别感谢一位仙女在界面审美上的建设性意见</string>
+    <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯和评分，即看即走。下载地址：https://fir.im/jyx"</string>
+
+    <string name="key_first_time">key_first_time</string>
+    <string name="key_auto_day_night">key_auto_day_night</string>
+    <string name="key_day_mode_time">key_day_mode_time</string>
+    <string name="key_night_mode_time">key_night_mode_time</string>
+    <string name="key_theme">key_theme</string>
+    <string name="key_cache">key_cache</string>
+    <string name="key_city">key_city</string>
+
+    <string name="action_locate_succeed">key_locate_succeed</string>
+
+</resources>

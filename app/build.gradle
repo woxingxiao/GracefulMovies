@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "com.xw.project.gracefulmovies"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file(STORE_FILE)
+            storePassword KEYSTORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+ext {
+    support_library_version = "25.1.0"
+    junit_version = "4.12"
+    butter_knife_version = "8.4.0"
+    glide_version = "3.7.0"
+    rx_java_version = "1.2.6"
+    rx_android_version = "1.2.1"
+    retrofit_version = "2.1.0"
+    okhttp_version = "3.6.0"
+    rating_bar_version = "0.1.5"
+    seek_bar_version = "v1.8"
+    ken_burns_view_version = "1.0.7"
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$support_library_version"
+    compile "com.android.support:design:$support_library_version"
+    compile "com.android.support:cardview-v7:$support_library_version"
+    testCompile "junit:junit:$junit_version"
+    compile "com.jakewharton:butterknife:$butter_knife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
+    compile "com.github.bumptech.glide:glide:$glide_version"
+    compile "io.reactivex:rxjava:$rx_java_version"
+    compile "io.reactivex:rxandroid:$rx_android_version"
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    compile("com.iarcuschin:simpleratingbar:$rating_bar_version") {
+        exclude group: 'com.android.support'
+        exclude group: 'org.androidannotations'
+    }
+    compile "com.github.woxingxiao:BubbleSeekBar:$seek_bar_version"
+    compile "com.flaviofaria:kenburnsview:$ken_burns_view_version"
+    compile project(':library')
+    compile files('libs/AMap_Location_V3.3.0_20170118.jar')
+}
