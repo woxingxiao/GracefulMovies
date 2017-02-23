@@ -20,6 +20,7 @@ import rx.Observable;
 public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
 
     private IMovieListFragment mFragment;
+    private ApiSubscriber<List<MovieModel>> mSubscriber;
 
     @Override
     public void register(MovieListFragment fragment) {
@@ -30,14 +31,7 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
     public void loadMovieData(int releaseType) {
         String city = PrefUtil.getCity(mFragment.getContext());
 
-        Observable<List<MovieModel>> observable;
-        if (releaseType == 0) {
-            observable = ApiHelper.loadBeReleasedMovies(city);
-        } else {
-            observable = ApiHelper.loadGoingToBeingReleasedMovies(city);
-        }
-
-        observable.subscribe(new ApiSubscriber<List<MovieModel>>() {
+        mSubscriber = new ApiSubscriber<List<MovieModel>>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -45,9 +39,8 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
 
             @Override
             public void onNext(List<MovieModel> movieModels) {
-                super.onNext(movieModels);
-
-                mFragment.onDataReady(movieModels);
+                if (mFragment != null)
+                    mFragment.onDataReady(movieModels);
             }
 
             @Override
@@ -57,18 +50,29 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
 
             @Override
             protected void onError(String msg) {
-                mFragment.onDataError(msg);
+                if (mFragment != null)
+                    mFragment.onDataError(msg);
             }
 
             @Override
             public void onFinally() {
                 super.onFinally();
             }
-        });
+        };
+
+        Observable<List<MovieModel>> observable;
+        if (releaseType == 0) {
+            observable = ApiHelper.loadBeReleasedMovies(city);
+        } else {
+            observable = ApiHelper.loadGoingToBeingReleasedMovies(city);
+        }
+        observable.subscribe(mSubscriber);
     }
 
     @Override
     public void unregister() {
+        if (mSubscriber != null && mSubscriber.isUnsubscribed())
+            mSubscriber.unsubscribe();
         mFragment = null;
     }
 }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xw.project.gracefulmovies.R;
 
 import org.polaric.colorful.Colorful;
@@ -34,6 +35,8 @@ import butterknife.OnClick;
  */
 public class AboutActivity extends BaseActivity {
 
+    @BindView(R.id.about_header_img)
+    ImageView mHeaderImg;
     @BindView(R.id.version_name_text)
     TextView mVersionNameText;
     @BindView(R.id.about_github_img)
@@ -55,6 +58,7 @@ public class AboutActivity extends BaseActivity {
 
         initializeToolbar();
 
+        Glide.with(this).load(R.drawable.pic_movie_projector).into(mHeaderImg);
         try {
             PackageManager manager = getPackageManager();
             PackageInfo info = manager.getPackageInfo(getPackageName(), 0);

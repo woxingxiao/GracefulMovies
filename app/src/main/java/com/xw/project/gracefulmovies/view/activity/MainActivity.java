@@ -29,8 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.util.PrefUtil;
 import com.xw.project.gracefulmovies.view.adapter.TabPagerAdapter;
@@ -118,6 +120,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         navView.setNavigationItemSelectedListener(this);
         mSwitch = (SwitchCompat) navView.getHeaderView(0).findViewById(R.id.day_night_mode_switch);
         mDayNightText = (TextView) navView.getHeaderView(0).findViewById(R.id.day_night_mode_text);
+        ImageView img = (ImageView) navView.getHeaderView(0).findViewById(R.id.nav_header_img);
+        Glide.with(this).load(R.drawable.pic_movies).into(img);
 
         MovieListFragment[] fragments = new MovieListFragment[2];
         fragments[0] = MovieListFragment.newInstance(0);

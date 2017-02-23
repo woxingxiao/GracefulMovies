@@ -26,12 +26,12 @@
             app:titleEnabled="false">
 
             <ImageView
-                android:id="@+id/header_bg_img"
+                android:id="@+id/about_header_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/pic_movie_projector"
+                tools:src="@drawable/pic_movie_projector"
                 app:layout_collapseMode="parallax"/>
 
             <TextView
