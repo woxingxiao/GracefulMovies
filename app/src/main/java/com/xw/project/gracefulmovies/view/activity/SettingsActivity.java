@@ -24,6 +24,8 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
 
         initializeToolbar();
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle("设置");
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.settings_container, SettingsFragment.newInstance())

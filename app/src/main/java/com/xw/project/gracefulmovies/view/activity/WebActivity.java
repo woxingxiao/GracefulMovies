@@ -33,9 +33,10 @@ public class WebActivity extends BaseActivity {
 
     private WebView mWebView;
 
-    public static void navigation(Activity activity, String url) {
+    public static void navigation(Activity activity, String url, String title) {
         Intent intent = new Intent(activity, WebActivity.class);
         intent.putExtra("url", url);
+        intent.putExtra("title", title);
         activity.startActivity(intent);
     }
 
@@ -55,6 +56,9 @@ public class WebActivity extends BaseActivity {
         if (Colorful.getThemeDelegate().isNight()) {
             mContainer.setAlpha(0.7f);
         }
+
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
 
         initWebView(getIntent().getStringExtra("url"));
     }

@@ -119,7 +119,8 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
                 if (movieModel.getWebUrl() == null || movieModel.getWebUrl().isEmpty()) {
                     showToast("无效地址");
                 } else {
-                    WebActivity.navigation(MovieDetailActivity.this, movieModel.getWebUrl());
+                    WebActivity.navigation(MovieDetailActivity.this, movieModel.getWebUrl(),
+                            movieModel.getName() == null ? "" : movieModel.getName());
                 }
             }
         });
