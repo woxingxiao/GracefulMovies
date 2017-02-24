@@ -27,7 +27,7 @@ public class GMApplication extends Application {
 
         SharedPrefHelper.init(this);
         Logy.init(true);
-        ApiHelper.init(getString(R.string.api_key));
+        ApiHelper.init(""); // TODO: 2017-02-24 add your api key to request data
 //        CrashHandler.getInstance().init(this);
     }
 }

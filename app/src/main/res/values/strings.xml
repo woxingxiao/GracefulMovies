@@ -2,8 +2,6 @@
     <string name="app_name">简影讯</string>
     <string name="app_slogan">简约精彩影讯</string>
 
-    <string name="api_key">your api key</string><!--todo: add your api key to request data-->
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
