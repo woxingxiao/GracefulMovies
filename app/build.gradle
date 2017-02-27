@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "com.xw.project.gracefulmovies"
-        minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.0"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 2
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -42,17 +42,8 @@ android {
 }
 
 ext {
-    support_library_version = "25.1.0"
-    junit_version = "4.12"
     butter_knife_version = "8.4.0"
-    glide_version = "3.7.0"
-    rx_java_version = "1.2.6"
-    rx_android_version = "1.2.1"
     retrofit_version = "2.1.0"
-    okhttp_version = "3.6.0"
-    rating_bar_version = "0.1.5"
-    seek_bar_version = "v1.8"
-    ken_burns_view_version = "1.0.7"
 }
 
 dependencies {
@@ -60,25 +51,27 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "com.android.support:appcompat-v7:$support_library_version"
-    compile "com.android.support:design:$support_library_version"
-    compile "com.android.support:cardview-v7:$support_library_version"
-    testCompile "junit:junit:$junit_version"
+    compile "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.ext.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.ext.supportLibraryVersion"
+    testCompile 'junit:junit:4.12'
     compile "com.jakewharton:butterknife:$butter_knife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
-    compile "com.github.bumptech.glide:glide:$glide_version"
-    compile "io.reactivex:rxjava:$rx_java_version"
-    compile "io.reactivex:rxandroid:$rx_android_version"
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'io.reactivex:rxjava:1.2.6'
+    compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-    compile("com.iarcuschin:simpleratingbar:$rating_bar_version") {
+    compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    compile('com.iarcuschin:simpleratingbar:0.1.5') {
         exclude group: 'com.android.support'
         exclude group: 'org.androidannotations'
     }
-    compile "com.github.woxingxiao:BubbleSeekBar:$seek_bar_version"
-    compile "com.flaviofaria:kenburnsview:$ken_burns_view_version"
+    compile 'com.github.woxingxiao:BubbleSeekBar:v1.9'
+    compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+
     compile project(':library')
     compile files('libs/AMap_Location_V3.3.0_20170118.jar')
 }
