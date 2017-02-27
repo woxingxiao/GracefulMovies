@@ -33,10 +33,10 @@
 - [`StarWars.Android`](https://github.com/Yalantis/StarWars.Android)
 - [`SeeWeather`](https://github.com/xcc3641/SeeWeather)
 
-感谢聚合数据提供免费API接口。
-感谢高德提供定位服务。
-感谢一位仙女在界面审美上的建设性意见，笔芯❤。
-感谢下列酷站和工具为本项目提供帮助：
+感谢聚合数据提供免费API接口。  
+感谢高德提供定位服务。  
+感谢一位仙女在界面审美上的建设性意见，笔芯❤。  
+感谢下列酷站和工具为本项目提供帮助：  
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
 - [dribbble](https://dribbble.com) 提供海量的图片资源。项目中有两张图片来自[JustinMezzell](https://dribbble.com/JustinMezzell)
 - [tinypng](https://tinypng.com) 提供免费并高质量的图片压缩服务
@@ -44,7 +44,7 @@
 - [AndroidAssetStudio](https://romannurik.github.io/AndroidAssetStudio) 提供在线图标制作
 - 手机应用软件_Screener_生成漂亮的手机外观截屏图片
 
-**项目中其他图片均收集自网络，版权属于原作者。如有侵权，告知后会立即删除。**
+**本项目中数据来自聚合数据，版权归聚合数据。图片资源均收集自网络，版权属于原作者。如有侵权，告知后会立即删除。**
 #彩蛋
 本项目在主题界面埋了一颗彩蛋，进入界面会随机加载一段经典电影台词。  
 
