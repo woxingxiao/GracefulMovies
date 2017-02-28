@@ -8,7 +8,7 @@
 
 本人首个上线的个人App。  
 ##APK下载
-1. bugly（微信、QQ直接安装 ）[https://beta.bugly.qq.com/p8ie](https://beta.bugly.qq.com/oa35)
+1. bugly（微信、QQ直接安装 ）[beta.bugly.qq.com/jianyingxun](https://beta.bugly.qq.com/jianyingxun)
 2. fir.im [https://fir.im/jyx](https://fir.im/jyx)
 3. 下列应用商店搜“简影讯”：
   - [x] 应用宝
