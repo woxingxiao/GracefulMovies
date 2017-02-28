@@ -21,4 +21,24 @@ public final class Util {
         return result;
     }
 
+    static String trimCity(String city) {
+        if (city.endsWith("市")) {
+            return city.substring(0, city.lastIndexOf("市"));
+        }
+        if (city.endsWith("区")) {
+            return city.substring(0, city.lastIndexOf("区"));
+        }
+        if (city.endsWith("县")) {
+            return city.substring(0, city.lastIndexOf("县"));
+        }
+        if (city.endsWith("镇")) {
+            return city.substring(0, city.lastIndexOf("镇"));
+        }
+        if (city.endsWith("乡")) {
+            return city.substring(0, city.lastIndexOf("乡"));
+        }
+
+        return city;
+    }
+
 }

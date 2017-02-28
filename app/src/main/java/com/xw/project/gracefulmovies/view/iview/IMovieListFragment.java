@@ -16,5 +16,5 @@ public interface IMovieListFragment {
 
     void onDataReady(List<MovieModel> movieModels);
 
-    void onDataError(String msg);
+    void onDataError(int code, String msg);
 }

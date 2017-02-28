@@ -2,6 +2,7 @@ package com.xw.project.gracefulmovies.presenter.impl;
 
 import com.xw.project.gracefulmovies.model.MovieModel;
 import com.xw.project.gracefulmovies.presenter.IMovieFragmentPresenter;
+import com.xw.project.gracefulmovies.server.ApiException;
 import com.xw.project.gracefulmovies.server.ApiHelper;
 import com.xw.project.gracefulmovies.server.ApiSubscriber;
 import com.xw.project.gracefulmovies.util.PrefUtil;
@@ -21,6 +22,7 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
 
     private IMovieListFragment mFragment;
     private ApiSubscriber<List<MovieModel>> mSubscriber;
+    private int mErrCode = -1;
 
     @Override
     public void register(MovieListFragment fragment) {
@@ -49,9 +51,16 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
             }
 
             @Override
+            public void onError(Throwable e) {
+                if (e instanceof ApiException)
+                    mErrCode = ((ApiException) e).getCode();
+                super.onError(e);
+            }
+
+            @Override
             protected void onError(String msg) {
                 if (mFragment != null)
-                    mFragment.onDataError(msg);
+                    mFragment.onDataError(mErrCode, msg);
             }
 
             @Override

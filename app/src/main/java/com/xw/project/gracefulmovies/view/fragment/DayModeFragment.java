@@ -1,6 +1,7 @@
 package com.xw.project.gracefulmovies.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
@@ -46,14 +47,17 @@ public class DayModeFragment extends SideFragment {
 
         mFab.setBackgroundTintList(createColorStateList(Colorful.getThemeDelegate().getPrimaryColor().getColorRes()));
 
-        mHeaderImg.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Glide.with(getActivity()).load(R.drawable.pic_day).into(mHeaderImg);
-                mHeaderImg.setAlpha(0f);
-                mHeaderImg.animate().alpha(1.0f).setDuration(500);
-            }
-        }, 500);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Glide.with(getActivity()).load(R.drawable.pic_day).into(mHeaderImg);
+                    mHeaderImg.setAlpha(0f);
+                    mHeaderImg.animate().alpha(1.0f).setDuration(500);
+                }
+            }, 500);
+        }
 
         mSwitch.setChecked(false);
 

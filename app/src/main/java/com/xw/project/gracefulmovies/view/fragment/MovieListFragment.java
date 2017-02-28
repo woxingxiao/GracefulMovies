@@ -1,5 +1,6 @@
 package com.xw.project.gracefulmovies.view.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -106,8 +107,23 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     }
 
     @Override
-    public void onDataError(String msg) {
+    public void onDataError(int code, String msg) {
+        if (code == 209405) { // "查询不到热映电影相关信息"，以上一级城市名进行查询
+            if (mReleaseType == 0) {
+                Intent intent = new Intent(getString(R.string.action_locate_succeed));
+                intent.putExtra(getString(R.string.param_is_upper_city), true);
+                getContext().sendBroadcast(intent);
+            }
+
+            mSwipeRefreshLayout.setRefreshing(false);
+            mAdapter.clearData();
+            mAdapter.setLoading(false);
+
+            return;
+        }
+
         mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.clearData();
         mAdapter.setLoading(false);
         Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }

@@ -2,6 +2,7 @@ package com.xw.project.gracefulmovies.view.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
@@ -47,14 +48,17 @@ public class NightModeFragment extends SideFragment {
 
         mFab.setBackgroundTintList(createColorStateList(R.color.md_night_primary));
 
-        mHeaderImg.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Glide.with(getActivity()).load(R.drawable.pic_night).into(mHeaderImg);
-                mHeaderImg.setAlpha(0f);
-                mHeaderImg.animate().alpha(1.0f).setDuration(500);
-            }
-        }, 500);
+        if (mHandler == null) {
+            mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Glide.with(getActivity()).load(R.drawable.pic_night).into(mHeaderImg);
+                    mHeaderImg.setAlpha(0f);
+                    mHeaderImg.animate().alpha(1.0f).setDuration(500);
+                }
+            }, 500);
+        }
 
         mSwitch.setChecked(true);
 

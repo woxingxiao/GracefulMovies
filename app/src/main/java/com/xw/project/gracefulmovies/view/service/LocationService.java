@@ -20,6 +20,11 @@ import com.xw.project.gracefulmovies.util.PrefUtil;
  */
 public class LocationService extends Service {
 
+    // 直辖市、省会城市
+    private static final String CAPITAL_CITIES = "北京，天津，上海，重庆，石家庄，太原，呼和浩特，沈阳，" +
+            "长春，哈尔滨，南京，杭州，合肥，福州，南昌，济南，郑州，武汉，长沙，广州，南宁，海口，成都，" +
+            "贵阳，昆明，西安，兰州，西宁，拉萨，银川，乌鲁木齐";
+
     private AMapLocationClient mLocationClient;
 
     public static void start(Context context) {
@@ -80,6 +85,8 @@ public class LocationService extends Service {
     AMapLocationListener locationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation location) {
+            if (locationListener == null)
+                return;
             if (location == null) {
                 Logy.w("LocationService", "------------定位失败，继续定位");
                 return;
@@ -92,13 +99,24 @@ public class LocationService extends Service {
                 return;
             }
             if (location.getCity() != null && !location.getCity().isEmpty()) {
-                String city = PrefUtil.getCity(LocationService.this);
-                String newCity = trimCity(location.getCity());
+                String newCity = location.getCity();
+
+                boolean diffUpper = !newCity.equals(PrefUtil.getUpperCity(LocationService.this));
+                if (diffUpper)
+                    PrefUtil.setUpperCity(LocationService.this, newCity);
+
+                /**
+                 * 非直辖市和省会城市，使用定位城市的下级城市
+                 */
+                if (!CAPITAL_CITIES.contains(newCity)) {
+                    newCity = location.getDistrict();
+                }
                 Logy.w("LocationService", "------------定位成功：" + location.getCity() + "，" + newCity);
 
-                if (!city.equals(newCity)) {
+                if (diffUpper && !newCity.equals(PrefUtil.getCity(LocationService.this))) {
                     PrefUtil.setCity(LocationService.this, newCity);
                     sendBroadcast(new Intent(getString(R.string.action_locate_succeed)));
+                    Logy.w("LocationService", "-----------------sendBroadcast locate succeed-----------------");
                 }
 
                 stopLocation();
@@ -108,29 +126,10 @@ public class LocationService extends Service {
         }
     };
 
-    private String trimCity(String city) {
-        if (city.endsWith("市")) {
-            return city.substring(0, city.lastIndexOf("市"));
-        }
-        if (city.endsWith("区")) {
-            return city.substring(0, city.lastIndexOf("区"));
-        }
-        if (city.endsWith("县")) {
-            return city.substring(0, city.lastIndexOf("县"));
-        }
-        if (city.endsWith("镇")) {
-            return city.substring(0, city.lastIndexOf("镇"));
-        }
-        if (city.endsWith("乡")) {
-            return city.substring(0, city.lastIndexOf("乡"));
-        }
-
-        return city;
-    }
-
     private void stopLocation() {
         mLocationClient.unRegisterLocationListener(locationListener);
         mLocationClient.stopLocation();
+        locationListener = null;
         stopSelf();
     }
 

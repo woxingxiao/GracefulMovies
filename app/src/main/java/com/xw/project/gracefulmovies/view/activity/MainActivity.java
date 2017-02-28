@@ -181,7 +181,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         final MenuItem item = menu.findItem(R.id.action_location);
 
         mCityText = (TextView) item.getActionView().findViewById(R.id.menu_location_text);
-        mCityText.setText(PrefUtil.getCity(this));
+        mCityText.setText(PrefUtil.getCityShort(this));
 
         item.getActionView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +199,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_location) {
-            showLocatedCityDialog(false);
+            showLocatedCityDialog(false, false);
             return true;
         }
 
@@ -348,17 +348,22 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         @Override
         public void onReceive(Context context, Intent intent) {
             if (getString(R.string.action_locate_succeed).equals(intent.getAction())) {
-                mCityText.setText(PrefUtil.getCity(MainActivity.this));
+                mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
 
-                showLocatedCityDialog(true);
+                showLocatedCityDialog(true, intent.getBooleanExtra(getString(R.string.param_is_upper_city), false));
             }
         }
     }
 
-    private void showLocatedCityDialog(final boolean refresh) {
+    private void showLocatedCityDialog(final boolean refresh, final boolean upperCity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.location_default));
-        builder.setMessage(getString(R.string.hint_located_city, PrefUtil.getCity(MainActivity.this)));
+        if (upperCity) {
+            builder.setMessage(getString(R.string.hint_query_by_upper_city, PrefUtil.getCity(MainActivity.this),
+                    PrefUtil.getUpperCity(MainActivity.this)));
+        } else {
+            builder.setMessage(getString(R.string.hint_located_city, PrefUtil.getCity(MainActivity.this)));
+        }
         builder.setNegativeButton(getString(R.string.locate_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -369,6 +374,10 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if (upperCity) {
+                    PrefUtil.setCity(MainActivity.this, PrefUtil.getUpperCity(MainActivity.this));
+                    mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
+                }
                 if (refresh) {
                     List<Fragment> fragments = getSupportFragmentManager().getFragments();
                     if (fragments != null) {

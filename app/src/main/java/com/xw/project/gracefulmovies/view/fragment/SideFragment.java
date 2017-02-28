@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StyleRes;
@@ -88,6 +89,7 @@ public abstract class SideFragment extends Fragment {
     QuoteTextView mQuoteText;
 
     private ThemeActivity mThemeActivity;
+    protected Handler mHandler;
 
     @Override
     public void onAttach(Context context) {
@@ -300,6 +302,14 @@ public abstract class SideFragment extends Fragment {
         }
 
         dialog.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
     }
 
     @StyleRes

@@ -44,7 +44,11 @@ public final class PrefUtil {
     }
 
     public static String getCity(Context context) {
-        return SharedPrefHelper.getString(context.getString(R.string.key_city), "成都");
+        return SharedPrefHelper.getString(context.getString(R.string.key_city), "成都市");
+    }
+
+    public static String getCityShort(Context context) {
+        return Util.trimCity(getCity(context));
     }
 
     public static void setCity(Context context, String city) {
@@ -53,5 +57,14 @@ public final class PrefUtil {
 
     public static void clearCity(Context context) {
         SharedPrefHelper.putString(context.getString(R.string.key_city), "");
+        SharedPrefHelper.putString(context.getString(R.string.key_upper_city), "");
+    }
+
+    public static String getUpperCity(Context context) {
+        return SharedPrefHelper.getString(context.getString(R.string.key_upper_city), "");
+    }
+
+    public static void setUpperCity(Context context, String city) {
+        SharedPrefHelper.putString(context.getString(R.string.key_upper_city), city);
     }
 }
