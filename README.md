@@ -7,13 +7,16 @@
 这是一个完全`Material Design`风格的Android应用。项目中使用到了`Retrofit`、`RxJava`、`MVP`、`Glide`等方案，换肤框架基于[`Colorful`](https://github.com/garretyoder/Colorful)。图标使用`svg`矢量图，图片使用`webp`格式，最大限度压缩apk尺寸。  
 
 本人首个上线的个人App。  
-#APK下载：
-1. bugly（微信、QQ直接安装 ）[https://beta.bugly.qq.com/p8ie](https://beta.bugly.qq.com/p8ie)
+##APK下载
+1. bugly（微信、QQ直接安装 ）[https://beta.bugly.qq.com/p8ie](https://beta.bugly.qq.com/oa35)
 2. fir.im [https://fir.im/jyx](https://fir.im/jyx)
 3. 下列应用商店搜“简影讯”：
   - [x] 应用宝
   - [ ] 小米应用商店
   - [ ] 百度手机助手
+  
+##升级日志
+[**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
 如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)申请_Appkey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。定位无需再申请，不必理会。  
 #致谢
