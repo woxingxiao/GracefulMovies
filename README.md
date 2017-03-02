@@ -15,10 +15,17 @@
   - [ ] 小米应用商店
   - [ ] 百度手机助手
   
-##升级日志
+##升级日志  
+###最新：
+1. 新增意见反馈入口，[谷歌在线表单问卷调查之神器](https://docs.google.com/forms/d/1cP5G5lfikMCK3YmZH8zOwQX_rr0cFjN5g3FamYNrhGw/edit?usp=drive_web)；
+2. 以网络接口定位替换高德SDK定位，摆脱CPU平台束缚，减小apk尺寸；
+3. 使用[AndResGuard](https://github.com/shwenzhang/AndResGuard)进行资源混淆，进一步缩小apk容量。
+
+###历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
-如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)申请_Appkey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。定位无需再申请，不必理会。  
+##关于测试
+如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)申请_Appkey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。定位无需再申请，不必理会。  
 #致谢
 感谢开源的力量！
 开源库：  
@@ -37,7 +44,6 @@
 - [`SeeWeather`](https://github.com/xcc3641/SeeWeather)
 
 感谢聚合数据提供免费API接口。  
-感谢高德提供定位服务。  
 感谢一位仙女在界面审美上的建设性意见，笔芯❤。  
 感谢下列酷站和工具为本项目提供帮助：  
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
@@ -61,7 +67,7 @@
 
 ![alipay](https://github.com/woxingxiao/GracefulMovies/blob/master/images/alipay.jpg) ![wxpay](https://github.com/woxingxiao/GracefulMovies/blob/master/images/wxpay.jpg)
 
-如果你需要科学上网工具，推荐本人自用的，很不错。通过此[链接](https://portal.shadowsocks.com.hk/aff.php?aff=8881)购买，我可以获得一点点回扣，也算一种支持了。  
+人生苦短，请选择科学上网。推荐本人自用的，稳定高速。[推介链接](https://portal.shadowsocks.com.hk/aff.php?aff=8881)。
 
 技术交流或合作可邮件：Chauvet910@gmail.com  
 
