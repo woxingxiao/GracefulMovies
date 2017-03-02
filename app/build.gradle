@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'AndResGuard'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -7,10 +8,11 @@ android {
         applicationId "com.xw.project.gracefulmovies"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 6
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        resConfigs "zh" // 仅支持中文
     }
     buildTypes {
         release {
@@ -38,6 +40,31 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+}
+
+andResGuard {
+    mappingFile = file("./resource_mapping.txt")
+    use7zip = true
+    useSign = true
+    keepRoot = false
+    // 白名单
+    whiteList = [
+            "R.mipmap.ic_launcher", // ic_launcher
+            "R.style.primary*", // Colorful框架
+            "R.style.accent*", // Colorful框架
+            "R.id.*"
+    ]
+    compressFilePattern = [
+            "*.png",
+            "*.jpg",
+            "*.jpeg",
+            "*.webp",
+            "resources.arsc"
+    ]
+    sevenzip {
+        artifact = 'com.tencent.mm:SevenZip:1.1.16'
+        //path = "/usr/local/bin/7za"
     }
 }
 
@@ -70,8 +97,6 @@ dependencies {
     }
     compile 'com.github.woxingxiao:BubbleSeekBar:v1.9'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
 
     compile project(':library')
-    compile files('libs/AMap_Location_V3.3.0_20170118.jar')
 }

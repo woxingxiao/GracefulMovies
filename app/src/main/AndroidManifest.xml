@@ -67,11 +67,6 @@
             android:name=".view.activity.WebActivity"
             android:screenOrientation="portrait"/>
 
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="6f2d988267715bfd2c4b42d262352f6f"/>
-
-        <service android:name="com.amap.api.location.APSService"/>
         <service
             android:name=".view.service.LocationService"
             android:exported="false"

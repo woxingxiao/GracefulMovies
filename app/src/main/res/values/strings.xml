@@ -54,9 +54,11 @@
     <string name="hint_clipboard">%1$s“%2$s”已复制到粘贴板</string>
     <string name="open_source_permission">开源许可</string>
     <string name="license"><![CDATA[<u>LICENSE</u>]]></string>
-    <string name="thanks_list">强大的开源社区\n聚合数据提供数据支持\n高德提供城市定位支持\niconfont.cn的海量图标资源\n特别感谢一位仙女在界面审美上的建设性意见，笔芯❤</string>
+    <string name="thanks_list">强大的开源社区\n聚合数据提供数据支持\niconfont.cn的海量图标资源\n特别感谢一位仙女在界面审美上的建设性意见，笔芯❤</string>
     <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯和评分，即看即走。下载地址：https://fir.im/jyx"</string>
     <string name="hint_query_by_upper_city">使用【%1$s】查询无数据，使用其上级行政区【%2$s】查询？</string>
+    <string name="questionnaire_url">https://gdgdocs.org/forms/d/e/1FAIpQLSdQF1HvXnvx_vki00RUTKR3PP0-ghTpYoxjfZCZWs5IAH41Pw/viewform</string>
+    <string name="hint_auto_day_night_disabled">自动切换日夜模式已关闭，到“设置”中可再开启</string>
 
     <string name="key_first_time">key_first_time</string>
     <string name="key_auto_day_night">key_auto_day_night</string>
@@ -66,6 +68,7 @@
     <string name="key_theme">key_theme</string>
     <string name="key_cache">key_cache</string>
     <string name="key_city">key_city</string>
+    <string name="key_feedback">key_feedback</string>
 
     <string name="action_locate_succeed">key_locate_succeed</string>
     <string name="param_is_upper_city">param_is_upper_city</string>

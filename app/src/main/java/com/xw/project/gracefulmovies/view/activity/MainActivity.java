@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xw.project.gracefulmovies.R;
@@ -165,7 +166,11 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 mDrawerLayout.addDrawerListener(new MyDrawerListener());
                 mDrawerLayout.closeDrawer(GravityCompat.START);
 
-                PrefUtil.setAutoDayNightMode(MainActivity.this, false);
+                if (PrefUtil.isAutoDayNightMode(MainActivity.this)) {
+                    Toast.makeText(MainActivity.this, getString(R.string.hint_auto_day_night_disabled),
+                            Toast.LENGTH_LONG).show();
+                    PrefUtil.setAutoDayNightMode(MainActivity.this, false);
+                }
             }
         });
     }

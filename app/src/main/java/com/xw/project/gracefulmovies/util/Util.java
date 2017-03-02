@@ -21,7 +21,7 @@ public final class Util {
         return result;
     }
 
-    static String trimCity(String city) {
+    public static String trimCity(String city) {
         if (city.endsWith("市")) {
             return city.substring(0, city.lastIndexOf("市"));
         }
@@ -40,5 +40,4 @@ public final class Util {
 
         return city;
     }
-
 }

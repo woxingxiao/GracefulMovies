@@ -1,8 +1,9 @@
 package com.xw.project.gracefulmovies.view.fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
@@ -11,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.util.PrefUtil;
@@ -71,6 +73,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         mNightTimePref.setOnPreferenceClickListener(this);
         findPreference(getString(R.string.key_theme)).setOnPreferenceClickListener(this);
         mCachePreference.setOnPreferenceClickListener(this);
+        findPreference(getString(R.string.key_feedback)).setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -101,7 +104,14 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
             case 4:
                 if (!"无缓存".equals(mCachePreference.getSummary()) && clearCache()) {
                     mCachePreference.setSummary("无缓存");
+                    Toast.makeText(getActivity(), "已清除", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case 5:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setData(Uri.parse(getString(R.string.questionnaire_url)));
+                startActivity(Intent.createChooser(intent, "请选择浏览器"));
                 break;
         }
         return true;
@@ -175,29 +185,12 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
     }
 
     private String getCacheSizeString() {
-        long size = 0;
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            if (getActivity().getExternalCacheDir() != null) {
-                size = getFolderSize(new File(getActivity().getExternalCacheDir().getAbsolutePath()));
-            }
-        } else {
-            if (getActivity().getCacheDir() != null) {
-                size = getFolderSize(new File(getActivity().getCacheDir().getAbsolutePath()));
-            }
-        }
-
+        long size = getFolderSize(new File(getActivity().getCacheDir().getAbsolutePath()));
         return formatFileSize(size);
     }
 
     private boolean clearCache() {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            if (getActivity().getExternalCacheDir() != null) {
-                return deleteDir(new File(getActivity().getExternalCacheDir().getAbsolutePath()));
-            }
-        } else {
-            return deleteDir(new File(getActivity().getCacheDir().getAbsolutePath()));
-        }
-        return true;
+        return deleteDir(new File(getActivity().getCacheDir().getAbsolutePath()));
     }
 
     private long getFolderSize(File file) {

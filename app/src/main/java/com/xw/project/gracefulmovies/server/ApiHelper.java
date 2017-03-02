@@ -4,8 +4,10 @@ package com.xw.project.gracefulmovies.server;
 import com.xw.project.gracefulmovies.model.MovieData;
 import com.xw.project.gracefulmovies.model.MovieModel;
 import com.xw.project.gracefulmovies.model.MovieReleaseType;
+import com.xw.project.gracefulmovies.model.NetLocResult;
 import com.xw.project.gracefulmovies.model.RequestResult;
 import com.xw.project.gracefulmovies.server.api.MovieApi;
+import com.xw.project.gracefulmovies.server.api.NetLocApi;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class ApiHelper {
 
     private static String API_KEY;
     private static MovieApi movieApi;
+    private static NetLocApi netLocApi;
 
     public static void init(String apiKey) {
         API_KEY = apiKey;
@@ -30,10 +33,18 @@ public class ApiHelper {
 
     private static MovieApi getMovieApi() {
         if (movieApi == null) {
-            movieApi = ApiClient.getInstance().createApi(MovieApi.class);
+            movieApi = new ApiClient().createApi(MovieApi.class);
         }
 
         return movieApi;
+    }
+
+    private static NetLocApi getNetLocApi() {
+        if (netLocApi == null) {
+            netLocApi = new ApiClient().createApi("http://gc.ditu.aliyun.com/", NetLocApi.class);
+        }
+
+        return netLocApi;
     }
 
     public static Observable<List<MovieModel>> loadBeReleasedMovies(String city) {
@@ -96,6 +107,16 @@ public class ApiHelper {
                         return movieReleaseType == null ? null : movieReleaseType.getData();
                     }
                 });
+    }
+
+    public static Observable<NetLocResult> loadNetLoc(String latLng) {
+        return getNetLocApi().getNetLoc(latLng)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public static void releaseNetLocApi() {
+        netLocApi = null;
     }
 
 }

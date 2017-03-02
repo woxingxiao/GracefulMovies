@@ -34,18 +34,18 @@ public final class Logy {
     }
 
     public static void w(String msg) {
-        if (DEBUG) Log.i(TAG, msg);
+        if (DEBUG) Log.w(TAG, msg);
     }
 
     public static void w(String tag, String msg) {
-        if (DEBUG) Log.i(tag, msg);
+        if (DEBUG) Log.w(tag, msg);
     }
 
     public static void e(String msg) {
-        if (DEBUG) Log.i(TAG, msg);
+        if (DEBUG) Log.e(TAG, msg);
     }
 
     public static void e(String tag, String msg) {
-        if (DEBUG) Log.i(tag, msg);
+        if (DEBUG) Log.e(tag, msg);
     }
 }

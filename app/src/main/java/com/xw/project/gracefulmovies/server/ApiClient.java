@@ -19,15 +19,7 @@ class ApiClient {
     private Retrofit.Builder mRetrofitBuilder;
     private OkHttpClient.Builder mOkHttpClientBuilder;
 
-    private static class SingletonHolder {
-        private static ApiClient INSTANCE = new ApiClient();
-    }
-
-    static ApiClient getInstance() {
-        return SingletonHolder.INSTANCE;
-    }
-
-    private ApiClient() {
+    ApiClient() {
         mRetrofitBuilder = new Retrofit.Builder()
                 .baseUrl("http://op.juhe.cn/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -42,11 +34,17 @@ class ApiClient {
         }
     }
 
+    <S> S createApi(String baseUrl, Class<S> ApiClass) {
+        mRetrofitBuilder.baseUrl(baseUrl);
+
+        return createApi(ApiClass);
+    }
+
     <S> S createApi(Class<S> ApiClass) {
         return mRetrofitBuilder
                 .client(mOkHttpClientBuilder.build())
                 .build()
                 .create(ApiClass);
-
     }
+
 }

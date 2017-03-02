@@ -36,6 +36,11 @@
             android:order="4"
             android:title="清除缓存"
             tools:summary="16KB"/>
+        <Preference
+            android:key="@string/key_feedback"
+            android:order="5"
+            android:title="意见反馈"
+            android:summary="点赞与吐槽"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
