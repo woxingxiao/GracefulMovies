@@ -8,8 +8,8 @@ android {
         applicationId "com.xw.project.gracefulmovies"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.0.2"
+        versionCode 10
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         resConfigs "zh" // 仅支持中文
@@ -69,8 +69,8 @@ andResGuard {
 }
 
 ext {
-    butter_knife_version = "8.4.0"
-    retrofit_version = "2.1.0"
+    butter_knife_version = "8.5.1"
+    retrofit_version = "2.2.0"
 }
 
 dependencies {
@@ -85,7 +85,7 @@ dependencies {
     compile "com.jakewharton:butterknife:$butter_knife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butter_knife_version"
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'io.reactivex:rxjava:1.2.6'
+    compile 'io.reactivex:rxjava:1.2.7'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
@@ -97,6 +97,7 @@ dependencies {
     }
     compile 'com.github.woxingxiao:BubbleSeekBar:v1.9'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
 
     compile project(':library')
 }

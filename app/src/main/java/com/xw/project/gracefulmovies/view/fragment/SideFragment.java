@@ -90,6 +90,7 @@ public abstract class SideFragment extends Fragment {
 
     private ThemeActivity mThemeActivity;
     protected Handler mHandler;
+    private boolean isAnimRunning;
 
     @Override
     public void onAttach(Context context) {
@@ -118,6 +119,7 @@ public abstract class SideFragment extends Fragment {
                     // Hardware-supported clipPath()
                     // http://developer.android.com/guide/topics/graphics/hardware-accel.html
                     if (Build.VERSION.SDK_INT >= 18) {
+                        isAnimRunning = true;
                         Animator reveal = createCheckoutRevealAnimator((ClipRevealFrame) v, cx, cy, 28f, radius);
                         reveal.start();
                     } else {
@@ -157,6 +159,8 @@ public abstract class SideFragment extends Fragment {
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if (isAnimRunning)
+                    return;
                 onSideSwitch(mSwitch);
 
                 Colorful.config(getContext()).night(checked).apply();
@@ -231,6 +235,7 @@ public abstract class SideFragment extends Fragment {
             public void onAnimationEnd(Animator animation) {
                 view.setClipOutLines(false);
                 removeOldSideFragment();
+                isAnimRunning = false;
             }
         });
 

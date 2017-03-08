@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -33,11 +35,14 @@ public class WebActivity extends BaseActivity {
 
     private WebView mWebView;
 
-    public static void navigation(Activity activity, String url, String title) {
+    public static void navigation(Activity activity, View view, String url, String title) {
         Intent intent = new Intent(activity, WebActivity.class);
         intent.putExtra("url", url);
         intent.putExtra("title", title);
-        activity.startActivity(intent);
+
+        ActivityOptionsCompat option = ActivityOptionsCompat.makeClipRevealAnimation(view, 0, 0,
+                view.getMeasuredWidth(), view.getMeasuredHeight());
+        ActivityCompat.startActivity(activity, intent, option.toBundle());
     }
 
     @Override
@@ -76,11 +81,9 @@ public class WebActivity extends BaseActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setAllowFileAccess(true);
         webSettings.setAppCacheEnabled(true);
+        webSettings.setDisplayZoomControls(false);
         if (Build.VERSION.SDK_INT >= 21) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-        }
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
-            webSettings.setDisplayZoomControls(false);
         }
         mWebView.setWebChromeClient(new MyWebChromeClient());
 

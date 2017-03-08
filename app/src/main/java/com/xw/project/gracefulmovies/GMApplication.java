@@ -27,7 +27,10 @@ public class GMApplication extends Application {
 
         SharedPrefHelper.init(this);
         Logy.init(true);
-        ApiHelper.init(""); // TODO: 2017-02-24 add your api key to request data
+        String s1 = ""; // 聚合Api Key
+        String s2 = ""; // 易源App Id
+        String s3 = ""; // 易源Api Key
+        ApiHelper.init(s1, s2, s3); // TODO: 2017-02-24 add your api key to request data
 //        CrashHandler.getInstance().init(this);
     }
 }

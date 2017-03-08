@@ -24,8 +24,8 @@
             android:text="@string/welcome"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_smile"/>
+            app:drawableLeftCompat="@drawable/svg_ic_smile"
+            app:tintDrawableWithTextColor="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,8 +43,8 @@
             android:text="@string/make_friends"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_friend"/>
+            app:drawableLeftCompat="@drawable/svg_ic_friend"
+            app:tintDrawableWithTextColor="true"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -90,8 +90,8 @@
             android:text="@string/open_source_address"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_source"/>
+            app:drawableLeftCompat="@drawable/svg_ic_source"
+            app:tintDrawableWithTextColor="true"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/about_github_img"
@@ -109,8 +109,8 @@
             android:text="@string/begging"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_reward"/>
+            app:drawableLeftCompat="@drawable/svg_ic_reward"
+            app:tintDrawableWithTextColor="true"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -142,8 +142,8 @@
             android:text="@string/open_source_permission"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_license"/>
+            app:drawableLeftCompat="@drawable/svg_ic_license"
+            app:tintDrawableWithTextColor="true"/>
 
         <TextView
             android:id="@+id/about_license_text"
@@ -162,8 +162,8 @@
             android:text="@string/thanks"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:TintDrawableWithTextColor="true"
-            app:drawableLeftCompat="@drawable/svg_ic_flower"/>
+            app:drawableLeftCompat="@drawable/svg_ic_flower"
+            app:tintDrawableWithTextColor="true"/>
 
         <TextView
             android:layout_width="wrap_content"

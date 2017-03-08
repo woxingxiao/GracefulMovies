@@ -16,21 +16,23 @@
         android:scaleType="centerCrop"
         tools:src="@drawable/pic_movies"/>
 
-    <TextView
-        android:id="@+id/day_night_mode_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="10dp"
-        android:text="@string/day_mode"
-        android:textColor="@android:color/white"/>
-
     <com.yalantis.starwarsdemo.widget.BackgroundDrawableSwitchCompat
         android:id="@+id/day_night_mode_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
+        android:layout_gravity="bottom"
         android:layout_margin="@dimen/space"
         app:switchMinWidth="60dp"
         app:thumbTint="@android:color/white"/>
+
+    <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        android:id="@+id/nav_city_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="12dp"
+        android:text="@string/location_default"
+        android:textColor="@android:color/white"
+        app:drawableLeftCompat="@drawable/svg_ic_location"/>
+
 </FrameLayout>

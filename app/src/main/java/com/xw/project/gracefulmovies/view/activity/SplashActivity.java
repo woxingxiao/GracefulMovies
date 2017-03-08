@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.flaviofaria.kenburnsview.KenBurnsView;
+import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.xw.project.gracefulmovies.R;
 
 import butterknife.BindView;
@@ -45,6 +46,8 @@ public class SplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
 
+        RandomTransitionGenerator generator = new RandomTransitionGenerator(20000, new LinearInterpolator());
+        mBgImg.setTransitionGenerator(generator);
         Glide.with(this).load(R.drawable.pic_cinema).into(mBgImg);
         mRootLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override

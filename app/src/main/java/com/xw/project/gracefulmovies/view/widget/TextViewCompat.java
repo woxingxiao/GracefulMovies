@@ -60,7 +60,7 @@ public class TextViewCompat extends AppCompatTextView {
                     db = AppCompatResources.getDrawable(context, dbId);
             }
 
-            boolean isTint = a.getBoolean(R.styleable.TextViewCompat_TintDrawableWithTextColor, false);
+            boolean isTint = a.getBoolean(R.styleable.TextViewCompat_tintDrawableWithTextColor, false);
             if (isTint && dl != null)
                 DrawableCompat.setTint(dl, getCurrentTextColor());
             if (isTint && dt != null)

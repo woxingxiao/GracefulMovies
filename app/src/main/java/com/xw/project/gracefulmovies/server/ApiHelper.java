@@ -1,14 +1,19 @@
 package com.xw.project.gracefulmovies.server;
 
 
+import com.xw.project.gracefulmovies.model.BoxOfficeModel;
+import com.xw.project.gracefulmovies.model.BoxOfficeResult;
 import com.xw.project.gracefulmovies.model.MovieData;
 import com.xw.project.gracefulmovies.model.MovieModel;
 import com.xw.project.gracefulmovies.model.MovieReleaseType;
 import com.xw.project.gracefulmovies.model.NetLocResult;
 import com.xw.project.gracefulmovies.model.RequestResult;
+import com.xw.project.gracefulmovies.server.api.BoxOfficeApi;
 import com.xw.project.gracefulmovies.server.api.MovieApi;
 import com.xw.project.gracefulmovies.server.api.NetLocApi;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import rx.Observable;
@@ -23,12 +28,18 @@ import rx.schedulers.Schedulers;
  */
 public class ApiHelper {
 
-    private static String API_KEY;
+    private static String API_KEY_JH;
+    private static String APP_ID_YY;
+    private static String API_KEY_YY;
+
     private static MovieApi movieApi;
     private static NetLocApi netLocApi;
+    private static BoxOfficeApi boxOfficeApi;
 
-    public static void init(String apiKey) {
-        API_KEY = apiKey;
+    public static void init(String apiKeyJH, String appId, String apiKeyYY) {
+        API_KEY_JH = apiKeyJH;
+        APP_ID_YY = appId;
+        API_KEY_YY = apiKeyYY;
     }
 
     private static MovieApi getMovieApi() {
@@ -47,9 +58,20 @@ public class ApiHelper {
         return netLocApi;
     }
 
+    private static BoxOfficeApi getBoxOfficeApi() {
+        if (boxOfficeApi == null) {
+            boxOfficeApi = new ApiClient().createApi("http://route.showapi.com/", BoxOfficeApi.class);
+        }
+
+        return boxOfficeApi;
+    }
+
+    /**
+     * 加载所在城市正在热映的电影
+     */
     public static Observable<List<MovieModel>> loadBeReleasedMovies(String city) {
         return getMovieApi()
-                .apiGet(API_KEY, city)
+                .apiGet(API_KEY_JH, city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<RequestResult, MovieData>() {
@@ -78,9 +100,12 @@ public class ApiHelper {
                 });
     }
 
+    /**
+     * 加载所在城市即将上映的电影
+     */
     public static Observable<List<MovieModel>> loadGoingToBeingReleasedMovies(String city) {
         return getMovieApi()
-                .apiGet(API_KEY, city)
+                .apiGet(API_KEY_JH, city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<RequestResult, MovieData>() {
@@ -109,14 +134,68 @@ public class ApiHelper {
                 });
     }
 
+    /**
+     * 经纬度转地址
+     */
     public static Observable<NetLocResult> loadNetLoc(String latLng) {
         return getNetLocApi().getNetLoc(latLng)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    /**
+     * 加载票房数据
+     *
+     * @param dataType 0 单日票房，1 周末票房，2 单周票房，3 单月票房
+     */
+    public static Observable<List<BoxOfficeModel>> loadBoxOffice(int dataType) {
+        Observable<BoxOfficeResult> observable;
+        if (dataType == 0) {
+            observable = getBoxOfficeApi().dayBoxOfficeGet(APP_ID_YY, API_KEY_YY);
+        } else if (dataType == 1) {
+            observable = getBoxOfficeApi().weekendBoxOfficeGet(APP_ID_YY, API_KEY_YY);
+        } else if (dataType == 2) {
+            observable = getBoxOfficeApi().weekBoxOfficeGet(APP_ID_YY, API_KEY_YY);
+        } else {
+            observable = getBoxOfficeApi().monthBoxOfficeGet(APP_ID_YY, API_KEY_YY);
+        }
+        return observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<BoxOfficeResult, BoxOfficeResult.BoxOfficeData>() {
+                    @Override
+                    public BoxOfficeResult.BoxOfficeData call(BoxOfficeResult boxOfficeResult) {
+                        if (boxOfficeResult.getResult() == null) {
+                            /**
+                             * 如果返回数据对象是null，则抛出业务异常
+                             */
+                            throw new ApiException(boxOfficeResult.getError_code(), boxOfficeResult.getReason());
+                        }
+                        return boxOfficeResult.getResult();
+                    }
+                })
+                .map(new Func1<BoxOfficeResult.BoxOfficeData, List<BoxOfficeModel>>() {
+                    @Override
+                    public List<BoxOfficeModel> call(BoxOfficeResult.BoxOfficeData boxOfficeData) {
+                        if (boxOfficeData.modelList != null && !boxOfficeData.modelList.isEmpty()) {
+                            Collections.sort(boxOfficeData.modelList, new Comparator<BoxOfficeModel>() {
+                                @Override
+                                public int compare(BoxOfficeModel o1, BoxOfficeModel o2) {
+                                    return o1.getRankInt() - o2.getRankInt();
+                                }
+                            });
+                        }
+                        return boxOfficeData.modelList;
+                    }
+                });
+    }
+
     public static void releaseNetLocApi() {
         netLocApi = null;
+    }
+
+    public static void releaseBoxOfficeApi() {
+        boxOfficeApi = null;
     }
 
 }

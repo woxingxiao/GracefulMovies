@@ -5,6 +5,6 @@
         <attr name="drawableRightCompat" format="reference"/>
         <attr name="drawableTopCompat" format="reference"/>
         <attr name="drawableBottomCompat" format="reference"/>
-        <attr name="TintDrawableWithTextColor" format="boolean"/>
+        <attr name="tintDrawableWithTextColor" format="boolean"/>
     </declare-styleable>
 </resources>

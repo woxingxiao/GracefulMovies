@@ -66,11 +66,9 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     ViewPager mViewPager;
 
     private SwitchCompat mSwitch;
-    private TextView mDayNightText;
     private TextView mCityText;
 
     private MyReceiver mReceiver;
-    private Bundle mSavedInstanceState;
     private String mAutoSwitchedHint;
     private boolean isCollapsed = false; // AppBar是否折叠
 
@@ -120,7 +118,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(this);
         mSwitch = (SwitchCompat) navView.getHeaderView(0).findViewById(R.id.day_night_mode_switch);
-        mDayNightText = (TextView) navView.getHeaderView(0).findViewById(R.id.day_night_mode_text);
+        mCityText = (TextView) navView.getHeaderView(0).findViewById(R.id.nav_city_text);
         ImageView img = (ImageView) navView.getHeaderView(0).findViewById(R.id.nav_header_img);
         Glide.with(this).load(R.drawable.pic_movies).into(img);
 
@@ -133,9 +131,18 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         mViewPager.setAdapter(adapter);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setupWithViewPager(mViewPager);
+        mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
+        mCityText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLocatedCityDialog(false, false);
+            }
+        });
 
         if (savedInstanceState == null) {
             LocationService.start(this);
+
+            checkAutoDayNightMode();
         } else {
             String hint = savedInstanceState.getString("hint", null);
             if (hint != null) {
@@ -150,8 +157,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                         .show();
             }
         }
-
-        mSavedInstanceState = savedInstanceState;
     }
 
     @Override
@@ -159,7 +164,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         super.onResume();
 
         mSwitch.setChecked(Colorful.getThemeDelegate().isNight());
-        mDayNightText.setText(mSwitch.isChecked() ? getString(R.string.night_mode) : getString(R.string.day_mode));
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -183,11 +187,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        final MenuItem item = menu.findItem(R.id.action_location);
-
-        mCityText = (TextView) item.getActionView().findViewById(R.id.menu_location_text);
-        mCityText.setText(PrefUtil.getCityShort(this));
-
+        final MenuItem item = menu.findItem(R.id.action_box_office);
         item.getActionView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,16 +195,13 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
             }
         });
 
-        if (mSavedInstanceState == null)
-            checkAutoDayNightMode();
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_location) {
-            showLocatedCityDialog(false, false);
+        if (item.getItemId() == R.id.action_box_office) {
+            BoxOfficeActivity.navigation(this);
             return true;
         }
 

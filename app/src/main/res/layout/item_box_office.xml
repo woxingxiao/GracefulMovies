@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/four_dp"
+    android:layout_marginLeft="@dimen/space"
+    android:layout_marginRight="@dimen/space"
+    android:layout_marginTop="@dimen/four_dp">
+
+    <TextView
+        android:id="@+id/bo_rank_text"
+        android:layout_width="@dimen/space6x"
+        android:layout_height="@dimen/space6x"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:textSize="25sp"
+        tools:text="1"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/bo_rank_img"
+        android:layout_width="@dimen/space6x"
+        android:layout_height="@dimen/space6x"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/four_dp"
+        app:srcCompat="@drawable/svg_ic_gold_metal"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space5x"
+        android:layout_marginStart="@dimen/space5x"
+        android:padding="@dimen/four_dp">
+
+        <TextView
+            android:id="@+id/bo_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space"
+            android:layout_marginStart="@dimen/space"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintGuide_percent="0.33"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.66"/>
+
+        <TextView
+            android:id="@+id/bo_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintBottom_toTopOf="@+id/bo_hint_1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/guideline1"
+            tools:text="54321"/>
+
+        <TextView
+            android:id="@+id/bo_hint_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space7x"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guideline1"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/bo_text_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/bo_text_1"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline1"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            tools:text="12345"/>
+
+        <TextView
+            android:id="@+id/bo_hint_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space7x"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline1"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/bo_text_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintBottom_toTopOf="@+id/bo_hint_3"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+            app:layout_constraintRight_toRightOf="parent"
+            tools:text="12345"/>
+
+        <TextView
+            android:id="@+id/bo_hint_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space7x"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/bo_text_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/bo_hint_1"
+            tools:text="54321"/>
+
+        <TextView
+            android:id="@+id/bo_hint_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/guideline1"
+            app:layout_constraintTop_toBottomOf="@+id/bo_text_4"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/bo_text_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline1"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/bo_hint_2"
+            tools:text="12345"/>
+
+        <TextView
+            android:id="@+id/bo_hint_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline1"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/bo_text_5"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/bo_text_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_24sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bo_hint_3"
+            tools:text="12345"/>
+
+        <TextView
+            android:id="@+id/bo_hint_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bo_text_6"
+            tools:text="@string/app_name"/>
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

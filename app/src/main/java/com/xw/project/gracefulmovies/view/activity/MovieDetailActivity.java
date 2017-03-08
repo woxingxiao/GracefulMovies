@@ -1,11 +1,18 @@
 package com.xw.project.gracefulmovies.view.activity;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -61,6 +68,21 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
     FloatingActionButton mFab;
 
     private boolean isCollapsed = false;
+
+    public static void navigation(Activity activity, View view, MovieModel movieModel) {
+        Intent intent = new Intent(activity, MovieDetailActivity.class);
+        intent.putExtra("movie_model", movieModel);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            activity.getWindow().setExitTransition(new Explode());
+            ActivityCompat.startActivity(activity, intent,
+                    ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
+        } else {
+            ActivityOptionsCompat option = ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0,
+                    view.getMeasuredWidth(), view.getMeasuredHeight());
+            ActivityCompat.startActivity(activity, intent, option.toBundle());
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +141,7 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
                 if (movieModel.getWebUrl() == null || movieModel.getWebUrl().isEmpty()) {
                     showToast("无效地址");
                 } else {
-                    WebActivity.navigation(MovieDetailActivity.this, movieModel.getWebUrl(),
+                    WebActivity.navigation(MovieDetailActivity.this, mFab, movieModel.getWebUrl(),
                             movieModel.getName() == null ? "" : movieModel.getName());
                 }
             }

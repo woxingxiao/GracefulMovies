@@ -52,9 +52,11 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.AboutActivity"
-            android:label="@string/title_activity_about"/>
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.SettingsActivity"
+            android:label="@string/settings"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.MovieDetailActivity"
@@ -65,6 +67,10 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.WebActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.BoxOfficeActivity"
+            android:label="@string/box_office"
             android:screenOrientation="portrait"/>
 
         <service

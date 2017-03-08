@@ -1,10 +1,10 @@
 package com.xw.project.gracefulmovies.server;
 
-import android.util.SparseArray;
-
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Locale;
 
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
@@ -27,52 +27,6 @@ public abstract class ApiSubscriber<T> extends Subscriber<T> {
     private static final String MSG_UNKNOWN_ERROR = "Ops，好像出错了~";
     private static final String MSG_TIME_OUT = "网络请求超时";
     private static final String MSG_SERVER_ERROR = "服务器错误";
-    //业务错误码
-    private static final int[] CODES = {
-            10001,
-            10002,
-            10003,
-            10004,
-            10005,
-            10007,
-            10008,
-            10009,
-            10011,
-            10012,
-            10013,
-            10014,
-            10020,
-            10021,
-            209401,
-            209402,
-            209403,
-            209404,
-            209405
-    };
-    //业务出错提示
-    private static final String[] CODE_MSG = {
-            "错误的请求KEY",
-            "该KEY无请求权限",
-            "KEY过期",
-            "错误的OPENID",
-            "应用未审核超时，请提交认证",
-            "未知的请求源",
-            "被禁止的IP",
-            "被禁止的KEY",
-            "当前IP请求超过限制",
-            "请求超过次数限制",
-            "测试KEY超过请求限制",
-            "系统内部异常",
-            "接口维护",
-            "接口停用",
-            "影片名不能为空",
-            "查询不到该影片相关信息",
-            "网络错误，请重试",
-            "城市名不能为空",
-            "查询不到热映电影相关信息"
-    };
-
-    private SparseArray<String> mSparseArray;
 
     @Override
     public void onStart() {
@@ -113,9 +67,7 @@ public abstract class ApiSubscriber<T> extends Subscriber<T> {
         if (e instanceof ApiException) {
             String msg = ((ApiException) e).getMsg();
             if (msg == null || msg.isEmpty()) {
-                mapCodeAndMsg(); // 错误码与提示一一对应到map
-
-                msg = mSparseArray.get(((ApiException) e).getCode(), MSG_SERVER_ERROR);
+                msg = String.format(Locale.CHINA, "出错了！错误代码：%d", ((ApiException) e).getCode());
             }
 
             onError(msg);
@@ -141,17 +93,10 @@ public abstract class ApiSubscriber<T> extends Subscriber<T> {
             onError(MSG_NETWORK_ERROR);
         } else if (e instanceof UnknownHostException) {
             onError(MSG_NETWORK_CONNECTION_ERROR);
+        } else if (e instanceof SocketException) {
+            onError(MSG_SERVER_ERROR);
         } else {
             onError(MSG_UNKNOWN_ERROR);
-        }
-    }
-
-    private void mapCodeAndMsg() {
-        if (mSparseArray == null) {
-            mSparseArray = new SparseArray<>();
-            for (int i = 0; i < CODES.length; i++) {
-                mSparseArray.put(CODES[i], CODE_MSG[i]);
-            }
         }
     }
 

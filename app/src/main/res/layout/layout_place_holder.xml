@@ -14,7 +14,7 @@
         android:drawablePadding="@dimen/space"
         android:gravity="center"
         android:text="@string/data_loading"
-        app:TintDrawableWithTextColor="true"
-        app:drawableTopCompat="@drawable/svg_ic_loading"/>
+        app:drawableTopCompat="@drawable/svg_ic_loading"
+        app:tintDrawableWithTextColor="true"/>
 
 </FrameLayout>
