@@ -2,10 +2,16 @@ package com.xw.project.gracefulmovies.view.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Process;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +20,11 @@ import com.bumptech.glide.Glide;
 import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.flaviofaria.kenburnsview.RandomTransitionGenerator;
 import com.xw.project.gracefulmovies.R;
+import com.xw.project.gracefulmovies.server.ApiHelper;
+import com.xw.project.gracefulmovies.util.Logy;
+import com.xw.project.gracefulmovies.util.SharedPrefHelper;
+
+import org.polaric.colorful.Colorful;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,7 +34,7 @@ import butterknife.ButterKnife;
  * <p/>
  * Created by woxingxiao on 2017-02-09.
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @BindView(R.id.splash_root_layout)
     RelativeLayout mRootLayout;
@@ -41,7 +52,19 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        transparentStatusBar();
+        // transparent status bar
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
 
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
@@ -103,6 +126,32 @@ public class SplashActivity extends BaseActivity {
         });
 
         mHandler = new Handler();
+
+        /**
+         * 三方初始化放入工作线程，加速App启动
+         */
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+
+                Colorful.defaults()
+                        .primaryColor(Colorful.ThemeColor.DARK)
+                        .accentColor(Colorful.ThemeColor.DEEP_ORANGE)
+                        .translucent(false)
+                        .night(false);
+                Colorful.init(getApplicationContext());
+
+                SharedPrefHelper.init(getApplicationContext());
+                Logy.init(true);
+                String s1 = ""; // 聚合Api Key
+                String s2 = ""; // 易源App Id
+                String s3 = ""; // 易源Api Key
+                ApiHelper.init(s1, s2, s3); // TODO: 2017-02-24 add your api key to request data
+//                CrashHandler.getInstance().init(this);
+            }
+        }.start();
     }
 
     private void jumpToMain() {
@@ -113,7 +162,7 @@ public class SplashActivity extends BaseActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
-        }, 500);
+        }, 300);
     }
 
     @Override
