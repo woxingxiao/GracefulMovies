@@ -40,22 +40,17 @@
     <string name="confirm">确定</string>
     <string name="locate_again">重新定位</string>
     <string name="welcome">谢天谢地你来了</string>
-    <string name="make_friends">交个朋友吧</string>
+    <string name="contact_me">联系我</string>
     <string name="open_source_address">项目已开源，喜欢就star一个哦</string>
-    <string name="begging">老板随意打赏鼓励作者</string>
     <string name="thanks">致谢</string>
     <string name="welcome_detail">我是一枚展示所在城市热映电影资讯和票房的小小应用，万分荣幸入驻你的手机。我简单但颜值高，善变（多色主题自由搭配）却体贴（夜间模式护眼），总有一种性格与你的气质相配。简约，优雅，精彩，即看即走，全都来自处女座作者的“斤斤计较”。希望你喜欢。o(*￣︶￣*)o</string>
-    <string name="weibo_name">萧声匿</string>
-    <string name="wechat_number">wo_xing_xiao</string>
-    <string name="qq_number">185578499</string>
     <string name="gmail_address">Chauvet910@gmail.com</string>
     <string name="github_page">https://github.com/woxingxiao/GracefulMovies</string>
-    <string name="alipay_name">185578499@qq.com</string>
     <string name="hint_clipboard">%1$s“%2$s”已复制到粘贴板</string>
     <string name="open_source_permission">开源许可</string>
     <string name="license"><![CDATA[<u>LICENSE</u>]]></string>
     <string name="thanks_list">强大的开源社区\n聚合数据提供影讯数据支持\n易源数据提供票房数据支持\niconfont.cn的海量图标资源\n特别感谢一位仙女在界面审美上的建设性意见，笔芯❤</string>
-    <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯和评分，即看即走。下载地址：https://fir.im/jyx"</string>
+    <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯、评分和票房，即看即走。下载地址：https://fir.im/jyx"</string>
     <string name="hint_query_by_upper_city">使用【%1$s】查询无数据，使用其上级行政区【%2$s】查询？</string>
     <string name="questionnaire_url">https://gdgdocs.org/forms/d/e/1FAIpQLSdQF1HvXnvx_vki00RUTKR3PP0-ghTpYoxjfZCZWs5IAH41Pw/viewform</string>
     <string name="hint_auto_day_night_disabled">自动切换日夜模式已关闭，到“设置”中可再开启</string>
@@ -75,7 +70,7 @@
     <string name="hint_box_office_month">单月票房（万）</string>
     <string name="hint_playing_days_in_the_month">月内天数</string>
     <string name="hint_playing_rate_in_the_month">月内占比</string>
-    <string name="hint_box_office_attention">票房相关数据非即时统计，仅供参考。单月票房排名按照月票房成绩，而非累计票房。</string>
+    <string name="hint_box_office_attention">票房数据由第三方提供，提示：\n1. 单日票房数据统计实时性较高，其余仅供参考；\n2. 单月票房排名按照月票房成绩，而非累计票房。</string>
 
     <string name="key_first_time">key_first_time</string>
     <string name="key_auto_day_night">key_auto_day_night</string>

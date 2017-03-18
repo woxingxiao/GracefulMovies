@@ -40,47 +40,19 @@
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
             android:gravity="center"
-            android:text="@string/make_friends"
+            android:text="@string/contact_me"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
-            app:drawableLeftCompat="@drawable/svg_ic_friend"
+            app:drawableLeftCompat="@drawable/svg_ic_contact"
             app:tintDrawableWithTextColor="true"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space"
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/about_gmail_img"
+            android:layout_width="@dimen/space4x"
+            android:layout_height="@dimen/space4x"
+            android:layout_margin="@dimen/space2x"
             android:layout_marginLeft="@dimen/space2x"
-            android:layout_marginTop="@dimen/space"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_weibo_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                app:srcCompat="@drawable/svg_ic_weibo"/>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_wechat_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                android:layout_marginLeft="@dimen/space2x"
-                app:srcCompat="@drawable/svg_ic_wechat"/>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_qq_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                android:layout_marginLeft="@dimen/space2x"
-                app:srcCompat="@drawable/svg_ic_qq"/>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_gmail_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                android:layout_marginLeft="@dimen/space2x"
-                app:srcCompat="@drawable/svg_ic_gmail"/>
-        </LinearLayout>
+            app:srcCompat="@drawable/svg_ic_gmail"/>
 
         <com.xw.project.gracefulmovies.view.widget.TextViewCompat
             android:layout_width="wrap_content"
@@ -100,39 +72,6 @@
             android:layout_margin="@dimen/space2x"
             android:layout_marginLeft="@dimen/space2x"
             app:srcCompat="@drawable/svg_ic_github"/>
-
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/four_dp"
-            android:gravity="center"
-            android:text="@string/begging"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="@dimen/text_size_16sp"
-            app:drawableLeftCompat="@drawable/svg_ic_reward"
-            app:tintDrawableWithTextColor="true"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/space"
-            android:layout_marginLeft="@dimen/space2x"
-            android:layout_marginTop="@dimen/space"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_alipay_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                app:srcCompat="@drawable/svg_ic_alipay"/>
-
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/about_wechat_pay_img"
-                android:layout_width="@dimen/space4x"
-                android:layout_height="@dimen/space4x"
-                android:layout_marginLeft="@dimen/space2x"
-                app:srcCompat="@drawable/svg_ic_wechat"/>
-        </LinearLayout>
 
         <com.xw.project.gracefulmovies.view.widget.TextViewCompat
             android:layout_width="wrap_content"

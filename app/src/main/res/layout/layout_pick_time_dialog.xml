@@ -31,11 +31,8 @@
         android:layout_marginTop="@dimen/space3x"
         app:bsb_max="23"
         app:bsb_min="0"
-        app:bsb_second_track_color="@color/colorAccent"
         app:bsb_section_count="23"
-        app:bsb_show_text="true"
-        app:bsb_text_position="sides"
-        app:bsb_track_color="@color/colorPrimary"/>
+        app:bsb_show_section_text="true"/>
 
     <com.xw.repo.BubbleSeekBar
         android:id="@+id/dialog_min_seek_bar"
@@ -44,9 +41,6 @@
         android:layout_marginTop="@dimen/space3x"
         app:bsb_max="59"
         app:bsb_min="0"
-        app:bsb_second_track_color="@color/colorAccent"
         app:bsb_section_count="59"
-        app:bsb_show_text="true"
-        app:bsb_text_position="sides"
-        app:bsb_track_color="@color/colorPrimary"/>
+        app:bsb_show_section_text="true"/>
 </LinearLayout>

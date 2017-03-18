@@ -12,6 +12,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.transition.Explode;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -133,19 +138,43 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
         mDirectorText.setText(movieModel.getDirector().getData().getLabel1().getName());
         mTypeText.setText(movieModel.getMovieTypeString());
         mStarringText.setText(movieModel.getCastString());
-        mStoryBriefText.setText(movieModel.getStory().getData().getStoryBrief());
+
+        String story = movieModel.getStory().getData().getStoryBrief();
+        story += "更多";
+        int index = story.length();
+        SpannableStringBuilder ssb = new SpannableStringBuilder(story);
+        ssb.setSpan(new ClickableSpan() { // 可点击
+            @Override
+            public void onClick(View view) {
+                goToDetail(movieModel, view);
+            }
+
+            @Override
+            public void updateDrawState(TextPaint p) {
+                p.setColor(ContextCompat.getColor(MovieDetailActivity.this,
+                        Colorful.getThemeDelegate().getAccentColor().getColorRes()));
+                p.setUnderlineText(true);
+            }
+
+        }, index - 2, index, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mStoryBriefText.setMovementMethod(LinkMovementMethod.getInstance());
+        mStoryBriefText.setText(ssb);
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (movieModel.getWebUrl() == null || movieModel.getWebUrl().isEmpty()) {
-                    showToast("无效地址");
-                } else {
-                    WebActivity.navigation(MovieDetailActivity.this, mFab, movieModel.getWebUrl(),
-                            movieModel.getName() == null ? "" : movieModel.getName());
-                }
+                goToDetail(movieModel, view);
             }
         });
+    }
+
+    private void goToDetail(MovieModel movieModel, View view) {
+        if (movieModel.getWebUrl() == null || movieModel.getWebUrl().isEmpty()) {
+            showToast("无效地址");
+        } else {
+            WebActivity.navigation(this, view, movieModel.getWebUrl(),
+                    movieModel.getName() == null ? "" : movieModel.getName());
+        }
     }
 
     @Override

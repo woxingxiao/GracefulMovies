@@ -27,6 +27,7 @@ import java.util.Map;
  * <p/>
  * Created by woxingxiao on 2017-02-02.
  */
+@SuppressWarnings("unused")
 class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static final String TAG = "CrashHandler";

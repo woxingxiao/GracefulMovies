@@ -128,31 +128,40 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         int[] time = PrefUtil.getDayNightModeStartTime(getActivity(), isDay);
         int h = time[0];
         int m = time[1];
+
         hourMinText.setText(getString(R.string.format_hour_min, formatTime(h), formatTime(m)));
-        hourBar.setProgress(h);
-        minBar.setProgress(m);
-        hourBar.setSecondTrackColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        minBar.setSecondTrackColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        hourBar.setThumbColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        minBar.setThumbColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        hourBar.setBubbleColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        minBar.setBubbleColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()));
+        hourBar.getConfigBuilder()
+                .progress(h)
+                .secondTrackColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .thumbColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .bubbleColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .build();
+        minBar.getConfigBuilder()
+                .progress(m)
+                .secondTrackColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .thumbColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .bubbleColor(resolveColor(Colorful.getThemeDelegate().getAccentColor().getColorRes()))
+                .build();
         if (Colorful.getThemeDelegate().isNight()) {
-            hourBar.setTrackColor(resolveColor(android.R.color.darker_gray));
-            minBar.setTrackColor(resolveColor(android.R.color.darker_gray));
-            hourBar.setTextColor(resolveColor(android.R.color.white));
-            minBar.setTextColor(resolveColor(android.R.color.white));
+            hourBar.getConfigBuilder()
+                    .trackColor(resolveColor(android.R.color.darker_gray))
+                    .sectionTextColor(resolveColor(android.R.color.white))
+                    .build();
+            minBar.getConfigBuilder()
+                    .trackColor(resolveColor(android.R.color.darker_gray))
+                    .sectionTextColor(resolveColor(android.R.color.white))
+                    .build();
         }
         hourBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
-            public void onProgressChanged(int progress) {
+            public void onProgressChanged(int progress, float progressFloat) {
                 hourMinText.setText(getString(R.string.format_hour_min, formatTime(progress),
                         formatTime(minBar.getProgress())));
             }
         });
         minBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
-            public void onProgressChanged(int progress) {
+            public void onProgressChanged(int progress, float progressFloat) {
                 hourMinText.setText(getString(R.string.format_hour_min,
                         formatTime(hourBar.getProgress()), formatTime(progress)));
             }

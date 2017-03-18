@@ -78,55 +78,29 @@ public class AboutActivity extends BaseActivity {
         mLicenseText.setText(Html.fromHtml(getString(R.string.license)));
     }
 
-    @OnClick({R.id.about_weibo_img, R.id.about_wechat_img, R.id.about_qq_img, R.id.about_gmail_img,
-            R.id.about_github_img, R.id.about_alipay_img, R.id.about_wechat_pay_img,
-            R.id.about_license_text})
+    @OnClick({R.id.about_gmail_img, R.id.about_github_img, R.id.about_license_text})
     public void onClick(View view) {
-        if (view.getId() == R.id.about_github_img) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setData(Uri.parse(getString(R.string.github_page)));
-            startActivity(Intent.createChooser(intent, "请选择浏览器"));
-            return;
-        }
-        if (view.getId() == R.id.about_license_text) {
-            OpenLicenseActivity.navigation(this);
-            return;
-        }
-
-        String s1 = "";
-        String s2 = "";
         switch (view.getId()) {
-            case R.id.about_weibo_img:
-                s1 = "微博昵称";
-                s2 = getString(R.string.weibo_name);
-                break;
-            case R.id.about_wechat_img:
-                s1 = "微信号";
-                s2 = getString(R.string.wechat_number);
-                break;
-            case R.id.about_qq_img:
-                s1 = "QQ号";
-                s2 = getString(R.string.qq_number);
-                break;
             case R.id.about_gmail_img:
-                s1 = "邮箱";
-                s2 = getString(R.string.gmail_address);
+                String s1 = "邮箱";
+                String s2 = getString(R.string.gmail_address);
+
+                ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("content", s2);
+                cmb.setPrimaryClip(clipData);
+
+                showToast(getString(R.string.hint_clipboard, s1, s2));
                 break;
-            case R.id.about_alipay_img:
-                s1 = "支付宝账户";
-                s2 = getString(R.string.alipay_name);
+            case R.id.about_github_img:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setData(Uri.parse(getString(R.string.github_page)));
+                startActivity(Intent.createChooser(intent, "请选择浏览器"));
                 break;
-            case R.id.about_wechat_pay_img:
-                s1 = "微信号";
-                s2 = getString(R.string.wechat_number);
+            case R.id.about_license_text:
+                OpenLicenseActivity.navigation(this);
                 break;
         }
-
-        ClipboardManager cmb = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("content", s2);
-        cmb.setPrimaryClip(clipData);
-
-        showToast(getString(R.string.hint_clipboard, s1, s2));
     }
+
 }
