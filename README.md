@@ -17,14 +17,14 @@
   
 ## 升级日志  
 ### 最新：
-1. 重大更新，新增票房排行榜；
-2. 启动加速，已知漏洞修复。
+1. 移除不必要权限；
+2. 部分界面细微调整。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
 ## 关于测试
-如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)和[易源数据](https://www.showapi.com/)申请_Appkey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
+如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)和[易源数据](https://www.showapi.com/)申请 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
 # 致谢
 感谢开源的力量！
 开源库：  
