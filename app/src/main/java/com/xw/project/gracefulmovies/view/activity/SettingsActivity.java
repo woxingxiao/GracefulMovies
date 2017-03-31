@@ -1,7 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.xw.project.gracefulmovies.R;
@@ -13,10 +11,6 @@ import com.xw.project.gracefulmovies.view.fragment.SettingsFragment;
  * Created by woxingxiao on 2017-02-13.
  */
 public class SettingsActivity extends BaseActivity {
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, SettingsActivity.class));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

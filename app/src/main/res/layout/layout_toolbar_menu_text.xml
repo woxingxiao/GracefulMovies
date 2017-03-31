@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:paddingRight="@dimen/space2x">
 
-    <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+    <com.xw.repo.VectorCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -1,7 +1,10 @@
 package com.xw.project.gracefulmovies.view.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -10,6 +13,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.oubowu.slideback.SlideBackHelper;
+import com.oubowu.slideback.SlideConfig;
+import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.R;
 
 import org.polaric.colorful.ColorfulActivity;
@@ -26,6 +32,39 @@ public abstract class BaseActivity extends ColorfulActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        initializeSlideBack();
+    }
+
+    /**
+     * 初始化滑动返回
+     */
+    private void initializeSlideBack() {
+        SlideBackHelper.attach(
+                this, // 当前Activity
+                GMApplication.getActivityHelper(), // Activity栈管理工具
+                new SlideConfig.Builder() // 参数的配置
+                        .rotateScreen(false) // 屏幕是否旋转
+                        .edgeOnly(true) // 是否侧滑
+                        .lock(false) // 是否禁止侧滑
+                        .edgePercent(0.1f) // 边缘滑动的响应阈值，0~1，对应屏幕宽度*percent
+                        .slideOutPercent(0.5f) // 关闭页面的阈值，0~1，对应屏幕宽度*percent
+                        .create(),
+                null); // 滑动的监听
+    }
+
+    /**
+     * Activity跳转导航
+     *
+     * @param activity 目标Activity.class
+     */
+    protected void navigateTo(Class activity) {
+        startActivity(new Intent(this, activity));
+    }
+
     /**
      * 检测系统版本并使状态栏全透明
      */
@@ -35,7 +74,7 @@ public abstract class BaseActivity extends ColorfulActivity {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
-            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//            window.requestFeature(Window.FEATURE_CONTENT_TRANSITIONS); // 新增滑动返回，舍弃过渡动效
 
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS |
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);

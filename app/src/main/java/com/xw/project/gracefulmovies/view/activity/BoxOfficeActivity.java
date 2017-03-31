@@ -1,7 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -49,10 +47,6 @@ public class BoxOfficeActivity extends BaseActivity {
     TabLayout mTabLayout;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, BoxOfficeActivity.class));
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -131,7 +131,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         mViewPager.setAdapter(adapter);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         mTabLayout.setupWithViewPager(mViewPager);
-        mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
+        mCityText.setText(PrefUtil.getCityShort());
         mCityText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +150,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                         .setAction(getString(R.string.revoke), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                PrefUtil.setAutoDayNightMode(MainActivity.this, false);
+                                PrefUtil.setAutoDayNightMode(false);
                                 switchDayNightModeSmoothly(!Colorful.getThemeDelegate().isNight(), false);
                             }
                         })
@@ -170,10 +170,10 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 mDrawerLayout.addDrawerListener(new MyDrawerListener());
                 mDrawerLayout.closeDrawer(GravityCompat.START);
 
-                if (PrefUtil.isAutoDayNightMode(MainActivity.this)) {
+                if (PrefUtil.isAutoDayNightMode()) {
                     Toast.makeText(MainActivity.this, getString(R.string.hint_auto_day_night_disabled),
                             Toast.LENGTH_LONG).show();
-                    PrefUtil.setAutoDayNightMode(MainActivity.this, false);
+                    PrefUtil.setAutoDayNightMode(false);
                 }
             }
         });
@@ -201,7 +201,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_box_office) {
-            BoxOfficeActivity.navigation(this);
+            navigateTo(BoxOfficeActivity.class);
             return true;
         }
 
@@ -213,10 +213,10 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_theme:
-                ThemeActivity.navigation(this);
+                navigateTo(ThemeActivity.class);
                 break;
             case R.id.nav_settings:
-                SettingsActivity.navigation(this);
+                navigateTo(SettingsActivity.class);
                 break;
             case R.id.nav_share: // 分享
                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -233,7 +233,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 startActivity(Intent.createChooser(intent2, "评价"));
                 break;
             case R.id.nav_about:
-                AboutActivity.navigation(this);
+                navigateTo(AboutActivity.class);
                 break;
         }
 
@@ -246,15 +246,15 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
      * 检测是否自动日夜模式，如果是自动将根据时间判断是否切换
      */
     private void checkAutoDayNightMode() {
-        boolean firstTime = PrefUtil.checkFirstTime(this);
+        boolean firstTime = PrefUtil.checkFirstTime();
         if (firstTime)
-            PrefUtil.setNotFirstTime(MainActivity.this);
-        boolean auto = PrefUtil.isAutoDayNightMode(this);
+            PrefUtil.setNotFirstTime();
+        boolean auto = PrefUtil.isAutoDayNightMode();
         if (firstTime || !auto)
             return;
 
-        int[] dayTime = PrefUtil.getDayNightModeStartTime(this, true);
-        int[] nightTime = PrefUtil.getDayNightModeStartTime(this, false);
+        int[] dayTime = PrefUtil.getDayNightModeStartTime(true);
+        int[] nightTime = PrefUtil.getDayNightModeStartTime(false);
         Calendar cal = Calendar.getInstance();
         int h = cal.get(Calendar.HOUR_OF_DAY);
         int m = cal.get(Calendar.MINUTE);
@@ -350,7 +350,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         @Override
         public void onReceive(Context context, Intent intent) {
             if (getString(R.string.action_locate_succeed).equals(intent.getAction())) {
-                mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
+                mCityText.setText(PrefUtil.getCityShort());
 
                 showLocatedCityDialog(true, intent.getBooleanExtra(getString(R.string.param_is_upper_city), false));
             }
@@ -361,15 +361,15 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.location_default));
         if (upperCity) {
-            builder.setMessage(getString(R.string.hint_query_by_upper_city, PrefUtil.getCity(MainActivity.this),
-                    PrefUtil.getUpperCity(MainActivity.this)));
+            builder.setMessage(getString(R.string.hint_query_by_upper_city, PrefUtil.getCity(),
+                    PrefUtil.getUpperCity()));
         } else {
-            builder.setMessage(getString(R.string.hint_located_city, PrefUtil.getCity(MainActivity.this)));
+            builder.setMessage(getString(R.string.hint_located_city, PrefUtil.getCity()));
         }
         builder.setNegativeButton(getString(R.string.locate_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                PrefUtil.clearCity(MainActivity.this);
+                PrefUtil.clearCity();
                 LocationService.start(MainActivity.this);
             }
         });
@@ -377,8 +377,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (upperCity) {
-                    PrefUtil.setCity(MainActivity.this, PrefUtil.getUpperCity(MainActivity.this));
-                    mCityText.setText(PrefUtil.getCityShort(MainActivity.this));
+                    PrefUtil.setCity(PrefUtil.getUpperCity());
+                    mCityText.setText(PrefUtil.getCityShort());
                 }
                 if (refresh) {
                     List<Fragment> fragments = getSupportFragmentManager().getFragments();

@@ -92,7 +92,8 @@ public class LocationService extends Service {
             locationProvider = LocationManager.PASSIVE_PROVIDER;
         }
 
-        mLocationManager.requestLocationUpdates(locationProvider, 2000, 10, mLocationListener);
+        if (mLocationListener != null)
+            mLocationManager.requestLocationUpdates(locationProvider, 2000, 10, mLocationListener);
     }
 
     private LocationListener mLocationListener = new LocationListener() {
@@ -113,9 +114,9 @@ public class LocationService extends Service {
                     if (netLocResult.getUpperCity() != null && !netLocResult.getUpperCity().isEmpty()) {
                         String newCity = netLocResult.getUpperCity();
 
-                        boolean diffUpper = !newCity.equals(PrefUtil.getUpperCity(LocationService.this));
+                        boolean diffUpper = !newCity.equals(PrefUtil.getUpperCity());
                         if (diffUpper)
-                            PrefUtil.setUpperCity(LocationService.this, newCity);
+                            PrefUtil.setUpperCity(newCity);
 
                         /**
                          * 非直辖市和省会城市，使用定位城市的下级城市
@@ -125,8 +126,8 @@ public class LocationService extends Service {
                         }
                         Logy.i("LocationService", "------------定位成功：" + netLocResult.getUpperCity() + "，" + newCity);
 
-                        if (diffUpper && !newCity.equals(PrefUtil.getCity(LocationService.this))) {
-                            PrefUtil.setCity(LocationService.this, newCity);
+                        if (diffUpper && !newCity.equals(PrefUtil.getCity())) {
+                            PrefUtil.setCity(newCity);
                             sendBroadcast(new Intent(getString(R.string.action_locate_succeed)));
                             Logy.w("LocationService", "-----------------sendBroadcast locate succeed-----------------");
                         }
@@ -173,9 +174,11 @@ public class LocationService extends Service {
             return;
         }
 
-        mLocationManager.removeUpdates(mLocationListener);
-        mLocationListener = null;
-        ApiHelper.releaseNetLocApi();
+        if (mLocationListener != null) {
+            mLocationManager.removeUpdates(mLocationListener);
+            mLocationListener = null;
+            ApiHelper.releaseNetLocApi();
+        }
 
         stopSelf();
     }

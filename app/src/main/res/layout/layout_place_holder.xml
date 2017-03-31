@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+    <com.xw.repo.VectorCompatTextView
         android:id="@+id/place_holder_hint_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,6 +15,6 @@
         android:gravity="center"
         android:text="@string/data_loading"
         app:drawableTopCompat="@drawable/svg_ic_loading"
-        app:tintDrawableWithTextColor="true"/>
+        app:tintDrawableInTextColor="true"/>
 
 </FrameLayout>

@@ -58,11 +58,11 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
         String cache = getCacheSizeString();
         mCachePreference.setSummary(cache.equals("0.0B") ? "无缓存" : cache);
-        int[] time = PrefUtil.getDayNightModeStartTime(getActivity(), true);
+        int[] time = PrefUtil.getDayNightModeStartTime(true);
         int h = time[0];
         int m = time[1];
         mDayTimePref.setSummary(getString(R.string.format_hour_min2, formatTime(h), formatTime(m)));
-        time = PrefUtil.getDayNightModeStartTime(getActivity(), false);
+        time = PrefUtil.getDayNightModeStartTime(false);
         h = time[0];
         m = time[1];
         mNightTimePref.setSummary(getString(R.string.format_hour_min2, formatTime(h), formatTime(m)));
@@ -125,7 +125,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         final BubbleSeekBar hourBar = (BubbleSeekBar) view.findViewById(R.id.dialog_hour_seek_bar);
         final BubbleSeekBar minBar = (BubbleSeekBar) view.findViewById(R.id.dialog_min_seek_bar);
 
-        int[] time = PrefUtil.getDayNightModeStartTime(getActivity(), isDay);
+        int[] time = PrefUtil.getDayNightModeStartTime(isDay);
         int h = time[0];
         int m = time[1];
 

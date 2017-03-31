@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="@dimen/space2x">
 
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        <com.xw.repo.VectorCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
@@ -25,7 +25,7 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
             app:drawableLeftCompat="@drawable/svg_ic_smile"
-            app:tintDrawableWithTextColor="true"/>
+            app:tintDrawableInTextColor="true"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_marginTop="@dimen/space"
             android:text="@string/welcome_detail"/>
 
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        <com.xw.repo.VectorCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
@@ -44,7 +44,7 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
             app:drawableLeftCompat="@drawable/svg_ic_contact"
-            app:tintDrawableWithTextColor="true"/>
+            app:tintDrawableInTextColor="true"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/about_gmail_img"
@@ -54,7 +54,7 @@
             android:layout_marginLeft="@dimen/space2x"
             app:srcCompat="@drawable/svg_ic_gmail"/>
 
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        <com.xw.repo.VectorCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
@@ -63,7 +63,7 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
             app:drawableLeftCompat="@drawable/svg_ic_source"
-            app:tintDrawableWithTextColor="true"/>
+            app:tintDrawableInTextColor="true"/>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/about_github_img"
@@ -73,7 +73,7 @@
             android:layout_marginLeft="@dimen/space2x"
             app:srcCompat="@drawable/svg_ic_github"/>
 
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        <com.xw.repo.VectorCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
@@ -82,7 +82,7 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
             app:drawableLeftCompat="@drawable/svg_ic_license"
-            app:tintDrawableWithTextColor="true"/>
+            app:tintDrawableInTextColor="true"/>
 
         <TextView
             android:id="@+id/about_license_text"
@@ -93,7 +93,7 @@
             android:layout_marginTop="@dimen/space"
             tools:text="@string/license"/>
 
-        <com.xw.project.gracefulmovies.view.widget.TextViewCompat
+        <com.xw.repo.VectorCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/four_dp"
@@ -102,7 +102,7 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_16sp"
             app:drawableLeftCompat="@drawable/svg_ic_flower"
-            app:tintDrawableWithTextColor="true"/>
+            app:tintDrawableInTextColor="true"/>
 
         <TextView
             android:layout_width="wrap_content"

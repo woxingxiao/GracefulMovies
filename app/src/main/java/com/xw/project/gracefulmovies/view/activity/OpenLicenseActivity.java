@@ -1,7 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,10 +20,6 @@ import butterknife.ButterKnife;
  * Created by woxingxiao on 2017-02-14.
  */
 public class OpenLicenseActivity extends BaseActivity {
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, OpenLicenseActivity.class));
-    }
 
     @BindView(R.id.license_recycler_view)
     RecyclerView mRecyclerView;

@@ -1,6 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -43,10 +42,6 @@ public class AboutActivity extends BaseActivity {
     ImageView mGitHubImg;
     @BindView(R.id.about_license_text)
     TextView mLicenseText;
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, AboutActivity.class));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +93,7 @@ public class AboutActivity extends BaseActivity {
                 startActivity(Intent.createChooser(intent, "请选择浏览器"));
                 break;
             case R.id.about_license_text:
-                OpenLicenseActivity.navigation(this);
+                navigateTo(OpenLicenseActivity.class);
                 break;
         }
     }

@@ -31,7 +31,7 @@ public class MovieFragmentPresenterImpl implements IMovieFragmentPresenter {
 
     @Override
     public void loadMovieData(int releaseType) {
-        String city = PrefUtil.getCity(mFragment.getContext());
+        String city = PrefUtil.getCity();
 
         mSubscriber = new ApiSubscriber<List<MovieModel>>() {
             @Override
