@@ -35,9 +35,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.xw.project.gracefulmovies.R;
+import com.xw.project.gracefulmovies.presenter.IMainActivityPresenter;
+import com.xw.project.gracefulmovies.presenter.impl.MainActivityPresenter;
 import com.xw.project.gracefulmovies.util.PrefUtil;
 import com.xw.project.gracefulmovies.view.adapter.TabPagerAdapter;
 import com.xw.project.gracefulmovies.view.fragment.MovieListFragment;
+import com.xw.project.gracefulmovies.view.iview.IMainActivity;
 import com.xw.project.gracefulmovies.view.service.LocationService;
 
 import org.polaric.colorful.Colorful;
@@ -54,7 +57,7 @@ import butterknife.ButterKnife;
  * Created by woxingxiao on 2017-01-25.
  */
 public class MainActivity extends CheckPermissionsActivity implements NavigationView
-        .OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener {
+        .OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener, IMainActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -72,6 +75,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     private String mAutoSwitchedHint;
     private boolean isCollapsed = false; // AppBar是否折叠
 
+    private IMainActivityPresenter mPresenter;
+
     public static void navigation(Activity activity) {
         activity.startActivity(new Intent(activity, MainActivity.class));
     }
@@ -84,6 +89,9 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+        mPresenter = new MainActivityPresenter(this);
+        mPresenter.loadMovieData();
 
         mReceiver = new MyReceiver();
         registerReceiver(mReceiver, new IntentFilter(getString(R.string.action_locate_succeed)));
@@ -293,6 +301,43 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         LocationService.start(this);
     }
 
+    @Override
+    public void onFragmentRefreshRequest(int fragmentId) {
+        mPresenter.onFragmentRefreshCheckData(fragmentId);
+    }
+
+    @Override
+    public void onFragmentInitOK(int fragmentId) {
+        mPresenter.onFragmentInitOK(fragmentId);
+    }
+
+    @Override
+    public void onFragmentRefreshDataReady(int fragmentId) {
+        String tag = "android:switcher:" + mViewPager.getId() + ":" + fragmentId;
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment != null && fragment instanceof MovieListFragment) {
+            ((MovieListFragment) fragment).onDataReady(mPresenter.getMovieModels(fragmentId));
+        }
+    }
+
+    @Override
+    public void onDataError(int code, String msg) {
+        if (code == 209405) { // "查询不到热映电影相关信息"，以上一级城市名进行查询
+            showLocatedCityDialog(false, true);
+            return;
+        }
+
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment fragment : fragments) {
+                if (fragment != null && fragment instanceof MovieListFragment) {
+                    ((MovieListFragment) fragment).onDataError();
+                }
+            }
+        }
+        showToast(msg);
+    }
+
     long mStartMills;
 
     @Override
@@ -319,6 +364,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     protected void onDestroy() {
         super.onDestroy();
 
+        mPresenter.unregister();
         unregisterReceiver(mReceiver);
     }
 
@@ -380,12 +426,14 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                     PrefUtil.setCity(PrefUtil.getUpperCity());
                     mCityText.setText(PrefUtil.getCityShort());
                 }
-                if (refresh) {
-                    List<Fragment> fragments = getSupportFragmentManager().getFragments();
-                    if (fragments != null) {
-                        for (Fragment fragment : fragments) {
-                            if (fragment != null && fragment instanceof MovieListFragment) {
+                List<Fragment> fragments = getSupportFragmentManager().getFragments();
+                if (fragments != null) {
+                    for (Fragment fragment : fragments) {
+                        if (fragment != null && fragment instanceof MovieListFragment) {
+                            if (refresh) {
                                 ((MovieListFragment) fragment).onRefresh();
+                            } else {
+                                ((MovieListFragment) fragment).onDataError();
                             }
                         }
                     }

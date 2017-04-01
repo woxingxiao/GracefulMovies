@@ -1,6 +1,6 @@
 package com.xw.project.gracefulmovies.view.fragment;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,14 +13,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.model.MovieModel;
-import com.xw.project.gracefulmovies.presenter.IMovieFragmentPresenter;
-import com.xw.project.gracefulmovies.presenter.impl.MovieFragmentPresenterImpl;
+import com.xw.project.gracefulmovies.view.activity.MainActivity;
 import com.xw.project.gracefulmovies.view.adapter.MovieListAdapter;
-import com.xw.project.gracefulmovies.view.iview.IMovieListFragment;
 
 import org.polaric.colorful.Colorful;
 
@@ -32,24 +29,23 @@ import butterknife.ButterKnife;
 /**
  * 影片列表Fragment
  * <p/>
- * Created by McQueen on 2017-01-23.
+ * Created by woxingxiao on 2017-01-23.
  */
-public class MovieListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
-        IMovieListFragment {
+public class MovieListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    private MainActivity mActivity;
     private MovieListAdapter mAdapter;
-    private IMovieFragmentPresenter mPresenter;
-    private int mReleaseType;
+    private int mId;
 
-    public static MovieListFragment newInstance(int type) {
+    public static MovieListFragment newInstance(int id) {
         MovieListFragment fragment = new MovieListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
+        bundle.putInt("id", id);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -57,9 +53,6 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mPresenter = new MovieFragmentPresenterImpl();
-        mPresenter.register(this);
     }
 
     @Override
@@ -90,54 +83,53 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mReleaseType = getArguments().getInt("type");
-        mPresenter.loadMovieData(mReleaseType);
+        mId = getArguments().getInt("id");
+        /**
+         * Fragment初始化完成告知MainActivityPresenter，并索要数据，如果：
+         * 1. 数据已准备好，直接回调装载数据；
+         * 2. 数据还在加载，等待加载完毕再回调装载数据。
+         */
+        mActivity.onFragmentInitOK(mId);
+        mActivity.onFragmentRefreshRequest(mId);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof MainActivity) {
+            mActivity = (MainActivity) context;
+        }
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.loadMovieData(mReleaseType);
-        mAdapter.setLoading(true);
+        if (mAdapter.getData() != null) {
+            // 假刷新
+            mRecyclerView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.setLoading(true);
+                }
+            }, 1000);
+        } else {
+            mActivity.onFragmentRefreshRequest(mId);
+            mAdapter.setLoading(true);
+        }
     }
 
-    @Override
     public void onDataReady(List<MovieModel> movieModels) {
         mSwipeRefreshLayout.setRefreshing(false);
         mAdapter.setData(movieModels);
     }
 
-    @Override
-    public void onDataError(int code, String msg) {
-        if (code == 209405) { // "查询不到热映电影相关信息"，以上一级城市名进行查询
-            if (mReleaseType == 0) {
-                Intent intent = new Intent(getString(R.string.action_locate_succeed));
-                intent.putExtra(getString(R.string.param_is_upper_city), true);
-                getContext().sendBroadcast(intent);
-            }
-
-            mSwipeRefreshLayout.setRefreshing(false);
-            mAdapter.clearData();
-            mAdapter.setLoading(false);
-
-            return;
-        }
-
+    public void onDataError() {
         mSwipeRefreshLayout.setRefreshing(false);
         mAdapter.clearData();
         mAdapter.setLoading(false);
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     public void scrollToTop() {
         mRecyclerView.smoothScrollToPosition(0);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        mPresenter.unregister();
-        mPresenter = null;
     }
 
 }

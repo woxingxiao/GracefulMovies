@@ -8,7 +8,7 @@ android {
         applicationId "com.xw.project.gracefulmovies"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 14
         versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -16,14 +16,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     signingConfigs {
-        debug {
+        release {
             storeFile file(STORE_FILE)
             storePassword KEYSTORE_PASSWORD
             keyAlias KEY_ALIAS
@@ -32,14 +32,24 @@ android {
     }
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         release {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
     lintOptions {
         abortOnError false
+    }
+    // 编译选项
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    // recommend
+    dexOptions {
+        jumboMode = true
     }
 }
 

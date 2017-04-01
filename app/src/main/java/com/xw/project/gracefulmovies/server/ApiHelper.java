@@ -4,7 +4,6 @@ package com.xw.project.gracefulmovies.server;
 import com.xw.project.gracefulmovies.model.BoxOfficeModel;
 import com.xw.project.gracefulmovies.model.BoxOfficeResult;
 import com.xw.project.gracefulmovies.model.MovieData;
-import com.xw.project.gracefulmovies.model.MovieModel;
 import com.xw.project.gracefulmovies.model.MovieReleaseType;
 import com.xw.project.gracefulmovies.model.NetLocResult;
 import com.xw.project.gracefulmovies.model.RequestResult;
@@ -67,9 +66,9 @@ public class ApiHelper {
     }
 
     /**
-     * 加载所在城市正在热映的电影
+     * 加载所在城市的影讯
      */
-    public static Observable<List<MovieModel>> loadBeReleasedMovies(String city) {
+    public static Observable<MovieReleaseType[]> loadMovies(String city) {
         return getMovieApi()
                 .apiGet(API_KEY_JH, city)
                 .subscribeOn(Schedulers.io())
@@ -86,50 +85,10 @@ public class ApiHelper {
                         return requestResult.getResult();
                     }
                 })
-                .map(new Func1<MovieData, MovieReleaseType>() {
+                .map(new Func1<MovieData, MovieReleaseType[]>() {
                     @Override
-                    public MovieReleaseType call(MovieData movieData) {
-                        return movieData == null ? null : movieData.getData()[0]; // 正在上映
-                    }
-                })
-                .map(new Func1<MovieReleaseType, List<MovieModel>>() {
-                    @Override
-                    public List<MovieModel> call(MovieReleaseType movieReleaseType) {
-                        return movieReleaseType == null ? null : movieReleaseType.getData();
-                    }
-                });
-    }
-
-    /**
-     * 加载所在城市即将上映的电影
-     */
-    public static Observable<List<MovieModel>> loadGoingToBeingReleasedMovies(String city) {
-        return getMovieApi()
-                .apiGet(API_KEY_JH, city)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<RequestResult, MovieData>() {
-                    @Override
-                    public MovieData call(RequestResult requestResult) {
-                        if (requestResult.getResult() == null) {
-                            /**
-                             * 如果返回数据对象是null，则抛出业务异常
-                             */
-                            throw new ApiException(requestResult.getError_code(), requestResult.getReason());
-                        }
-                        return requestResult.getResult();
-                    }
-                })
-                .map(new Func1<MovieData, MovieReleaseType>() {
-                    @Override
-                    public MovieReleaseType call(MovieData movieData) {
-                        return movieData == null ? null : movieData.getData()[1]; // 即将上映
-                    }
-                })
-                .map(new Func1<MovieReleaseType, List<MovieModel>>() {
-                    @Override
-                    public List<MovieModel> call(MovieReleaseType movieReleaseType) {
-                        return movieReleaseType == null ? null : movieReleaseType.getData();
+                    public MovieReleaseType[] call(MovieData movieData) {
+                        return movieData.getData();
                     }
                 });
     }
