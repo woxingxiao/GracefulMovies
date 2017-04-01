@@ -17,14 +17,15 @@
   
 ## 升级日志  
 ### 最新：
-1. 移除不必要权限；
-2. 部分界面细微调整。
+1. （找大神设计的）更立体化的LOGO；
+2. 新增右滑返回手势（类似微信）；
+3. 坑爹的聚合数据只给免费玩家每天100次的请求次数（这点都不够我调试的好吗），被迫进行数据接口策略调整。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
 ## 关于测试
-如果你想运行项目，先clone到本地，修改包名，再到[聚合数据](https://www.juhe.cn/)和[易源数据](https://www.showapi.com/)申请 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
+如果你想运行项目，先clone到本地，修改包名，再到（接口质量不咋的却还想收钱的）聚合数据和[易源数据](https://www.showapi.com/)申请相应的 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
 # 致谢
 感谢开源的力量！
 开源库：  
@@ -37,14 +38,14 @@
 6. [SimpleRatingBar](https://github.com/FlyingPumba/SimpleRatingBar)  
 7. [KenBurnsView](https://github.com/flavioarfaria/KenBurnsView)  
 8. [BubbleSeekBar](https://github.com/woxingxiao/BubbleSeekBar)  
+9. [VectorCompatTextView](https://github.com/woxingxiao/VectorCompatTextView)
+10. [SlideBack](https://github.com/oubowu/SlideBack)
 
 感谢以下的开源项目为本项目提供了诸多参考：
 - [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
 - [SeeWeather](https://github.com/xcc3641/SeeWeather)
 
-聚合数据提供影讯数据支持。  
-易源数据提供票房数据支持。  
-感谢一位仙女在界面审美上的建设性意见，笔芯❤。  
+易源数据提供票房数据支持。
 感谢下列酷站和工具为本项目提供帮助：
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
 - [dribbble](https://dribbble.com) 提供海量的图片资源。项目中有两张图片来自[JustinMezzell](https://dribbble.com/JustinMezzell)
