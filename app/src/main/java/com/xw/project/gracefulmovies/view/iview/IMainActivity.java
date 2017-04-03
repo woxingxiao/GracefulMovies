@@ -1,5 +1,7 @@
 package com.xw.project.gracefulmovies.view.iview;
 
+import com.xw.project.gracefulmovies.presenter.IMainActivityPresenter;
+
 /**
  * <p/>
  * Created by woxingxiao on 2017-04-01.
@@ -7,9 +9,7 @@ package com.xw.project.gracefulmovies.view.iview;
 
 public interface IMainActivity {
 
-    void onFragmentInitOK(int fragmentId);
-
-    void onFragmentRefreshRequest(int fragmentId);
+    IMainActivityPresenter getPresenter();
 
     void onFragmentRefreshDataReady(int fragmentId);
 

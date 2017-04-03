@@ -12,7 +12,7 @@ public interface IMainActivityPresenter {
 
     void onFragmentInitOK(int fragmentId);
 
-    void onFragmentRefreshCheckData(int fragmentId);
+    void onFragmentRefreshRequest(int fragmentId);
 
     void loadMovieData();
 

@@ -16,7 +16,7 @@ import java.util.List;
  * Created by woxingxiao on 2017-04-01.
  */
 
-public class MainActivityPresenter implements IMainActivityPresenter {
+public class MainActivityPresenterImpl implements IMainActivityPresenter {
 
     /**
      * 由于接口请求次数限制，加上影讯数据即时性很低，故采取一次启动只加载一次的策略
@@ -30,7 +30,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     private boolean isRequestDataFinished; // 网络请求数据完毕
     private int mErrCode; // 错误码
 
-    public MainActivityPresenter(IMainActivity activity) {
+    public MainActivityPresenterImpl(IMainActivity activity) {
         mActivity = activity;
     }
 
@@ -49,7 +49,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
      * Fragment下拉刷新请求
      */
     @Override
-    public void onFragmentRefreshCheckData(int fragmentId) {
+    public void onFragmentRefreshRequest(int fragmentId) {
         if (mReleasedMovies != null && mWillReleaseMovies != null && mActivity != null) {
             mActivity.onFragmentRefreshDataReady(fragmentId);
         } else {

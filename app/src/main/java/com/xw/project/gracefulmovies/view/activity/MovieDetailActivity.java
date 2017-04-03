@@ -123,7 +123,7 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
             mReleaseHintText.setText(getString(R.string.release_info));
             mReleaseInfoText.setTextSize(16);
             mReleaseInfoText.setText(movieModel.getReleaseDateString());
-            mReleaseInfoText.append("上映  " + movieModel.getCinemaNum());
+            mReleaseInfoText.append("上映  当地" + movieModel.getCinemaNum());
         } else {
             mRatingText.setVisibility(View.GONE);
             mRatingLayout.setVisibility(View.GONE);

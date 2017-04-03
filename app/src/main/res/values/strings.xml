@@ -71,6 +71,10 @@
     <string name="hint_playing_days_in_the_month">月内天数</string>
     <string name="hint_playing_rate_in_the_month">月内占比</string>
     <string name="hint_box_office_attention">票房数据由第三方提供，提示：\n1. 单日票房数据统计实时性较高，其余仅供参考；\n2. 单月票房排名按照月票房成绩，而非累计票房。</string>
+    <string name="hint_input_city_manually">定位无力？我要手动输入</string>
+    <string name="hint_distract_input">如：成都</string>
+    <string name="hint_distract">市（区/县）</string>
+    <string name="hint_distract_input_empty">输入的地区名称为空</string>
 
     <string name="key_first_time">key_first_time</string>
     <string name="key_auto_day_night">key_auto_day_night</string>
@@ -81,6 +85,7 @@
     <string name="key_cache">key_cache</string>
     <string name="key_city">key_city</string>
     <string name="key_feedback">key_feedback</string>
+    <string name="key_inputted_city">key_inputted_city</string>
 
     <string name="action_locate_succeed">key_locate_succeed</string>
     <string name="param_is_upper_city">param_is_upper_city</string>

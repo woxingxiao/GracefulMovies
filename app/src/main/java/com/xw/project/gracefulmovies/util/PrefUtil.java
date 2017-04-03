@@ -57,6 +57,7 @@ public final class PrefUtil {
     public static void clearCity() {
         SharedPrefHelper.putString(GMApplication.sGMApplication.getString(R.string.key_city), "");
         SharedPrefHelper.putString(GMApplication.sGMApplication.getString(R.string.key_upper_city), "");
+        SharedPrefHelper.putBoolean(GMApplication.sGMApplication.getString(R.string.key_inputted_city), false);
     }
 
     public static String getUpperCity() {
@@ -65,5 +66,13 @@ public final class PrefUtil {
 
     public static void setUpperCity(String city) {
         SharedPrefHelper.putString(GMApplication.sGMApplication.getString(R.string.key_upper_city), city);
+    }
+
+    public static boolean isInputtedCity() {
+        return SharedPrefHelper.getBoolean(GMApplication.sGMApplication.getString(R.string.key_inputted_city), false);
+    }
+
+    public static void setInputtedCity(boolean inputted) {
+        SharedPrefHelper.putBoolean(GMApplication.sGMApplication.getString(R.string.key_inputted_city), inputted);
     }
 }

@@ -17,6 +17,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -24,11 +25,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +41,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.presenter.IMainActivityPresenter;
-import com.xw.project.gracefulmovies.presenter.impl.MainActivityPresenter;
+import com.xw.project.gracefulmovies.presenter.impl.MainActivityPresenterImpl;
 import com.xw.project.gracefulmovies.util.PrefUtil;
 import com.xw.project.gracefulmovies.view.adapter.TabPagerAdapter;
 import com.xw.project.gracefulmovies.view.fragment.MovieListFragment;
@@ -90,8 +95,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-        mPresenter = new MainActivityPresenter(this);
-        mPresenter.loadMovieData();
+        getPresenter().loadMovieData();
 
         mReceiver = new MyReceiver();
         registerReceiver(mReceiver, new IntentFilter(getString(R.string.action_locate_succeed)));
@@ -302,13 +306,11 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     }
 
     @Override
-    public void onFragmentRefreshRequest(int fragmentId) {
-        mPresenter.onFragmentRefreshCheckData(fragmentId);
-    }
-
-    @Override
-    public void onFragmentInitOK(int fragmentId) {
-        mPresenter.onFragmentInitOK(fragmentId);
+    public IMainActivityPresenter getPresenter() {
+        if (mPresenter == null) {
+            mPresenter = new MainActivityPresenterImpl(this);
+        }
+        return mPresenter;
     }
 
     @Override
@@ -406,12 +408,33 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     private void showLocatedCityDialog(final boolean refresh, final boolean upperCity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(getString(R.string.location_default));
+        final View view = getLayoutInflater().inflate(R.layout.layout_location_dialog, null);
+        final TextView msgText = (TextView) view.findViewById(R.id.dialog_loc_msg_text);
+        final TextView manualText = (TextView) view.findViewById(R.id.dialog_loc_input_manually_text);
+        final View inputLayout = view.findViewById(R.id.dialog_loc_input_layout);
+        final EditText inputEdit = (EditText) view.findViewById(R.id.dialog_loc_edit);
+
         if (upperCity) {
-            builder.setMessage(getString(R.string.hint_query_by_upper_city, PrefUtil.getCity(),
+            msgText.setText(getString(R.string.hint_query_by_upper_city, PrefUtil.getCity(),
                     PrefUtil.getUpperCity()));
         } else {
-            builder.setMessage(getString(R.string.hint_located_city, PrefUtil.getCity()));
+            msgText.setText(getString(R.string.hint_located_city, PrefUtil.getCity()));
         }
+        String hint = getString(R.string.hint_input_city_manually);
+        SpannableStringBuilder span = new SpannableStringBuilder(hint);
+        span.setSpan(new ForegroundColorSpan(
+                        ContextCompat.getColor(this, Colorful.getThemeDelegate().getAccentColor().getColorRes())),
+                hint.length() - 4, hint.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        manualText.setText(span);
+        manualText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputLayout.getVisibility() != View.VISIBLE)
+                    inputLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        builder.setView(view);
         builder.setNegativeButton(getString(R.string.locate_again), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -422,6 +445,18 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if (inputLayout.getVisibility() == View.VISIBLE) {
+                    if (inputEdit.getText().toString().trim().isEmpty()) {
+                        showToast(getString(R.string.hint_distract_input_empty));
+                    } else {
+                        PrefUtil.setInputtedCity(true);
+                        PrefUtil.setCity(inputEdit.getText().toString().trim());
+                        mCityText.setText(PrefUtil.getCityShort());
+                        getPresenter().loadMovieData();
+                    }
+                    return;
+                }
+
                 if (upperCity) {
                     PrefUtil.setCity(PrefUtil.getUpperCity());
                     mCityText.setText(PrefUtil.getCityShort());
@@ -432,7 +467,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                         if (fragment != null && fragment instanceof MovieListFragment) {
                             if (refresh) {
                                 ((MovieListFragment) fragment).onRefresh();
-                            } else {
+                            }
+                            if (upperCity) {
                                 ((MovieListFragment) fragment).onDataError();
                             }
                         }
