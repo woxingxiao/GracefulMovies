@@ -20,6 +20,8 @@
 1. （找大神设计的）更立体化的LOGO；
 2. 新增右滑返回手势（类似微信）；
 3. 坑爹的聚合数据只给免费玩家每天100次的请求次数（这点都不够我调试的好吗），被迫进行数据接口策略调整。
+4. 定位失败？可手动输入城市了。
+5. 试水广告SDK（微量接入，人畜无害，点广告资瓷资瓷哇）；
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
