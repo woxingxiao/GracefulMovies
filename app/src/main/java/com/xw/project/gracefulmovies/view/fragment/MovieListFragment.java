@@ -89,8 +89,8 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
          * 1. 数据已准备好，直接回调装载数据；
          * 2. 数据还在加载，等待加载完毕再回调装载数据。
          */
-        mActivity.onFragmentInitOK(mId);
-        mActivity.onFragmentRefreshRequest(mId);
+        mActivity.getPresenter().onFragmentInitOK(mId);
+        mActivity.getPresenter().onFragmentRefreshRequest(mId);
     }
 
     @Override
@@ -108,11 +108,11 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
             mRecyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mAdapter.setLoading(true);
+                    mSwipeRefreshLayout.setRefreshing(false);
                 }
-            }, 1000);
+            }, 500);
         } else {
-            mActivity.onFragmentRefreshRequest(mId);
+            mActivity.getPresenter().onFragmentRefreshRequest(mId);
             mAdapter.setLoading(true);
         }
     }
