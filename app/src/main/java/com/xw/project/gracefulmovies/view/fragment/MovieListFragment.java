@@ -128,8 +128,4 @@ public class MovieListFragment extends Fragment implements SwipeRefreshLayout.On
         mAdapter.setLoading(false);
     }
 
-    public void scrollToTop() {
-        mRecyclerView.smoothScrollToPosition(0);
-    }
-
 }

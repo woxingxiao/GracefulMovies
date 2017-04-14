@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.oubowu.slideback.SlideBackHelper;
 import com.oubowu.slideback.SlideConfig;
+import com.oubowu.slideback.callbak.OnSlideListener;
 import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.R;
 
@@ -31,6 +33,8 @@ public abstract class BaseActivity extends ColorfulActivity {
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
+    private boolean hasIntentionToSlideBack; // 具有触发滑动返回的意图
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +57,26 @@ public abstract class BaseActivity extends ColorfulActivity {
                         .edgePercent(0.1f) // 边缘滑动的响应阈值，0~1，对应屏幕宽度*percent
                         .slideOutPercent(0.5f) // 关闭页面的阈值，0~1，对应屏幕宽度*percent
                         .create(),
-                null); // 滑动的监听
+                new OnSlideListener() { // 滑动的监听
+                    @Override
+                    public void onSlide(@FloatRange(from = 0.0, to = 1.0) float percent) {
+                        if (!hasIntentionToSlideBack && percent > 0.0) {
+                            hasIntentionToSlideBack = true;
+                            onSlideBackIntention();
+                        }
+                    }
+
+                    @Override
+                    public void onOpen() {
+                        hasIntentionToSlideBack = false;
+                    }
+
+                    @Override
+                    public void onClose() {
+
+                    }
+                }
+        );
     }
 
     /**
@@ -106,5 +129,11 @@ public abstract class BaseActivity extends ColorfulActivity {
 
     protected void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 当有滑动返回的意图时
+     */
+    protected void onSlideBackIntention() {
     }
 }

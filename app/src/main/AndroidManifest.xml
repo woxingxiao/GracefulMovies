@@ -58,6 +58,10 @@
             android:name=".view.activity.BoxOfficeActivity"
             android:label="@string/box_office"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:label="@android:string/search_go"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name=".view.service.LocationService"

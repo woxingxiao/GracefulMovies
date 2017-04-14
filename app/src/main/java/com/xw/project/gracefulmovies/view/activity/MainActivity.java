@@ -62,7 +62,7 @@ import butterknife.ButterKnife;
  * Created by woxingxiao on 2017-01-25.
  */
 public class MainActivity extends CheckPermissionsActivity implements NavigationView
-        .OnNavigationItemSelectedListener, AppBarLayout.OnOffsetChangedListener, IMainActivity {
+        .OnNavigationItemSelectedListener, IMainActivity {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -78,7 +78,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
 
     private MyReceiver mReceiver;
     private String mAutoSwitchedHint;
-    private boolean isCollapsed = false; // AppBar是否折叠
 
     private IMainActivityPresenter mPresenter;
 
@@ -105,20 +104,11 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mAppBar.addOnOffsetChangedListener(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isCollapsed) return;
-
-                mAppBar.setExpanded(true, true);
-
-                String tag = "android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem();
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if (fragment != null && fragment instanceof MovieListFragment) {
-                    ((MovieListFragment) fragment).scrollToTop();
-                }
+                navigateTo(SearchActivity.class);
             }
         });
 
@@ -189,11 +179,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 }
             }
         });
-    }
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        isCollapsed = verticalOffset < 0; // 监听AppBar是否被折叠
     }
 
     @Override
