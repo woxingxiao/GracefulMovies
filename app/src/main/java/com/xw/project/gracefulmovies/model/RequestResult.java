@@ -5,13 +5,13 @@ package com.xw.project.gracefulmovies.model;
  * Created by woxingxiao on 2017-02-11.
  */
 
-public class RequestResult {
+public class RequestResult<T> {
 
     private int error_code;
 
     private String reason;
 
-    private MovieData result;
+    private T result;
 
     public int getError_code() {
         return error_code;
@@ -29,11 +29,11 @@ public class RequestResult {
         this.reason = reason;
     }
 
-    public MovieData getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(MovieData result) {
+    public void setResult(T result) {
         this.result = result;
     }
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.xw.project.gracefulmovies.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,6 +36,14 @@ public class TagGroup extends LinearLayout {
         super(context, attrs, defStyleAttr);
 
         setOrientation(HORIZONTAL);
+    }
+
+    public void setTagData(String[] tags, @ColorRes int tintColorRes) {
+        if (tags == null || tags.length == 0) {
+            return;
+        }
+
+        setTagData(Arrays.asList(tags), tintColorRes);
     }
 
     public void setTagData(List<String> tags, @ColorRes int tintColorRes) {

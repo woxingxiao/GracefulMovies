@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/search_root_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,4 +11,168 @@
 
     <include layout="@layout/layout_toolbar"/>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/search_result_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:padding="@dimen/space2x"
+        android:visibility="invisible"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/search_poster_img"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/search_name_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/four_dp"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:id="@+id/search_type_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/four_dp"
+            android:text="@string/movie_type"
+            android:textSize="@dimen/text_size_10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_name_text"
+            tools:layout_height="@dimen/space2x"/>
+
+        <com.xw.project.gracefulmovies.view.widget.TagGroup
+            android:id="@+id/search_type_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/two_dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_type_text"
+            tools:layout_height="@dimen/space2x"/>
+
+        <TextView
+            android:id="@+id/search_rating_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/four_dp"
+            android:text="@string/movie_score"
+            android:textSize="@dimen/text_size_10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_type_container"
+            tools:layout_height="@dimen/space2x"/>
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/search_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/two_dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_rating_text"
+            app:srb_drawBorderEnabled="false"
+            app:srb_fillColor="@color/colorAccent"
+            app:srb_isIndicator="true"
+            app:srb_starBackgroundColor="@android:color/darker_gray"
+            app:srb_starSize="15dp"
+            app:srb_starsSeparation="@dimen/two_dp"/>
+
+        <TextView
+            android:id="@+id/search_grade_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginStart="@dimen/four_dp"
+            android:layout_marginTop="@dimen/space"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintBottom_toBottomOf="@+id/search_rating_bar"
+            app:layout_constraintLeft_toRightOf="@+id/search_rating_bar"
+            app:layout_constraintTop_toTopOf="@+id/search_rating_bar"
+            tools:text="7.8"/>
+
+        <TextView
+            android:id="@+id/director_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/four_dp"
+            android:text="@string/movie_director"
+            android:textSize="@dimen/text_size_10sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_rating_bar"
+            tools:layout_height="@dimen/space2x"/>
+
+        <TextView
+            android:id="@+id/search_director_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="136dp"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="@dimen/two_dp"
+            android:maxLines="2"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/director_text"
+            tools:text="导演：xxx，xxx"/>
+
+        <TextView
+            android:id="@+id/story_brief_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/story_brief"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_poster_img"/>
+
+        <TextView
+            android:id="@+id/search_story_brief_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="?android:textColorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/story_brief_text"
+            tools:text="TextView"/>
+
+        <TextView
+            android:id="@+id/cast_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space2x"
+            android:text="@string/starring"
+            android:textSize="@dimen/text_size_12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_story_brief_text"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cast_text"/>
+    </android.support.constraint.ConstraintLayout>
 </LinearLayout>

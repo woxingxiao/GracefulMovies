@@ -1,5 +1,7 @@
 package com.xw.project.gracefulmovies.server.api;
 
+import com.xw.project.gracefulmovies.model.MovieData;
+import com.xw.project.gracefulmovies.model.MovieSearchModel;
 import com.xw.project.gracefulmovies.model.RequestResult;
 
 import retrofit2.http.GET;
@@ -14,5 +16,8 @@ import rx.Observable;
 public interface MovieApi {
 
     @GET("onebox/movie/pmovie")
-    Observable<RequestResult> apiGet(@Query("key") String key, @Query("city") String city);
+    Observable<RequestResult<MovieData>> movieInfoGet(@Query("key") String key, @Query("city") String city);
+
+    @GET("onebox/movie/pmovie")
+    Observable<RequestResult<MovieSearchModel>> movieSearchGet(@Query("key") String key, @Query("q") String name);
 }

@@ -5,6 +5,7 @@ import com.xw.project.gracefulmovies.model.BoxOfficeModel;
 import com.xw.project.gracefulmovies.model.BoxOfficeResult;
 import com.xw.project.gracefulmovies.model.MovieData;
 import com.xw.project.gracefulmovies.model.MovieReleaseType;
+import com.xw.project.gracefulmovies.model.MovieSearchModel;
 import com.xw.project.gracefulmovies.model.NetLocResult;
 import com.xw.project.gracefulmovies.model.RequestResult;
 import com.xw.project.gracefulmovies.server.api.BoxOfficeApi;
@@ -70,13 +71,13 @@ public class ApiHelper {
      */
     public static Observable<MovieReleaseType[]> loadMovies(String city) {
         return getMovieApi()
-                .apiGet(API_KEY_JH, city)
+                .movieInfoGet(API_KEY_JH, city)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<RequestResult, MovieData>() {
+                .map(new Func1<RequestResult<MovieData>, MovieData>() {
                     @Override
-                    public MovieData call(RequestResult requestResult) {
-                        if (requestResult.getResult() == null) {
+                    public MovieData call(RequestResult<MovieData> requestResult) {
+                        if (requestResult.getError_code() != 0 || requestResult.getResult() == null) {
                             /**
                              * 如果返回数据对象是null，则抛出业务异常
                              */
@@ -89,6 +90,28 @@ public class ApiHelper {
                     @Override
                     public MovieReleaseType[] call(MovieData movieData) {
                         return movieData.getData();
+                    }
+                });
+    }
+
+    /**
+     * 搜索影讯
+     */
+    public static Observable<MovieSearchModel> searchMovie(String name) {
+        return getMovieApi()
+                .movieSearchGet(API_KEY_JH, name)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Func1<RequestResult<MovieSearchModel>, MovieSearchModel>() {
+                    @Override
+                    public MovieSearchModel call(RequestResult<MovieSearchModel> requestResult) {
+                        if (requestResult.getError_code() != 0 || requestResult.getResult() == null) {
+                            /**
+                             * 如果返回数据对象是null，则抛出业务异常
+                             */
+                            throw new ApiException(requestResult.getError_code(), requestResult.getReason());
+                        }
+                        return requestResult.getResult();
                     }
                 });
     }

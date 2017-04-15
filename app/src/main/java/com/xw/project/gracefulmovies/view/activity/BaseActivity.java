@@ -54,7 +54,7 @@ public abstract class BaseActivity extends ColorfulActivity {
                         .rotateScreen(false) // 屏幕是否旋转
                         .edgeOnly(true) // 是否侧滑
                         .lock(false) // 是否禁止侧滑
-                        .edgePercent(0.1f) // 边缘滑动的响应阈值，0~1，对应屏幕宽度*percent
+                        .edgePercent(0.2f) // 边缘滑动的响应阈值，0~1，对应屏幕宽度*percent
                         .slideOutPercent(0.5f) // 关闭页面的阈值，0~1，对应屏幕宽度*percent
                         .create(),
                 new OnSlideListener() { // 滑动的监听
