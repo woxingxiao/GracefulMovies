@@ -16,11 +16,10 @@
   
 ## 升级日志  
 ### 最新：
-1. （找大神设计的）更立体化的LOGO；
-2. 新增右滑返回手势（类似微信）；
-3. 坑爹的聚合数据只给免费玩家每天100次的请求次数（这点都不够我调试的好吗），被迫进行数据接口策略调整。
-4. 定位失败？可手动输入城市了。
-5. 试水广告SDK（微量接入，人畜无害，点广告资瓷资瓷哇）；
+### 1.3.0 (Build 18)
+1. 新增搜索功能（国内外电影电视剧都可以搜）；
+2. 调整广告策略（广告质量提升，同时点击就下载乱七八糟App的情况少了很多。广告位设置在不妨碍阅读的地方，各位乡亲请多点击资瓷资瓷哇）；
+3. 新增部分更优雅的动画（纵享丝滑~）。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
@@ -54,7 +53,8 @@
 - [tinypng](https://tinypng.com) 提供免费并高质量的图片压缩服务
 - [智图](http://zhitu.isux.us) 提供图片转`webp`格式服务
 - [AndroidAssetStudio](https://romannurik.github.io/AndroidAssetStudio) 提供在线图标制作
-- 手机应用软件_Screener_生成漂亮的手机外观截屏图片
+- [AndResGuard](https://github.com/shwenzhang/AndResGuard) 资源混淆减小Apk尺寸
+- 手机应用软件 _Screener_ 生成漂亮的手机外观截屏图片
 
 **本项目中影讯数据来自聚合数据，版权归聚合数据；票房数据来自易源数据，版权归易源数据。图片资源均收集自网络，版权属于原作者。如有侵权，告知后会立即删除。**
 # 彩蛋
