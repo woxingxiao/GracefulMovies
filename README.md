@@ -6,7 +6,6 @@
 
 这是一个完全`Material Design`风格的Android应用。项目中使用到了`Retrofit`、`RxJava`、`MVP`、`Glide`等方案，换肤框架基于[`Colorful`](https://github.com/garretyoder/Colorful)。图标使用`svg`矢量图，图片使用`webp`格式，最大限度压缩apk尺寸。  
 
-本人首个上线的个人App。  
 ## APK下载
 1. bugly（微信、QQ直接安装 ）[beta.bugly.qq.com/jianyingxun](https://beta.bugly.qq.com/jianyingxun)
 2. fir.im [https://fir.im/jyx](https://fir.im/jyx)
@@ -27,7 +26,7 @@
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
 ## 关于测试
-如果你想运行项目，先clone到本地，修改包名，再到（接口质量不咋的却还想收钱的）聚合数据和[易源数据](https://www.showapi.com/)申请相应的 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
+如果你想运行项目，先clone到本地，修改包名，再到聚合数据和[易源数据](https://www.showapi.com/)申请相应的 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
 # 致谢
 感谢开源的力量！
 开源库：  
@@ -47,6 +46,7 @@
 - [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
 - [SeeWeather](https://github.com/xcc3641/SeeWeather)
 
+聚合数据提供影讯数据支持。
 易源数据提供票房数据支持。
 感谢下列酷站和工具为本项目提供帮助：
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
