@@ -60,7 +60,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.SearchActivity"
-            android:label="@android:string/search_go"
+            android:label="@string/search"
             android:screenOrientation="portrait"/>
 
         <service

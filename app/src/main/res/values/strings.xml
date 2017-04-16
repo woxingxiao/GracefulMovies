@@ -75,6 +75,7 @@
     <string name="hint_distract_input">如：成都</string>
     <string name="hint_distract">市（区/县）</string>
     <string name="hint_distract_input_empty">输入的地区名称为空</string>
+    <string name="search">搜索</string>
     <string name="hint_movie_search">精彩一搜即现</string>
     <string name="movie_type">类型</string>
     <string name="movie_score">评分</string>
