@@ -168,8 +168,16 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
         if (movieModel.getWebUrl() == null || movieModel.getWebUrl().isEmpty()) {
             showToast("无效地址");
         } else {
-            WebActivity.navigation(this, view, movieModel.getWebUrl(),
-                    movieModel.getName() == null ? "" : movieModel.getName());
+            Intent intent = new Intent(this, WebActivity.class);
+            intent.putExtra("url", movieModel.getWebUrl());
+            intent.putExtra("title", movieModel.getName() == null ? "" : movieModel.getName());
+
+            navigateWithRippleCompat(
+                    this,
+                    intent,
+                    view,
+                    Colorful.getThemeDelegate().getAccentColor().getColorRes()
+            );
         }
     }
 

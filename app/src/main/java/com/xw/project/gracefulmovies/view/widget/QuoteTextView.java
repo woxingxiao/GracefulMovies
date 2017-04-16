@@ -30,7 +30,7 @@ public class QuoteTextView extends AppCompatTextView {
         super(context, attrs, defStyleAttr);
 
         setTextColor(ContextCompat.getColor(getContext(), R.color.color_text_primary_dark));
-        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_text_background_day));
+        setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_background_day));
     }
 
     public void setTextWithHtml(String text) {
@@ -49,10 +49,10 @@ public class QuoteTextView extends AppCompatTextView {
         isNight = night;
         if (isNight) {
             setTextColor(ContextCompat.getColor(getContext(), R.color.color_text_primary_light));
-            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_text_background_night));
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_background_night));
         } else {
             setTextColor(ContextCompat.getColor(getContext(), R.color.color_text_primary_dark));
-            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_text_background_day));
+            setBackgroundColor(ContextCompat.getColor(getContext(), R.color.color_background_day));
         }
         postInvalidate();
     }

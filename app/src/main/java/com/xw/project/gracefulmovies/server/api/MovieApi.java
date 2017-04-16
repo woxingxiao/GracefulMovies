@@ -18,6 +18,6 @@ public interface MovieApi {
     @GET("onebox/movie/pmovie")
     Observable<RequestResult<MovieData>> movieInfoGet(@Query("key") String key, @Query("city") String city);
 
-    @GET("onebox/movie/pmovie")
+    @GET("onebox/movie/video")
     Observable<RequestResult<MovieSearchModel>> movieSearchGet(@Query("key") String key, @Query("q") String name);
 }

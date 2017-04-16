@@ -1,9 +1,10 @@
-/**
- *
- */
 package com.xw.project.gracefulmovies.view.activity;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,13 +13,18 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.xw.project.gracefulmovies.R;
@@ -64,6 +70,52 @@ public abstract class CheckPermissionsActivity extends ColorfulActivity implemen
      */
     protected void navigateTo(Class activity) {
         startActivity(new Intent(this, activity));
+    }
+
+    /**
+     * 带水波动画的Activity跳转
+     */
+    @SuppressLint("NewApi")
+    protected void navigateWithRippleCompat(final Activity activity, final Intent intent,
+                                            final View triggerView, @ColorRes int color) {
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat option = ActivityOptionsCompat.makeClipRevealAnimation(triggerView, 0, 0,
+                    triggerView.getMeasuredWidth(), triggerView.getMeasuredHeight());
+            ActivityCompat.startActivity(activity, intent, option.toBundle());
+
+            return;
+        }
+
+        int[] location = new int[2];
+        triggerView.getLocationInWindow(location);
+        final int cx = location[0] + triggerView.getWidth() / 2;
+        final int cy = location[1] + triggerView.getHeight() / 2;
+        final ImageView view = new ImageView(activity);
+        view.setImageResource(color);
+        final ViewGroup decorView = (ViewGroup) activity.getWindow().getDecorView();
+        int w = decorView.getWidth();
+        int h = decorView.getHeight();
+        decorView.addView(view, w, h);
+        int finalRadius = (int) Math.sqrt(w * w + h * h) + 1;
+        Animator anim = ViewAnimationUtils.createCircularReveal(view, cx, cy, 0, finalRadius);
+        anim.setDuration(500);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+
+                activity.startActivity(intent);
+                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                decorView.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        decorView.removeView(view);
+                    }
+                }, 500);
+            }
+        });
+        anim.start();
     }
 
     /**

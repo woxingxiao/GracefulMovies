@@ -49,7 +49,7 @@
     <string name="hint_clipboard">%1$s“%2$s”已复制到粘贴板</string>
     <string name="open_source_permission">开源许可</string>
     <string name="license"><![CDATA[<u>LICENSE</u>]]></string>
-    <string name="thanks_list">强大的开源社区\n易源数据提供票房数据支持\niconfont.cn的海量图标资源</string>
+    <string name="thanks_list">强大的开源社区\n聚合数据提供影讯数据支持\n易源数据提供票房数据支持\niconfont.cn的海量图标资源</string>
     <string name="share_out_description">"简影讯，简约多彩影讯。速查热门电影影讯、评分和票房，即看即走。下载地址：https://fir.im/jyx"</string>
     <string name="hint_query_by_upper_city">使用【%1$s】查询无数据，使用其上级行政区【%2$s】查询？</string>
     <string name="questionnaire_url">https://gdgdocs.org/forms/d/e/1FAIpQLSdQF1HvXnvx_vki00RUTKR3PP0-ghTpYoxjfZCZWs5IAH41Pw/viewform</string>
@@ -75,9 +75,11 @@
     <string name="hint_distract_input">如：成都</string>
     <string name="hint_distract">市（区/县）</string>
     <string name="hint_distract_input_empty">输入的地区名称为空</string>
+    <string name="hint_movie_search">精彩一搜即现</string>
     <string name="movie_type">类型</string>
     <string name="movie_score">评分</string>
     <string name="movie_director">导演</string>
+    <string name="movie_cast">主演</string>
 
     <string name="key_first_time">key_first_time</string>
     <string name="key_auto_day_night">key_auto_day_night</string>

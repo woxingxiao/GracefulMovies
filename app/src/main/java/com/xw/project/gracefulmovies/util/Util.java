@@ -1,6 +1,7 @@
 package com.xw.project.gracefulmovies.util;
 
 import android.content.res.Resources;
+import android.util.TypedValue;
 
 /**
  * 全局助手类
@@ -39,5 +40,10 @@ public final class Util {
         }
 
         return city;
+    }
+
+    public static int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                Resources.getSystem().getDisplayMetrics());
     }
 }

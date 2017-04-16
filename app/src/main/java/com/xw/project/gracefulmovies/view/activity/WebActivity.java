@@ -1,11 +1,7 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -34,16 +30,6 @@ public class WebActivity extends BaseActivity {
     FrameLayout mContainer;
 
     private WebView mWebView;
-
-    public static void navigation(Activity activity, View view, String url, String title) {
-        Intent intent = new Intent(activity, WebActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-
-        ActivityOptionsCompat option = ActivityOptionsCompat.makeClipRevealAnimation(view, 0, 0,
-                view.getMeasuredWidth(), view.getMeasuredHeight());
-        ActivityCompat.startActivity(activity, intent, option.toBundle());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

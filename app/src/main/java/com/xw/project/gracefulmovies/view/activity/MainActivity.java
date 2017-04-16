@@ -108,7 +108,12 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateTo(SearchActivity.class);
+                navigateWithRippleCompat(
+                        MainActivity.this,
+                        new Intent(MainActivity.this, SearchActivity.class),
+                        view,
+                        Colorful.getThemeDelegate().getAccentColor().getColorRes()
+                );
             }
         });
 
@@ -198,7 +203,12 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_box_office) {
-            navigateTo(BoxOfficeActivity.class);
+            navigateWithRippleCompat(
+                    this,
+                    new Intent(this, BoxOfficeActivity.class),
+                    item.getActionView(),
+                    Colorful.getThemeDelegate().getPrimaryColor().getColorRes()
+            );
             return true;
         }
 

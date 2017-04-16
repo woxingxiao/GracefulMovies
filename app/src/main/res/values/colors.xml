@@ -8,7 +8,7 @@
     <color name="color_disable">#4cffffff</color>
     <color name="color_text_primary_dark">#303030</color>
     <color name="color_text_primary_light">#CECECE</color>
-    <color name="color_text_background_day">#F6F6F6</color>
-    <color name="color_text_background_night">#2B2B2B</color>
+    <color name="color_background_day">#F6F6F6</color>
+    <color name="color_background_night">#2B2B2B</color>
     <color name="color_division">#C7C7C7</color>
 </resources>
