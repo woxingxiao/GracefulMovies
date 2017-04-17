@@ -19,9 +19,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -142,37 +142,29 @@ public class SearchActivityPresenterImpl implements ISearchActivityPresenter {
     private void dealData(String query) {
         mHistoryList.add(0, query.trim());
 
+        final ArrayList<String> list = new ArrayList<>();
+
         // 仅保留MAX_SIZE个数据
         int size = mHistoryList.size() > MAX_SIZE ? MAX_SIZE : mHistoryList.size();
-        Iterator<String> iterator = mHistoryList.iterator();
-        int index = 0;
-        while (iterator.hasNext() && !iterator.next().isEmpty()) {
-            if (index > size - 1) {
-                iterator.remove();
-            }
-            index++;
-        }
+        Observable.from(mHistoryList)
+                .distinct() // 去除重复数据
+                .take(size)
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        list.add(s);
+                    }
 
-        // 去除重复数据
-        ArrayList<String> list = new ArrayList<>();
-        size = mHistoryList.size();
-        String str;
-        boolean isDuplicate;
-        for (int i = 0; i < size; i++) {
-            isDuplicate = false;
-            str = mHistoryList.get(i);
-            for (int j = 0; j < i; j++) {
-                if (str.equals(mHistoryList.get(j))) {
-                    isDuplicate = true;
-                    break;
-                }
-            }
-            if (!isDuplicate) {
-                list.add(str);
-            }
-        }
+                    @Override
+                    public void onCompleted() {
+                        mHistoryList = list;
+                    }
 
-        mHistoryList = list;
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+                });
     }
 
     @Override
