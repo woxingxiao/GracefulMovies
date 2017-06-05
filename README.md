@@ -13,13 +13,13 @@
    - [x] 应用宝
    - [x] 360手机助手
    - [x] 百度手机助手
-  
+
 ## 升级日志  
 ### 最新：
-### 1.3.0 (Build 18)
-1. 新增搜索功能（国内外电影电视剧都可以搜）；
-2. 调整广告策略（广告质量提升，同时点击就下载乱七八糟App的情况少了很多。广告位设置在不妨碍阅读的地方，各位乡亲请多点击资瓷资瓷哇）；
-3. 新增部分更优雅的动画（纵享丝滑~）。
+### 1.3.2 (Build 20)
+1. 默认夏日清爽配色主题；
+2. 安装包大小优化；
+3. 网络日志打印神器：[LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)，与Retrofit一起服用简直不要太爽。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
@@ -40,6 +40,7 @@
 8. [BubbleSeekBar](https://github.com/woxingxiao/BubbleSeekBar)  
 9. [VectorCompatTextView](https://github.com/woxingxiao/VectorCompatTextView)
 10. [SlideBack](https://github.com/oubowu/SlideBack)
+11. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
 
 感谢以下的开源项目为本项目提供了诸多参考：
 - [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
