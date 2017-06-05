@@ -1,11 +1,13 @@
 package com.xw.project.gracefulmovies.server;
 
+import com.ihsanbal.logging.Level;
+import com.ihsanbal.logging.LoggingInterceptor;
 import com.xw.project.gracefulmovies.BuildConfig;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+import okhttp3.internal.platform.Platform;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,9 +30,15 @@ class ApiClient {
         mOkHttpClientBuilder = new OkHttpClient.Builder();
         mOkHttpClientBuilder.connectTimeout(15, TimeUnit.SECONDS);
         if (BuildConfig.DEBUG) {
-            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            mOkHttpClientBuilder.addNetworkInterceptor(httpLoggingInterceptor);
+            mOkHttpClientBuilder.addNetworkInterceptor(
+                    new LoggingInterceptor.Builder()
+                            .loggable(BuildConfig.DEBUG)
+                            .setLevel(Level.BODY)
+                            .log(Platform.INFO)
+                            .request("Request")
+                            .response("Response")
+                            .build()
+            );
         }
     }
 

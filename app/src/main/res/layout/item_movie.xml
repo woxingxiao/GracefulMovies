@@ -24,7 +24,6 @@
             android:id="@+id/movie_poster_img"
             android:layout_width="90dp"
             android:layout_height="120dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -34,7 +33,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="98dp"
             android:layout_marginStart="98dp"
-            android:layout_marginTop="@dimen/four_dp"
             android:textColor="?android:textColorPrimary"
             android:textSize="@dimen/text_size_18sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -48,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="98dp"
             android:layout_marginStart="98dp"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="@dimen/four_dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_name_text"
             tools:layout_height="@dimen/space2x"/>
 
         <com.iarcuschin.simpleratingbar.SimpleRatingBar
@@ -59,9 +57,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="98dp"
             android:layout_marginStart="98dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="@dimen/space"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
             app:srb_drawBorderEnabled="false"
             app:srb_fillColor="@color/colorAccent"
             app:srb_isIndicator="true"
@@ -75,9 +73,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/four_dp"
             android:layout_marginStart="@dimen/four_dp"
-            android:layout_marginTop="54dp"
+            android:layout_marginTop="6dp"
             app:layout_constraintLeft_toRightOf="@+id/movie_rating_bar"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
             tools:text="7.8"/>
 
         <TextView
@@ -86,10 +84,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="98dp"
             android:layout_marginStart="98dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="@dimen/space"
             android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
             tools:text="7.8"/>
 
         <TextView
@@ -98,12 +96,11 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="98dp"
             android:layout_marginStart="98dp"
-            android:layout_marginTop="82dp"
             android:maxLines="2"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/space"
+            app:layout_constraintTop_toBottomOf="@+id/movie_rating_bar"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="主演：xxx，xxx"/>
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
