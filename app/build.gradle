@@ -8,8 +8,8 @@ android {
         applicationId "com.xw.project.gracefulmovies"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
-        versionName "1.3.2"
+        versionCode 21
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         resConfigs "zh" // 仅支持中文
@@ -111,6 +111,8 @@ dependencies {
     compile 'com.github.woxingxiao:VectorCompatTextView:1.1'
     compile 'com.flaviofaria:kenburnsview:1.0.7'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.yarolegovich:discrete-scrollview:1.2.0'
+    compile 'com.github.mmin18:realtimeblurview:1.1.0'
 
     compile project(':library')
     compile project(':SlideBack')
