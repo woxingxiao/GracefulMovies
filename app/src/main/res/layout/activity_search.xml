@@ -11,6 +11,8 @@
 
     <include layout="@layout/layout_toolbar"/>
 
+    <include layout="@layout/layout_place_holder"/>
+
     <android.support.constraint.ConstraintLayout
         android:id="@+id/search_base_info_layout"
         android:layout_width="match_parent"
@@ -20,7 +22,7 @@
         android:paddingLeft="@dimen/space2x"
         android:paddingRight="@dimen/space2x"
         android:paddingTop="@dimen/space2x"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
@@ -147,7 +149,7 @@
         android:layout_margin="@dimen/space"
         android:overScrollMode="never"
         android:padding="@dimen/space"
-        android:visibility="invisible">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/search_more_info_layout"
@@ -156,7 +158,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/story_brief_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/story_brief"

@@ -6,20 +6,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -34,7 +33,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +45,12 @@ import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.presenter.IMainActivityPresenter;
 import com.xw.project.gracefulmovies.presenter.impl.MainActivityPresenterImpl;
 import com.xw.project.gracefulmovies.util.PrefUtil;
+import com.xw.project.gracefulmovies.util.Util;
 import com.xw.project.gracefulmovies.view.adapter.TabPagerAdapter;
 import com.xw.project.gracefulmovies.view.fragment.MovieListFragment;
 import com.xw.project.gracefulmovies.view.iview.IMainActivity;
 import com.xw.project.gracefulmovies.view.service.LocationService;
+import com.xw.project.gracefulmovies.view.widget.UnScrollableViewPager;
 
 import org.polaric.colorful.Colorful;
 
@@ -66,12 +70,14 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBar;
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
     @BindView(R.id.view_pager)
-    ViewPager mViewPager;
+    UnScrollableViewPager mViewPager;
+    @BindView(R.id.radio_group)
+    RadioGroup mRadioGroup;
+    @BindView(R.id.now_radio)
+    RadioButton mNowBtn;
+    @BindView(R.id.coming_radio)
+    RadioButton mComingBtn;
 
     private SwitchCompat mSwitch;
     private TextView mCityText;
@@ -93,29 +99,29 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         getPresenter().loadMovieData();
 
         mReceiver = new MyReceiver();
-        registerReceiver(mReceiver, new IntentFilter(getString(R.string.action_locate_succeed)));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(getString(R.string.action_locate_succeed)));
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navigateWithRippleCompat(
-                        MainActivity.this,
-                        new Intent(MainActivity.this, SearchActivity.class),
-                        view,
-                        Colorful.getThemeDelegate().getAccentColor().getColorRes()
-                );
-            }
-        });
+        int resId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int statusBarHeight = getResources().getDimensionPixelSize(resId);
+
+        FrameLayout.LayoutParams lp1 = (FrameLayout.LayoutParams) toolbar.getLayoutParams();
+        lp1.topMargin = statusBarHeight;
+        toolbar.setLayoutParams(lp1);
+
+        FrameLayout.LayoutParams lp2 = (FrameLayout.LayoutParams) mRadioGroup.getLayoutParams();
+        lp2.topMargin = Util.dp2px(56) + statusBarHeight;
+        mRadioGroup.setLayoutParams(lp2);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -136,8 +142,22 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), fragments);
         adapter.setTabTitles(new String[]{getString(R.string.has_released), getString(R.string.going_to_release)});
         mViewPager.setAdapter(adapter);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setupWithViewPager(mViewPager);
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                int position = checkedId == R.id.now_radio ? 0 : 1;
+                if (mViewPager.getCurrentItem() == position)
+                    return;
+
+                mViewPager.setCurrentItem(position);
+            }
+        });
+        String font = "font.ttf";
+        Typeface typeface = Typeface.createFromAsset(getAssets(), font);
+        mNowBtn.setTypeface(typeface);
+        mComingBtn.setTypeface(typeface);
+
         mCityText.setText(PrefUtil.getCityShort());
         mCityText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +173,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         } else {
             String hint = savedInstanceState.getString("hint", null);
             if (hint != null) {
-                Snackbar.make(mAppBar, hint, 2000)
+                Snackbar.make(mDrawerLayout, hint, 2000)
                         .setAction(getString(R.string.revoke), new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -189,20 +209,34 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
-        final MenuItem item = menu.findItem(R.id.action_box_office);
-        item.getActionView().setOnClickListener(new View.OnClickListener() {
+        final MenuItem item1 = menu.findItem(R.id.action_search);
+        item1.getActionView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onOptionsItemSelected(item);
+                onOptionsItemSelected(item1);
             }
         });
-
+        final MenuItem item2 = menu.findItem(R.id.action_box_office);
+        item2.getActionView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onOptionsItemSelected(item2);
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_box_office) {
+        if (item.getItemId() == R.id.action_search) {
+            navigateWithRippleCompat(
+                    this,
+                    new Intent(this, SearchActivity.class),
+                    item.getActionView(),
+                    Colorful.getThemeDelegate().getPrimaryColor().getColorRes()
+            );
+            return true;
+        } else if (item.getItemId() == R.id.action_box_office) {
             navigateWithRippleCompat(
                     this,
                     new Intent(this, BoxOfficeActivity.class),
@@ -362,7 +396,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         super.onDestroy();
 
         mPresenter.unregister();
-        unregisterReceiver(mReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
     }
 
     private class MyDrawerListener implements DrawerLayout.DrawerListener {

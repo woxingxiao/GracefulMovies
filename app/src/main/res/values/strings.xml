@@ -10,8 +10,8 @@
     <string name="navigation_share">分享</string>
     <string name="navigation_evaluate">评价</string>
     <string name="navigation_about">关于</string>
-    <string name="has_released">正在上映</string>
-    <string name="going_to_release">即将上映</string>
+    <string name="has_released">上映</string>
+    <string name="going_to_release">待映</string>
     <string name="title_activity_about">关于</string>
     <string name="day_night_mode">日夜模式</string>
     <string name="day_mode">日间模式</string>

@@ -1,106 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="210dp"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/four_dp"
-    android:layout_marginLeft="@dimen/space"
-    android:layout_marginRight="@dimen/space"
-    android:layout_marginTop="@dimen/four_dp">
+    android:animateLayoutChanges="true"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space6x">
 
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/movie_container"
+    <android.support.v7.widget.CardView
+        android:layout_width="210dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/movie_poster_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pic_cinema"/>
+    </android.support.v7.widget.CardView>
+
+    <com.xw.project.gracefulmovies.view.widget.AutoFitSizeTextView
+        android:id="@+id/movie_name_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
-        android:padding="@dimen/four_dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        tools:text="Hello World!"/>
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/movie_poster_img"
-            android:layout_width="90dp"
-            android:layout_height="120dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/movie_open_info_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:alpha="0.3"
+        app:srcCompat="@drawable/svg_ic_more_info"/>
 
-        <TextView
-            android:id="@+id/movie_name_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginStart="98dp"
-            android:textColor="?android:textColorPrimary"
-            android:textSize="@dimen/text_size_18sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/app_name"/>
+    <LinearLayout
+        android:id="@+id/movie_info_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/four_dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        tools:visibility="visible">
 
         <com.xw.project.gracefulmovies.view.widget.TagGroup
             android:id="@+id/movie_type_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginStart="98dp"
-            android:layout_marginTop="@dimen/four_dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_name_text"
             tools:layout_height="@dimen/space2x"/>
 
-        <com.iarcuschin.simpleratingbar.SimpleRatingBar
-            android:id="@+id/movie_rating_bar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginStart="98dp"
-            android:layout_marginTop="@dimen/space"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
-            app:srb_drawBorderEnabled="false"
-            app:srb_fillColor="@color/colorAccent"
-            app:srb_isIndicator="true"
-            app:srb_starBackgroundColor="@android:color/darker_gray"
-            app:srb_starSize="15dp"
-            app:srb_starsSeparation="@dimen/two_dp"/>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/movie_grade_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/four_dp"
-            android:layout_marginStart="@dimen/four_dp"
-            android:layout_marginTop="6dp"
-            app:layout_constraintLeft_toRightOf="@+id/movie_rating_bar"
-            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
-            tools:text="7.8"/>
+            <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                android:id="@+id/movie_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srb_drawBorderEnabled="false"
+                app:srb_fillColor="@color/colorAccent"
+                app:srb_isIndicator="true"
+                app:srb_starBackgroundColor="@android:color/white"
+                app:srb_starSize="15dp"
+                app:srb_starsSeparation="@dimen/two_dp"/>
 
-        <TextView
-            android:id="@+id/movie_release_date_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginStart="98dp"
-            android:layout_marginTop="@dimen/space"
-            android:visibility="invisible"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movie_type_container"
-            tools:text="7.8"/>
+            <TextView
+                android:id="@+id/movie_release_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:visibility="gone"
+                tools:text="2017-6-29"/>
+
+            <TextView
+                android:id="@+id/movie_grade_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space"
+                android:layout_marginStart="@dimen/space"
+                android:textColor="@android:color/white"
+                tools:text="7.8"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/movie_cast_text"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="98dp"
-            android:layout_marginStart="98dp"
             android:maxLines="2"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="@dimen/space"
-            app:layout_constraintTop_toBottomOf="@+id/movie_rating_bar"
-            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_12sp"
             tools:text="主演：xxx，xxx"/>
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

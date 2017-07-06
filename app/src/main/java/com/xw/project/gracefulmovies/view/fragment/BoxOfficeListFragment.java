@@ -63,7 +63,7 @@ public class BoxOfficeListFragment extends Fragment implements SwipeRefreshLayou
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_box_office_list, container, false);
         ButterKnife.bind(this, view);
 
         mSwipeRefreshLayout.setColorSchemeColors(
