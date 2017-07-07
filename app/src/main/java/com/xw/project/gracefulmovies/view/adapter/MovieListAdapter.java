@@ -1,6 +1,5 @@
 package com.xw.project.gracefulmovies.view.adapter;
 
-import android.app.Activity;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.model.MovieModel;
+import com.xw.project.gracefulmovies.view.activity.BaseActivity;
 import com.xw.project.gracefulmovies.view.activity.MovieDetailActivity;
 import com.xw.project.gracefulmovies.view.widget.AutoFitSizeTextView;
 import com.xw.project.gracefulmovies.view.widget.TagGroup;
@@ -72,7 +72,7 @@ public class MovieListAdapter extends BaseRecyclerAdapter<MovieModel, MovieListA
         holder.mPosterImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MovieDetailActivity.navigation((Activity) mContext, holder.itemView, model);
+                BaseActivity.navigate(mContext, MovieDetailActivity.class, model);
             }
         });
     }

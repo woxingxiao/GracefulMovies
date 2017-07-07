@@ -1,7 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,10 +19,6 @@ import java.util.List;
  * Created by XiaoWei on 2017-01-30.
  */
 public class ThemeActivity extends BaseActivity {
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, ThemeActivity.class));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

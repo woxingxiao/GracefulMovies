@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.util.PrefUtil;
 import com.xw.project.gracefulmovies.util.SharedPrefHelper;
+import com.xw.project.gracefulmovies.view.activity.BaseActivity;
 import com.xw.project.gracefulmovies.view.activity.ThemeActivity;
 import com.xw.repo.BubbleSeekBar;
 
@@ -99,7 +100,7 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
                 showPickTimeDialog(false);
                 break;
             case 3:
-                ThemeActivity.navigation(getActivity());
+                BaseActivity.navigate(getActivity(), ThemeActivity.class);
                 break;
             case 4:
                 if (!"无缓存".equals(mCachePreference.getSummary()) && clearCache()) {

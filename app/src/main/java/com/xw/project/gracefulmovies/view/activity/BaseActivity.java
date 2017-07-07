@@ -4,12 +4,15 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.FloatRange;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -32,6 +35,8 @@ import com.xw.project.gracefulmovies.R;
 
 import org.polaric.colorful.ColorfulActivity;
 
+import java.io.Serializable;
+
 /**
  * BaseActivity
  * <p/>
@@ -44,11 +49,23 @@ public abstract class BaseActivity extends ColorfulActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    protected static final String PARAM_1 = "param_1";
+    protected static final String PARAM_2 = "param_2";
+    protected static final String OBJ_1 = "obj_1";
+    protected static final int REQUEST_CODE_1 = 0x22;
+
+    private static final String[] PARAMS = {PARAM_1, PARAM_2};
+    private static final String[] OBJECTS = {OBJ_1};
+
+    protected Activity mActivity;
+
     private boolean hasIntentionToSlideBack; // 具有触发滑动返回的意图
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mActivity = this;
 
         initializeSlideBack();
     }
@@ -89,13 +106,62 @@ public abstract class BaseActivity extends ColorfulActivity {
         );
     }
 
-    /**
-     * Activity跳转导航
-     *
-     * @param activity 目标Activity.class
-     */
-    protected void navigateTo(Class activity) {
-        startActivity(new Intent(this, activity));
+    protected void navigate(Class toActivity) {
+        startActivity(new Intent(this, toActivity));
+    }
+
+    protected void navigate(Class toActivity, @NonNull Object... params) {
+        startActivity(assembleIntentWithParam(new Intent(this, toActivity), params));
+    }
+
+    protected void navigateForResult(int requestCode, Class toActivity) {
+        startActivityForResult(new Intent(this, toActivity), requestCode);
+    }
+
+    protected void navigateForResult(int requestCode, Class toActivity, @NonNull Object... params) {
+        startActivityForResult(assembleIntentWithParam(new Intent(this, toActivity), params), requestCode);
+    }
+
+    public static void navigate(Context activity, Class toActivity) {
+        activity.startActivity(new Intent(activity, toActivity));
+    }
+
+    public static void navigate(Context activity, Class toActivity, @NonNull Object... params) {
+        activity.startActivity(assembleIntentWithParam(new Intent(activity, toActivity), params));
+    }
+
+    private static Intent assembleIntentWithParam(Intent intent, @NonNull Object... params) {
+        int p_i = 0;
+        int o_i = 0;
+
+        for (Object obj : params) {
+            if (obj instanceof Integer) {
+                intent.putExtra(PARAMS[p_i], (int) obj);
+            } else if (obj instanceof Boolean) {
+                intent.putExtra(PARAMS[p_i], (boolean) obj);
+            } else if (obj instanceof Float) {
+                intent.putExtra(PARAMS[p_i], (float) obj);
+            } else if (obj instanceof Double) {
+                intent.putExtra(PARAMS[p_i], (double) obj);
+            } else if (obj instanceof String) {
+                intent.putExtra(PARAMS[p_i], (String) obj);
+            } else if (obj instanceof Long) {
+                intent.putExtra(PARAMS[p_i], (long) obj);
+            } else if (obj instanceof Parcelable) {
+                intent.putExtra(OBJECTS[o_i], (Parcelable) obj);
+            } else if (obj instanceof Serializable) {
+                intent.putExtra(OBJECTS[o_i], (Serializable) obj);
+            }
+
+            if (obj instanceof Integer || obj instanceof Boolean || obj instanceof Float
+                    || obj instanceof Double || obj instanceof String || obj instanceof Long) {
+                p_i++;
+            } else if (obj instanceof Parcelable || obj instanceof Serializable) {
+                o_i++;
+            }
+        }
+
+        return intent;
     }
 
     /**

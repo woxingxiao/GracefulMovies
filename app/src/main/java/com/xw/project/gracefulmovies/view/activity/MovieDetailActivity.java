@@ -1,6 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -69,22 +68,6 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
 
     private boolean isCollapsed = false;
 
-    public static void navigation(Activity activity, View view, MovieModel movieModel) {
-        Intent intent = new Intent(activity, MovieDetailActivity.class);
-        intent.putExtra("movie_model", movieModel);
-
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            activity.getWindow().setExitTransition(new Explode());
-//            ActivityCompat.startActivity(activity, intent,
-//                    ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
-//        } else {
-//            ActivityOptionsCompat option = ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0,
-//                    view.getMeasuredWidth(), view.getMeasuredHeight());
-//            ActivityCompat.startActivity(activity, intent, option.toBundle());
-//        }
-        activity.startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +84,7 @@ public class MovieDetailActivity extends BaseActivity implements AppBarLayout.On
         lp.topMargin = Util.getStatusBarHeight();
         mToolbar.setLayoutParams(lp);
 
-        final MovieModel movieModel = getIntent().getParcelableExtra("movie_model");
+        final MovieModel movieModel = getIntent().getParcelableExtra(OBJ_1);
         if (movieModel == null) {
             mAppBar.removeOnOffsetChangedListener(this);
             mPosterImage.pause();

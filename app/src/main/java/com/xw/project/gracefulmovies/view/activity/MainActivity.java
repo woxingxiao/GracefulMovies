@@ -1,6 +1,5 @@
 package com.xw.project.gracefulmovies.view.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -86,10 +85,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     private String mAutoSwitchedHint;
 
     private IMainActivityPresenter mPresenter;
-
-    public static void navigation(Activity activity) {
-        activity.startActivity(new Intent(activity, MainActivity.class));
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,10 +249,10 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_theme:
-                navigateTo(ThemeActivity.class);
+                navigate(ThemeActivity.class);
                 break;
             case R.id.nav_settings:
-                navigateTo(SettingsActivity.class);
+                navigate(SettingsActivity.class);
                 break;
             case R.id.nav_share: // 分享
                 Intent intent = new Intent(Intent.ACTION_SEND);
@@ -274,7 +269,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 startActivity(Intent.createChooser(intent2, "评价"));
                 break;
             case R.id.nav_about:
-                navigateTo(AboutActivity.class);
+                navigate(AboutActivity.class);
                 break;
         }
 

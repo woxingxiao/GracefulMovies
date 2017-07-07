@@ -68,7 +68,7 @@ public abstract class CheckPermissionsActivity extends ColorfulActivity implemen
      *
      * @param activity 目标Activity.class
      */
-    protected void navigateTo(Class activity) {
+    protected void navigate(Class activity) {
         startActivity(new Intent(this, activity));
     }
 

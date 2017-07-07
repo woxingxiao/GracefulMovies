@@ -93,7 +93,7 @@ public class AboutActivity extends BaseActivity {
                 startActivity(Intent.createChooser(intent, "请选择浏览器"));
                 break;
             case R.id.about_license_text:
-                navigateTo(OpenLicenseActivity.class);
+                navigate(OpenLicenseActivity.class);
                 break;
         }
     }
