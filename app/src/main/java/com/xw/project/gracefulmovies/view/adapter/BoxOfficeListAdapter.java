@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.model.BoxOfficeModel;
-import com.xw.project.gracefulmovies.view.activity.BoxOfficeActivity;
 
 import org.polaric.colorful.Colorful;
 
@@ -21,12 +20,6 @@ import org.polaric.colorful.Colorful;
  * Created by woxingxiao on 2017-03-07.
  */
 public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, BoxOfficeListAdapter.BoxOfficeVH> {
-
-    private int mDataType;
-
-    public BoxOfficeListAdapter(int type) {
-        mDataType = type;
-    }
 
     @Override
     protected BoxOfficeVH onCreate(LayoutInflater inflater, ViewGroup parent, int viewType) {
@@ -66,40 +59,13 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
 
         holder.text1.setTextColor(ContextCompat.getColor(mContext,
                 Colorful.getThemeDelegate().getAccentColor().getColorRes()));
-        if (mDataType < 3) {
-            holder.text1.setText(model.getBoxOffice());
-            if (mDataType == BoxOfficeActivity.DAY) {
-                holder.hint1.setText(mContext.getString(R.string.hint_box_office_day));
-            } else if (mDataType == BoxOfficeActivity.WEEKEND) {
-                holder.hint1.setText(mContext.getString(R.string.hint_box_office_weekend));
-            } else if (mDataType == BoxOfficeActivity.WEEK) {
-                holder.hint1.setText(mContext.getString(R.string.hint_box_office_week));
-            }
-            holder.text2.setText(model.getSumBoxOffice());
-            holder.hint2.setText(mContext.getString(R.string.hint_box_office_sum));
-            holder.text3.setText(model.getMovieDays());
-            holder.hint3.setText(mContext.getString(R.string.hint_released_days));
-            holder.text4.setText(model.getBoxOfficeRate());
-            holder.hint4.setText(mContext.getString(R.string.hint_box_office_rate));
-            holder.text5.setText(model.getAvgPrice());
-            holder.hint5.setText(mContext.getString(R.string.hint_average_price));
-            if (mDataType != BoxOfficeActivity.DAY) {
-                holder.text6.setText(model.getWomIndex());
-                holder.hint6.setText(mContext.getString(R.string.hint_wom_index));
-            }
-        } else {
-            holder.text1.setText(model.getBoxOffice());
-            holder.hint1.setText(mContext.getString(R.string.hint_box_office_month));
-            holder.text2.setTextSize(18);
-            holder.text2.setText(model.getReleaseDate());
-            holder.hint2.setText(mContext.getString(R.string.release_date));
-            holder.text3.setText(model.getMovieDays());
-            holder.hint3.setText(mContext.getString(R.string.hint_playing_days_in_the_month));
-            holder.text4.setText(model.getBoxOfficeRate());
-            holder.hint4.setText(mContext.getString(R.string.hint_playing_rate_in_the_month));
-            holder.text5.setText(model.getAvgPrice());
-            holder.hint5.setText(mContext.getString(R.string.hint_average_price));
-        }
+        holder.text2.setTextColor(ContextCompat.getColor(mContext,
+                Colorful.getThemeDelegate().getAccentColor().getColorRes()));
+        holder.text1.setText(model.getBoxOffice());
+        holder.text2.setText(model.getSumBoxOffice());
+        holder.text3.setText(model.getMovieDays());
+        holder.text4.setText(model.getBoxOfficeRate());
+        holder.text5.setText(model.getAvgPrice());
     }
 
     class BoxOfficeVH extends BaseRecyclerViewHolder {
@@ -107,8 +73,7 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
         AppCompatImageView rankImg;
         TextView rankText;
         TextView nameText;
-        TextView text1, text2, text3, text4, text5, text6;
-        TextView hint1, hint2, hint3, hint4, hint5, hint6;
+        TextView text1, text2, text3, text4, text5;
 
         BoxOfficeVH(View itemView) {
             super(itemView);
@@ -117,17 +82,10 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
             rankText = findView(R.id.bo_rank_text);
             nameText = findView(R.id.bo_name_text);
             text1 = findView(R.id.bo_text_1);
-            hint1 = findView(R.id.bo_hint_1);
             text2 = findView(R.id.bo_text_2);
-            hint2 = findView(R.id.bo_hint_2);
             text3 = findView(R.id.bo_text_3);
-            hint3 = findView(R.id.bo_hint_3);
             text4 = findView(R.id.bo_text_4);
-            hint4 = findView(R.id.bo_hint_4);
             text5 = findView(R.id.bo_text_5);
-            hint5 = findView(R.id.bo_hint_5);
-            text6 = findView(R.id.bo_text_6);
-            hint6 = findView(R.id.bo_hint_6);
         }
     }
 

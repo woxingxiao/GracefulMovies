@@ -18,15 +18,4 @@ public interface BoxOfficeApi {
     Observable<BoxOfficeResult> dayBoxOfficeGet(@Query("showapi_appid") String appId,
                                                 @Query("showapi_sign") String apiKey);
 
-    @GET("578-3")
-    Observable<BoxOfficeResult> weekendBoxOfficeGet(@Query("showapi_appid") String appId,
-                                                    @Query("showapi_sign") String apiKey);
-
-    @GET("578-1")
-    Observable<BoxOfficeResult> weekBoxOfficeGet(@Query("showapi_appid") String appId,
-                                                 @Query("showapi_sign") String apiKey);
-
-    @GET("578-4")
-    Observable<BoxOfficeResult> monthBoxOfficeGet(@Query("showapi_appid") String appId,
-                                                  @Query("showapi_sign") String apiKey);
 }

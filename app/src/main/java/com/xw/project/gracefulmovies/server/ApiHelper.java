@@ -72,14 +72,12 @@ public class ApiHelper {
     public static Observable<MovieReleaseType[]> loadMovies(String city) {
         return getMovieApi()
                 .movieInfoGet(API_KEY_JH, city)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<RequestResult<MovieData>, MovieData>() {
                     @Override
                     public MovieData call(RequestResult<MovieData> requestResult) {
-                        if (requestResult.getError_code() != 0 || requestResult.getResult() == null) {
+                        if (requestResult.getError_code() != 0) {
                             /**
-                             * 如果返回数据对象是null，则抛出业务异常
+                             * 抛出业务异常
                              */
                             throw new ApiException(requestResult.getError_code(), requestResult.getReason());
                         }
@@ -91,7 +89,9 @@ public class ApiHelper {
                     public MovieReleaseType[] call(MovieData movieData) {
                         return movieData.getData();
                     }
-                });
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -100,56 +100,44 @@ public class ApiHelper {
     public static Observable<MovieSearchModel> searchMovie(String name) {
         return getMovieApi()
                 .movieSearchGet(API_KEY_JH, name)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .map(new Func1<RequestResult<MovieSearchModel>, MovieSearchModel>() {
                     @Override
                     public MovieSearchModel call(RequestResult<MovieSearchModel> requestResult) {
-                        if (requestResult.getError_code() != 0 || requestResult.getResult() == null) {
+                        if (requestResult.getError_code() != 0) {
                             /**
-                             * 如果返回数据对象是null，则抛出业务异常
+                             * 抛出业务异常
                              */
                             throw new ApiException(requestResult.getError_code(), requestResult.getReason());
                         }
                         return requestResult.getResult();
                     }
-                });
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * 经纬度转地址
      */
     public static Observable<NetLocResult> loadNetLoc(String latLng) {
-        return getNetLocApi().getNetLoc(latLng)
+        return getNetLocApi()
+                .getNetLoc(latLng)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
      * 加载票房数据
-     *
-     * @param dataType 0 单日票房，1 周末票房，2 单周票房，3 单月票房
      */
-    public static Observable<List<BoxOfficeModel>> loadBoxOffice(int dataType) {
-        Observable<BoxOfficeResult> observable;
-        if (dataType == 0) {
-            observable = getBoxOfficeApi().dayBoxOfficeGet(APP_ID_YY, API_KEY_YY);
-        } else if (dataType == 1) {
-            observable = getBoxOfficeApi().weekendBoxOfficeGet(APP_ID_YY, API_KEY_YY);
-        } else if (dataType == 2) {
-            observable = getBoxOfficeApi().weekBoxOfficeGet(APP_ID_YY, API_KEY_YY);
-        } else {
-            observable = getBoxOfficeApi().monthBoxOfficeGet(APP_ID_YY, API_KEY_YY);
-        }
-        return observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+    public static Observable<List<BoxOfficeModel>> loadBoxOffice() {
+        return getBoxOfficeApi()
+                .dayBoxOfficeGet(APP_ID_YY, API_KEY_YY)
                 .map(new Func1<BoxOfficeResult, BoxOfficeResult.BoxOfficeData>() {
                     @Override
                     public BoxOfficeResult.BoxOfficeData call(BoxOfficeResult boxOfficeResult) {
-                        if (boxOfficeResult.getResult() == null) {
+                        if (boxOfficeResult.getError_code() != 0) {
                             /**
-                             * 如果返回数据对象是null，则抛出业务异常
+                             * 抛出业务异常
                              */
                             throw new ApiException(boxOfficeResult.getError_code(), boxOfficeResult.getReason());
                         }
@@ -169,7 +157,9 @@ public class ApiHelper {
                         }
                         return boxOfficeData.modelList;
                     }
-                });
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public static void releaseNetLocApi() {

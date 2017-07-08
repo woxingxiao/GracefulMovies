@@ -1,11 +1,11 @@
 package com.xw.project.gracefulmovies.presenter.impl;
 
 import com.xw.project.gracefulmovies.model.BoxOfficeModel;
-import com.xw.project.gracefulmovies.presenter.IBoxOfficeFragmentPresenter;
+import com.xw.project.gracefulmovies.presenter.IBoxOfficeActivityPresenter;
 import com.xw.project.gracefulmovies.server.ApiException;
 import com.xw.project.gracefulmovies.server.ApiHelper;
 import com.xw.project.gracefulmovies.server.ApiSubscriber;
-import com.xw.project.gracefulmovies.view.iview.IBoxOfficeListFragment;
+import com.xw.project.gracefulmovies.view.iview.IBoxOfficeActivity;
 
 import java.util.List;
 
@@ -14,19 +14,19 @@ import java.util.List;
  * Created by woxingxiao on 2017-03-07.
  */
 
-public class BoxOfficeFragmentPresenterImpl implements IBoxOfficeFragmentPresenter {
+public class BoxOfficeActivityPresenterImpl implements IBoxOfficeActivityPresenter {
 
-    private IBoxOfficeListFragment mFragment;
+    private IBoxOfficeActivity mActivity;
     private ApiSubscriber<List<BoxOfficeModel>> mSubscriber;
     private int mErrCode = -1;
 
     @Override
-    public void register(IBoxOfficeListFragment fragment) {
-        this.mFragment = fragment;
+    public void register(IBoxOfficeActivity activity) {
+        this.mActivity = activity;
     }
 
     @Override
-    public void loadData(int dataType) {
+    public void loadData() {
         mSubscriber = new ApiSubscriber<List<BoxOfficeModel>>() {
             @Override
             public void onStart() {
@@ -35,8 +35,7 @@ public class BoxOfficeFragmentPresenterImpl implements IBoxOfficeFragmentPresent
 
             @Override
             public void onNext(List<BoxOfficeModel> movieModels) {
-                if (mFragment != null)
-                    mFragment.onDataReady(movieModels);
+                mActivity.onDataReady(movieModels);
             }
 
             @Override
@@ -53,8 +52,7 @@ public class BoxOfficeFragmentPresenterImpl implements IBoxOfficeFragmentPresent
 
             @Override
             protected void onError(String msg) {
-                if (mFragment != null)
-                    mFragment.onDataError(mErrCode, msg);
+                mActivity.onDataError(mErrCode, msg);
             }
 
             @Override
@@ -63,7 +61,7 @@ public class BoxOfficeFragmentPresenterImpl implements IBoxOfficeFragmentPresent
             }
         };
 
-        ApiHelper.loadBoxOffice(dataType)
+        ApiHelper.loadBoxOffice()
                 .subscribe(mSubscriber);
     }
 
@@ -71,6 +69,6 @@ public class BoxOfficeFragmentPresenterImpl implements IBoxOfficeFragmentPresent
     public void unregister() {
         if (mSubscriber != null && mSubscriber.isUnsubscribed())
             mSubscriber.unsubscribe();
-        mFragment = null;
+        mActivity = null;
     }
 }

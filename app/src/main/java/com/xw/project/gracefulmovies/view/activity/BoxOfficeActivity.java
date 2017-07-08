@@ -1,20 +1,30 @@
 package com.xw.project.gracefulmovies.view.activity;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.xw.project.gracefulmovies.R;
+import com.xw.project.gracefulmovies.model.BoxOfficeModel;
+import com.xw.project.gracefulmovies.presenter.IBoxOfficeActivityPresenter;
+import com.xw.project.gracefulmovies.presenter.impl.BoxOfficeActivityPresenterImpl;
 import com.xw.project.gracefulmovies.server.ApiHelper;
-import com.xw.project.gracefulmovies.view.adapter.TabPagerAdapter;
-import com.xw.project.gracefulmovies.view.fragment.BoxOfficeListFragment;
+import com.xw.project.gracefulmovies.view.adapter.BoxOfficeListAdapter;
+import com.xw.project.gracefulmovies.view.iview.IBoxOfficeActivity;
+
+import org.polaric.colorful.Colorful;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,29 +34,16 @@ import butterknife.ButterKnife;
  * <p/>
  * Created by xoxingxiao on 2017-03-07.
  */
-public class BoxOfficeActivity extends BaseActivity {
+public class BoxOfficeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener,
+        IBoxOfficeActivity {
 
-    /**
-     * 每日票房
-     */
-    public static final int DAY = 0;
-    /**
-     * 周末票房
-     */
-    public static final int WEEKEND = 1;
-    /**
-     * 每周票房
-     */
-    public static final int WEEK = 2;
-    /**
-     * 每月票房
-     */
-    public static final int MONTH = 3;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.recycler_view)
+    RecyclerView mRecyclerView;
 
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
+    private BoxOfficeListAdapter mAdapter;
+    private IBoxOfficeActivityPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,29 +57,28 @@ public class BoxOfficeActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tag = "android:switcher:" + mViewPager.getId() + ":" + mViewPager.getCurrentItem();
-                Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-                if (fragment != null && fragment instanceof BoxOfficeListFragment) {
-                    ((BoxOfficeListFragment) fragment).scrollToTop();
-                }
+                if (mAdapter.getData() != null && !mAdapter.getData().isEmpty())
+                    mRecyclerView.smoothScrollToPosition(0);
             }
         });
 
-        Fragment[] fragments = new Fragment[4];
-        fragments[0] = BoxOfficeListFragment.newInstance(DAY);
-        fragments[1] = BoxOfficeListFragment.newInstance(WEEKEND);
-        fragments[2] = BoxOfficeListFragment.newInstance(WEEK);
-        fragments[3] = BoxOfficeListFragment.newInstance(MONTH);
+        mSwipeRefreshLayout.setColorSchemeColors(
+                ContextCompat.getColor(this, Colorful.getThemeDelegate().getAccentColor().getColorRes()),
+                ContextCompat.getColor(this, Colorful.getThemeDelegate().getPrimaryColor().getColorRes())
+        );
+        mSwipeRefreshLayout.setProgressViewEndTarget(false, (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP, 80, Resources.getSystem().getDisplayMetrics()));
+        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), fragments);
-        adapter.setTabTitles(new String[]{
-                getString(R.string.box_office_day), getString(R.string.box_office_weekend),
-                getString(R.string.box_office_week), getString(R.string.box_office_month)
-        });
-        mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(adapter);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setupWithViewPager(mViewPager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter = new BoxOfficeListAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setItemAnimator(null);
+
+        mPresenter = new BoxOfficeActivityPresenterImpl();
+        mPresenter.register(this);
+        mPresenter.loadData();
     }
 
     @Override
@@ -95,7 +91,7 @@ public class BoxOfficeActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_attention) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("温馨提示");
+            builder.setTitle("提示");
             builder.setView(R.layout.layout_box_office_attention_dialog);
             builder.setPositiveButton("好的", null);
             builder.show();
@@ -107,9 +103,31 @@ public class BoxOfficeActivity extends BaseActivity {
     }
 
     @Override
+    public void onRefresh() {
+        mPresenter.loadData();
+        mAdapter.setLoading(true);
+    }
+
+    @Override
+    public void onDataReady(List<BoxOfficeModel> modelList) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.setData(modelList);
+    }
+
+    @Override
+    public void onDataError(int code, String msg) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mAdapter.clearData();
+        mAdapter.setLoading(false);
+        showToast(msg);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
 
+        mPresenter.unregister();
+        mPresenter = null;
         ApiHelper.releaseBoxOfficeApi();
     }
 }
