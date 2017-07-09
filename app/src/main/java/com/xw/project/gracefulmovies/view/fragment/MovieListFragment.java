@@ -79,7 +79,7 @@ public class MovieListFragment extends Fragment implements
 
         mBlurTransformation = new BlurTransformation(getActivity(), 10);
         mBgImg1.setAlpha(0f);
-        mBgImg2.setImageResource(R.drawable.pic_cinema);
+        mBgImg2.setImageResource(R.drawable.pic_bg_ocean);
 
         return view;
     }
@@ -143,6 +143,8 @@ public class MovieListFragment extends Fragment implements
             Glide.with(activity)
                     .load(mMovieModels.get(index).getPoster())
                     .transform(mBlurTransformation)
+                    .placeholder(R.drawable.pic_bg_ocean)
+                    .error(R.drawable.pic_bg_ocean)
                     .crossFade()
                     .into(imageView);
         }

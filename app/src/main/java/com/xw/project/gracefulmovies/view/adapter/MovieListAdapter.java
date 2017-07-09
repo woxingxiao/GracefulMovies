@@ -42,6 +42,8 @@ public class MovieListAdapter extends BaseRecyclerAdapter<MovieModel, MovieListA
         holder.mNameText.setAlpha(position == 0 ? 1 : 0);
         Glide.with(mContext)
                 .load(model.getPoster())
+                .placeholder(R.drawable.pic_orange)
+                .error(R.drawable.pic_orange)
                 .into(holder.mPosterImg);
         holder.tagContainer.setTagData(model.getMovieTypeList(),
                 Colorful.getThemeDelegate().getAccentColor().getColorRes());

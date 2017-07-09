@@ -71,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
 
         RandomTransitionGenerator generator = new RandomTransitionGenerator(20000, new LinearInterpolator());
         mBgImg.setTransitionGenerator(generator);
-        Glide.with(this).load(R.drawable.pic_cinema).into(mBgImg);
+        Glide.with(this).load(R.drawable.pic_bg_ocean).into(mBgImg);
         mRootLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {

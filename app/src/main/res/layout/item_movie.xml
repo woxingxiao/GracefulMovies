@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@null"
             android:scaleType="centerCrop"
-            android:src="@drawable/pic_cinema"/>
+            tools:src="@drawable/pic_orange"/>
     </android.support.v7.widget.CardView>
 
     <com.xw.project.gracefulmovies.view.widget.AutoFitSizeTextView
