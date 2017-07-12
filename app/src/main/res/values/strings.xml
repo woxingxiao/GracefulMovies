@@ -20,6 +20,7 @@
     <string name="accent_color">配&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;色</string>
     <string name="data_loading">正在加载</string>
     <string name="has_no_data">暂无数据</string>
+    <string name="reload_data">重新加载</string>
     <string name="hour_min">时&#160;&#160;:&#160;&#160;分</string>
     <string name="format_hour_min">%1$s&#160;&#160;:&#160;&#160;%2$s</string>
     <string name="format_hour_min2">%1$s:%2$s</string>

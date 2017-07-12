@@ -12,7 +12,6 @@
     <dimen name="space4x">32dp</dimen>
     <dimen name="space5x">40dp</dimen>
     <dimen name="space6x">48dp</dimen>
-    <dimen name="space7x">56dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="app_bar_height_large">260dp</dimen>
 

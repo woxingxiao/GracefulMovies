@@ -29,7 +29,13 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -78,6 +84,11 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
     @BindView(R.id.coming_radio)
     RadioButton mComingBtn;
 
+    private View mStatusView;
+    private ImageView mStatusLoadingImg;
+    private ImageView mStatusNoDataImg;
+    private Button mStatusReloadBtn;
+
     private SwitchCompat mSwitch;
     private TextView mCityText;
 
@@ -96,8 +107,6 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        getPresenter().loadMovieData();
 
         mReceiver = new MyReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(mReceiver, new IntentFilter(getString(R.string.action_locate_succeed)));
@@ -129,6 +138,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         mCityText = (TextView) navView.getHeaderView(0).findViewById(R.id.nav_city_text);
         ImageView img = (ImageView) navView.getHeaderView(0).findViewById(R.id.nav_header_img);
         Glide.with(this).load(R.drawable.pic_movies).into(img);
+
+        showStatusView(true);
 
         MovieListFragment[] fragments = new MovieListFragment[2];
         fragments[0] = MovieListFragment.newInstance(0);
@@ -164,8 +175,12 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         if (savedInstanceState == null) {
             LocationService.start(this);
 
-            checkAutoDayNightMode();
+            if (checkAutoDayNightMode()) {
+                getPresenter().loadMovieData();
+            }
         } else {
+            getPresenter().loadMovieData();
+
             String hint = savedInstanceState.getString("hint", null);
             if (hint != null) {
                 Snackbar.make(mDrawerLayout, hint, 2000)
@@ -178,6 +193,36 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                         })
                         .show();
             }
+        }
+    }
+
+    private void showStatusView(boolean loading) {
+        if (mStatusView == null) {
+            mStatusView = ((ViewStub) findViewById(R.id.view_stub)).inflate();
+            mStatusLoadingImg = (ImageView) mStatusView.findViewById(R.id.status_loading_img);
+            mStatusReloadBtn = (Button) mStatusView.findViewById(R.id.status_reload_button);
+            mStatusNoDataImg = (ImageView) mStatusView.findViewById(R.id.status_no_data_img);
+
+            mStatusReloadBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showStatusView(true);
+                    getPresenter().loadMovieData();
+                }
+            });
+        }
+        if (loading) {
+            Animation animation = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+            animation.setInterpolator(new LinearInterpolator());
+            mStatusLoadingImg.setAnimation(animation);
+            mStatusLoadingImg.setVisibility(View.VISIBLE);
+            mStatusReloadBtn.setVisibility(View.INVISIBLE);
+            mStatusNoDataImg.setVisibility(View.INVISIBLE);
+        } else {
+            mStatusLoadingImg.clearAnimation();
+            mStatusLoadingImg.setVisibility(View.INVISIBLE);
+            mStatusReloadBtn.setVisibility(View.VISIBLE);
+            mStatusNoDataImg.setVisibility(View.VISIBLE);
         }
     }
 
@@ -280,14 +325,16 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
 
     /**
      * 检测是否自动日夜模式，如果是自动将根据时间判断是否切换
+     *
+     * @return 是否立即加载数据
      */
-    private void checkAutoDayNightMode() {
+    private boolean checkAutoDayNightMode() {
         boolean firstTime = PrefUtil.checkFirstTime();
         if (firstTime)
             PrefUtil.setNotFirstTime();
         boolean auto = PrefUtil.isAutoDayNightMode();
         if (firstTime || !auto)
-            return;
+            return true;
 
         int[] dayTime = PrefUtil.getDayNightModeStartTime(true);
         int[] nightTime = PrefUtil.getDayNightModeStartTime(false);
@@ -297,10 +344,16 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         if (Colorful.getThemeDelegate().isNight()) {
             if ((dayTime[0] < h && h < nightTime[0]) || (dayTime[0] == h && dayTime[1] <= m)) {
                 switchDayNightModeSmoothly(false, true);
+                return false;
+            } else {
+                return true;
             }
         } else {
             if ((nightTime[0] < h) || (nightTime[0] == h && nightTime[1] <= m)) {
                 switchDayNightModeSmoothly(true, true);
+                return false;
+            } else {
+                return true;
             }
         }
     }
@@ -344,6 +397,11 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
         if (fragment != null && fragment instanceof MovieListFragment) {
             ((MovieListFragment) fragment).onDataReady(mPresenter.getMovieModels(fragmentId));
         }
+
+        if (mStatusView != null) {
+            ((ViewGroup) mStatusView.getParent()).removeView(mStatusView);
+            mStatusView = null;
+        }
     }
 
     @Override
@@ -361,6 +419,8 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
                 }
             }
         }
+
+        showStatusView(false);
         showToast(msg);
     }
 

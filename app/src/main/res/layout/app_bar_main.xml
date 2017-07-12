@@ -53,4 +53,11 @@
             android:textColor="@drawable/selector_text_color_tab"
             android:textSize="22sp"/>
     </RadioGroup>
+
+    <ViewStub
+        android:id="@+id/view_stub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout="@layout/content_status_view"/>
 </FrameLayout>

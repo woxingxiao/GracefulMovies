@@ -6,7 +6,7 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Locale;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
 import rx.Subscriber;
 
 /**
@@ -57,13 +57,6 @@ public abstract class ApiSubscriber<T> extends Subscriber<T> {
     }
 
     private void resolveException(Throwable e) {
-        Throwable throwable = e;
-        //获取最根源的异常
-        while (throwable.getCause() != null) {
-            e = throwable;
-            throwable = throwable.getCause();
-        }
-
         if (e instanceof ApiException) {
             String msg = ((ApiException) e).getMsg();
             if (msg == null || msg.isEmpty()) {

@@ -40,6 +40,8 @@
 #保持泛型
 -keepattributes Signature
 
+-ignorewarnings
+
 #所有在 AndroidManifest.xml 涉及到的类已经自动被保持，因此不用特意去添加这块混淆规则
 #Fragment未在AndroidManifest.xml中注册，需要额外保护下
 -keep public class * extends android.support.v4.app.Fragment
@@ -58,8 +60,8 @@
 -keep class com.squareup.wire.** {*;}
 
 # retrofit
--dontwarn retrofit2.**
--keep class retrofit2.** {*;}
+-dontwarn okio.**
+-dontwarn javax.annotation.**
 
 # butterknife
 -dontwarn butterknife.**

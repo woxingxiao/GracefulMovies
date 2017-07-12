@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
 import com.xw.project.gracefulmovies.R;
@@ -126,9 +127,9 @@ public class LocationService extends Service {
                         }
                         Logy.i("LocationService", "------------定位成功：" + netLocResult.getUpperCity() + "，" + newCity);
 
-                        if (diffUpper && !newCity.equals(PrefUtil.getCity())) {
+                        if (!PrefUtil.isInputtedCity() && diffUpper && !newCity.equals(PrefUtil.getCity())) {
                             PrefUtil.setCity(newCity);
-                            sendBroadcast(new Intent(getString(R.string.action_locate_succeed)));
+                            LocalBroadcastManager.getInstance(LocationService.this).sendBroadcast(new Intent(getString(R.string.action_locate_succeed)));
                             Logy.w("LocationService", "-----------------sendBroadcast locate succeed-----------------");
                         }
                     }
