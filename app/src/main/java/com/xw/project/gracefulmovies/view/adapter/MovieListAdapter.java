@@ -18,12 +18,18 @@ import com.xw.project.gracefulmovies.view.widget.TagGroup;
 
 import org.polaric.colorful.Colorful;
 
+import java.util.List;
+
 /**
  * 电影列表适配器
  * <p/>
  * Created by woxingxiao on 2017-02-12.
  */
 public class MovieListAdapter extends BaseRecyclerAdapter<MovieModel, MovieListAdapter.MovieVH> {
+
+    public MovieListAdapter(List<MovieModel> movieModels) {
+        setData(movieModels);
+    }
 
     @Override
     protected MovieVH onCreate(LayoutInflater inflater, ViewGroup parent, int viewType) {

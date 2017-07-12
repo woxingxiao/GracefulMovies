@@ -42,7 +42,6 @@ public class MovieListFragment extends Fragment implements
 
     private MainActivity mActivity;
     private List<MovieModel> mMovieModels;
-    private MovieListAdapter mAdapter;
     private int mId;
     private boolean isIntentTriggered;
     private int mPreIntentPos;
@@ -68,8 +67,6 @@ public class MovieListFragment extends Fragment implements
         View view = inflater.inflate(R.layout.fragment_movie_list, container, false);
         ButterKnife.bind(this, view);
 
-        mAdapter = new MovieListAdapter();
-        mInfiniteViewPager.setAdapter(mAdapter);
         mInfiniteViewPager.setItemTransformer(
                 new ScaleTransformer.Builder()
                         .setMinScale(0.8f)
@@ -116,7 +113,7 @@ public class MovieListFragment extends Fragment implements
         mMovieModels = movieModels;
 
         mInfiniteViewPager.setVisibility(View.VISIBLE);
-        mAdapter.setData(mMovieModels);
+        mInfiniteViewPager.setAdapter(new MovieListAdapter(mMovieModels));
         mBgImg1.animate().alpha(1).setDuration(1000)
                 .withStartAction(new Runnable() {
                     @Override
@@ -202,7 +199,7 @@ public class MovieListFragment extends Fragment implements
                         vh.mInfoLayout.setVisibility(View.INVISIBLE);
                     }
                 }
-            } else if (adapterPosition > 0 && adapterPosition < size - 1) {
+            } else if (adapterPosition > 0 && adapterPosition + 1 < size - 1) {
                 vh = (MovieListAdapter.MovieVH) mInfiniteViewPager.getViewHolder(adapterPosition + 1);
                 if (vh != null) {
                     vh.mNameText.setAlpha(0);

@@ -29,7 +29,6 @@ import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -398,10 +397,7 @@ public class MainActivity extends CheckPermissionsActivity implements Navigation
             ((MovieListFragment) fragment).onDataReady(mPresenter.getMovieModels(fragmentId));
         }
 
-        if (mStatusView != null) {
-            ((ViewGroup) mStatusView.getParent()).removeView(mStatusView);
-            mStatusView = null;
-        }
+        mStatusView.setVisibility(View.GONE);
     }
 
     @Override
