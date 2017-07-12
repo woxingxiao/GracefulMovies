@@ -16,10 +16,11 @@
 
 ## 升级日志  
 ### 最新：
-### 1.3.2 (Build 20)
-1. 默认夏日清爽配色主题；
-2. 安装包大小优化；
-3. 网络日志打印神器：[LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)，与Retrofit一起服用简直不要太爽。
+### 2.0.0 (Build 27)
+1. 全新的首页，我颜值炸裂！
+2. 移除了广告，他轻装上阵！
+3. 票房页改版，这去粗存精！
+4. 酷热的夏天，那凉爽界面！
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
@@ -41,6 +42,7 @@
 9. [VectorCompatTextView](https://github.com/woxingxiao/VectorCompatTextView)
 10. [SlideBack](https://github.com/oubowu/SlideBack)
 11. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
+12. [DiscreteScrollView](https://github.com/yarolegovich/DiscreteScrollView)
 
 感谢以下的开源项目为本项目提供了诸多参考：
 - [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
