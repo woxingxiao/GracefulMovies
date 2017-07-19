@@ -63,7 +63,26 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
                 Colorful.getThemeDelegate().getAccentColor().getColorRes()));
         holder.text1.setText(model.getBoxOffice());
         holder.text2.setText(model.getSumBoxOffice());
-        holder.text3.setText(model.getMovieDays());
+        try {
+            int day = Integer.parseInt(model.getMovieDays());
+            if (day == 0) {
+                holder.dayHintText.setText("上映日期");
+                holder.text3.setText("今天");
+                holder.text3.setTextSize(16);
+            } else if (day > 0) {
+                holder.dayHintText.setText("上映天数");
+                holder.text3.setText(String.valueOf(day));
+                holder.text3.setTextSize(24);
+            } else {
+                holder.dayHintText.setText("距离上映");
+                holder.text3.setText(String.valueOf(-day));
+                holder.text3.setTextSize(24);
+            }
+        } catch (Exception e) {
+            holder.dayHintText.setText("上映天数");
+            holder.text3.setText(model.getMovieDays());
+            holder.text3.setTextSize(24);
+        }
         holder.text4.setText(model.getBoxOfficeRate());
         holder.text5.setText(model.getAvgPrice());
     }
@@ -74,6 +93,7 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
         TextView rankText;
         TextView nameText;
         TextView text1, text2, text3, text4, text5;
+        TextView dayHintText;
 
         BoxOfficeVH(View itemView) {
             super(itemView);
@@ -86,6 +106,7 @@ public class BoxOfficeListAdapter extends BaseRecyclerAdapter<BoxOfficeModel, Bo
             text3 = findView(R.id.bo_text_3);
             text4 = findView(R.id.bo_text_4);
             text5 = findView(R.id.bo_text_5);
+            dayHintText = findView(R.id.bo_hint_3);
         }
     }
 
