@@ -75,6 +75,6 @@ public class ThemeActivity extends BaseActivity {
                 ft.remove(frag);
             }
         }
-        ft.commit();
+        ft.commitAllowingStateLoss();
     }
 }

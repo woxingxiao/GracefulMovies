@@ -35,7 +35,9 @@ public class BoxOfficeActivityPresenterImpl implements IBoxOfficeActivityPresent
 
             @Override
             public void onNext(List<BoxOfficeModel> movieModels) {
-                mActivity.onDataReady(movieModels);
+                if (mActivity != null) {
+                    mActivity.onDataReady(movieModels);
+                }
             }
 
             @Override
@@ -52,7 +54,9 @@ public class BoxOfficeActivityPresenterImpl implements IBoxOfficeActivityPresent
 
             @Override
             protected void onError(String msg) {
-                mActivity.onDataError(mErrCode, msg);
+                if (mActivity != null) {
+                    mActivity.onDataError(mErrCode, msg);
+                }
             }
 
             @Override
