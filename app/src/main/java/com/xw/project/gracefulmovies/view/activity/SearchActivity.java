@@ -192,6 +192,13 @@ public class SearchActivity extends BaseActivity implements ISearchActivity {
         if (!TextUtils.isEmpty(tags) && tags.contains("/")) {
             mTypeContainer.setTagData(tags.replaceAll(" ", "").split("/"),
                     Colorful.getThemeDelegate().getAccentColor().getColorRes());
+
+            int childCount = mTypeContainer.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                TextView textView = (TextView) mTypeContainer.getChildAt(i);
+                textView.setTextColor(ContextCompat.getColor(this,
+                        Colorful.getThemeDelegate().getAccentColor().getColorRes()));
+            }
         }
         mDirectorText.setText(model.getDir());
         float rating = model.getRating();

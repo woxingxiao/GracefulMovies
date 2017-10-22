@@ -155,14 +155,14 @@ public class SettingsFragment extends PreferenceFragment implements Preference.O
         }
         hourBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
-            public void onProgressChanged(int progress, float progressFloat) {
+            public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 hourMinText.setText(getString(R.string.format_hour_min, formatTime(progress),
                         formatTime(minBar.getProgress())));
             }
         });
         minBar.setOnProgressChangedListener(new BubbleSeekBar.OnProgressChangedListenerAdapter() {
             @Override
-            public void onProgressChanged(int progress, float progressFloat) {
+            public void onProgressChanged(BubbleSeekBar bubbleSeekBar, int progress, float progressFloat) {
                 hourMinText.setText(getString(R.string.format_hour_min,
                         formatTime(hourBar.getProgress()), formatTime(progress)));
             }

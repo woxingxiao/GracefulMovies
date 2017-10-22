@@ -16,11 +16,9 @@
 
 ## 升级日志  
 ### 最新：
-### 2.0.0 (Build 27)
-1. 全新的首页，我颜值炸裂！
-2. 移除了广告，他轻装上阵！
-3. 票房页改版，这去粗存精！
-4. 酷热的夏天，那凉爽界面！
+### 2.0.1 (Build 28)
+1. 精选秋日装扮；
+2. bug修复。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  

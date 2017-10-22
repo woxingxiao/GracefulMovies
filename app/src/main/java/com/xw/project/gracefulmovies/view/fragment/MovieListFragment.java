@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 
 /**
  * 影片列表Fragment
- * <p/>
+ * <p>
  * Created by woxingxiao on 2017-01-23.
  */
 public class MovieListFragment extends Fragment implements
@@ -76,7 +76,7 @@ public class MovieListFragment extends Fragment implements
 
         mBlurTransformation = new BlurTransformation(getActivity(), 10);
         mBgImg1.setAlpha(0f);
-        mBgImg2.setImageResource(R.drawable.pic_bg_ocean);
+        mBgImg2.setImageResource(R.drawable.pic_bg_fall);
 
         return view;
     }
@@ -140,8 +140,8 @@ public class MovieListFragment extends Fragment implements
             Glide.with(activity)
                     .load(mMovieModels.get(index).getPoster())
                     .transform(mBlurTransformation)
-                    .placeholder(R.drawable.pic_bg_ocean)
-                    .error(R.drawable.pic_bg_ocean)
+                    .placeholder(R.drawable.pic_bg_fall)
+                    .error(R.drawable.pic_bg_fall)
                     .crossFade()
                     .into(imageView);
         }
@@ -225,17 +225,18 @@ public class MovieListFragment extends Fragment implements
     }
 
     @Override
-    public void onScroll(float scrollPosition, @NonNull MovieListAdapter.MovieVH currentHolder, @NonNull MovieListAdapter.MovieVH newCurrent) {
+    public void onScroll(float scrollPosition, int currentPosition, int newPosition,
+                         @Nullable MovieListAdapter.MovieVH currentHolder,
+                         @Nullable MovieListAdapter.MovieVH newCurrent) {
         float position = Math.abs(scrollPosition);
-        boolean isOdd = currentHolder.getAdapterPosition() % 2 != 0;
-        int intentPos = newCurrent.getAdapterPosition();
+        boolean isOdd = currentPosition % 2 != 0;
 
-        if (mPreIntentPos != intentPos) {
+        if (mPreIntentPos != newPosition) {
             isIntentTriggered = false;
         }
         if (isOdd) {
-            if (!isIntentTriggered && intentPos >= 0 && intentPos <= mMovieModels.size() - 1) {
-                displayBgImage(intentPos, mBgImg1);
+            if (!isIntentTriggered && newPosition >= 0 && newPosition <= mMovieModels.size() - 1) {
+                displayBgImage(newPosition, mBgImg1);
 
                 isIntentTriggered = true;
             }
@@ -243,8 +244,8 @@ public class MovieListFragment extends Fragment implements
             mBgImg1.setAlpha(position);
             mBgImg2.setAlpha(1 - position);
         } else {
-            if (!isIntentTriggered && intentPos >= 0 && intentPos <= mMovieModels.size() - 1) {
-                displayBgImage(intentPos, mBgImg2);
+            if (!isIntentTriggered && newPosition >= 0 && newPosition <= mMovieModels.size() - 1) {
+                displayBgImage(newPosition, mBgImg2);
 
                 isIntentTriggered = true;
             }
@@ -252,13 +253,15 @@ public class MovieListFragment extends Fragment implements
             mBgImg1.setAlpha(1 - position);
             mBgImg2.setAlpha(position);
         }
-        mPreIntentPos = intentPos;
+        mPreIntentPos = newPosition;
 
-        float fastAlpha = position + 0.4f;
-        currentHolder.mNameText.setAlpha(1 - fastAlpha);
-        newCurrent.mNameText.setAlpha(fastAlpha);
-        if (currentHolder.mInfoLayout.getVisibility() == View.VISIBLE) {
-            currentHolder.mInfoLayout.setAlpha(1 - fastAlpha);
+        if (currentHolder != null && newCurrent != null) {
+            float fastAlpha = position + 0.4f;
+            currentHolder.mNameText.setAlpha(1 - fastAlpha);
+            newCurrent.mNameText.setAlpha(fastAlpha);
+            if (currentHolder.mInfoLayout.getVisibility() == View.VISIBLE) {
+                currentHolder.mInfoLayout.setAlpha(1 - fastAlpha);
+            }
         }
     }
 }
