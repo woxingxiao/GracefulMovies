@@ -16,9 +16,8 @@
 
 ## 升级日志  
 ### 最新：
-### 2.0.1 (Build 28)
-1. 精选秋日装扮；
-2. bug修复。
+### 2.0.2 (Build 29)
+精选冬日装扮。
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
@@ -76,7 +75,7 @@
 **作者保留权利**
 
 --------
-> **人生苦短，请选择科学上网。推荐一下本人正在使用的，稳定高速，便宜好用。[推介链接](https://portal.shadowsocks.com.hk/aff.php?aff=8881)**
+> **人生苦短，请选择科学上网。推荐一下本人正在使用的，稳定高速，便宜好用。[推介链接](https://portal.shadowsocks.la/aff.php?aff=8881)**
 
 # License
 ```

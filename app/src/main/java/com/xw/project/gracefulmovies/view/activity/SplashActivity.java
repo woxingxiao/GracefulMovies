@@ -71,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
 
         RandomTransitionGenerator generator = new RandomTransitionGenerator(20000, new LinearInterpolator());
         mBgImg.setTransitionGenerator(generator);
-        Glide.with(this).load(R.drawable.pic_bg_fall).into(mBgImg);
+        Glide.with(this).load(R.drawable.pic_bg_main).into(mBgImg);
         mRootLayout.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
@@ -137,8 +137,8 @@ public class SplashActivity extends AppCompatActivity {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
                 Colorful.defaults()
-                        .primaryColor(Colorful.ThemeColor.DEEP_ORANGE)
-                        .accentColor(Colorful.ThemeColor.LIGHT_BLUE)
+                        .primaryColor(Colorful.ThemeColor.RED)
+                        .accentColor(Colorful.ThemeColor.AMBER)
                         .translucent(false)
                         .night(false);
                 Colorful.init(getApplicationContext());
