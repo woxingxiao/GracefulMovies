@@ -137,8 +137,8 @@ public class SplashActivity extends AppCompatActivity {
                 Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
                 Colorful.defaults()
-                        .primaryColor(Colorful.ThemeColor.RED)
-                        .accentColor(Colorful.ThemeColor.AMBER)
+                        .primaryColor(Colorful.ThemeColor.GREEN)
+                        .accentColor(Colorful.ThemeColor.LIME)
                         .translucent(false)
                         .night(false);
                 Colorful.init(getApplicationContext());
