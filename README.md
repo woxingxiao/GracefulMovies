@@ -16,14 +16,20 @@
 
 ## 升级日志  
 ### 最新：
-### 2.0.3 (Build 30)
-精选春日装扮。
+### 2.1.0 (Build 33)
+久等了，重大更新发布！！
+【全新影讯数据】
+更多精彩影讯，更丰富的详情可供查看
+【全新票房数据】
+更精准的实时票房一手掌握
+【精选夏日主题】
+酷爽夏日，清凉来袭
+【立个flag】
+将重构项目
 
 ### 历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
-## 关于测试
-如果你想运行项目，先clone到本地，修改包名，再到聚合数据和[易源数据](https://www.showapi.com/)申请相应的 _AppKey_（需要实名认证，所以私有key不便公开，望见谅）。若嫌麻烦可下载上面链接的apk成品，再参考代码。  
 # 致谢
 感谢开源的力量！
 开源库：  
@@ -40,13 +46,12 @@
 10. [SlideBack](https://github.com/oubowu/SlideBack)
 11. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
 12. [DiscreteScrollView](https://github.com/yarolegovich/DiscreteScrollView)
+13. [PhotoView](https://github.com/chrisbanes/PhotoView)
 
 感谢以下的开源项目为本项目提供了诸多参考：
 - [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
 - [SeeWeather](https://github.com/xcc3641/SeeWeather)
 
-聚合数据提供影讯数据支持。
-易源数据提供票房数据支持。
 感谢下列酷站和工具为本项目提供帮助：
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
 - [dribbble](https://dribbble.com) 提供海量的图片资源。项目中有两张图片来自[JustinMezzell](https://dribbble.com/JustinMezzell)
@@ -56,7 +61,7 @@
 - [AndResGuard](https://github.com/shwenzhang/AndResGuard) 资源混淆减小Apk尺寸
 - 手机应用软件 _Screener_ 生成漂亮的手机外观截屏图片
 
-**本项目中影讯数据来自聚合数据，版权归聚合数据；票房数据来自易源数据，版权归易源数据。图片资源均收集自网络，版权属于原作者。如有侵权，告知后会立即删除。**
+**本项目中影讯数据来自时光网，图片资源均收集自网络，如有侵权，告知后会立即删除。**
 # 彩蛋
 本项目在主题界面埋了一颗彩蛋，进入界面会随机加载一段经典电影台词。
 
