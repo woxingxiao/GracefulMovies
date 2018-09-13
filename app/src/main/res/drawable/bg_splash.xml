@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@android:color/white"/>
+    </item>
+    <item android:bottom="@dimen/dp_32">
+        <bitmap
+            android:gravity="bottom|center_horizontal"
+            android:src="@drawable/ic_logo_slogan">
+        </bitmap>
+    </item>
+</layer-list>

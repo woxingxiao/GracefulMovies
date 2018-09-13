@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.xw.project.gracefulmovies.ui.adapter.ActorsAdapter"/>
+
+        <variable
+            name="model"
+            type="com.xw.project.gracefulmovies.data.ao.Actor"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/dp_72"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginRight="@dimen/dp_2"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/dp_72"
+            android:layout_height="@dimen/dp_96"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{model.img}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{model.name}"
+            android:textSize="@dimen/sp_12"
+            tools:text="@string/app_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@{ActorsAdapter.displayRoleText(model.roleName)}"
+            android:textColor="#A3A3A3"
+            android:textSize="@dimen/sp_10"
+            tools:text="饰 xxx"/>
+    </LinearLayout>
+</layout>

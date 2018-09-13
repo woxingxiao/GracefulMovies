@@ -1,53 +1,421 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context="com.xw.project.gracefulmovies.view.activity.MovieDetailActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="com.xw.project.gracefulmovies.ui.activity.MovieDetailActivity"/>
+
+        <variable
+            name="statusBarHeight"
+            type="Integer"/>
+
+        <variable
+            name="info"
+            type="com.xw.project.gracefulmovies.data.ao.MovieDetail.MovieDetailInfo"/>
+
+        <variable
+            name="boxOffice"
+            type="com.xw.project.gracefulmovies.data.ao.MovieDetail.BoxOfficeInDetail"/>
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
-        android:fitsSystemWindows="false"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        <com.xw.repo.widget.BounceScrollView
+            android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="false"
-            app:collapsedTitleTextAppearance="?attr/toolbarStyle"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            android:layout_height="match_parent">
 
-            <com.flaviofaria.kenburnsview.KenBurnsView
-                android:id="@+id/detail_poster_image"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/app_bar_height"/>
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                <ImageView
+                    android:id="@+id/header_bg_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/app_bar_height_large"
+                    android:contentDescription="@null"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+                <ImageView
+                    android:id="@+id/cover_iv"
+                    android:layout_width="120dp"
+                    android:layout_height="160dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@null"
+                    android:onClick="onClick"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/pic_place_holder"/>
 
-    <include layout="@layout/content_movie_detail"/>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/name_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/sp_18"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/cover_iv"
+                    app:layout_constraintTop_toTopOf="@+id/cover_iv"
+                    tools:text="@string/app_name"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/svg_ic_detail"/>
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/name_en_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@{info.nameEn}"
+                    android:textColor="#bbffffff"
+                    android:textSize="@dimen/sp_12"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/name_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/name_tv"
+                    tools:text="@string/app_name"/>
 
-</android.support.design.widget.CoordinatorLayout>
+                <com.iarcuschin.simpleratingbar.SimpleRatingBar
+                    android:id="@+id/rating_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    app:layout_constraintStart_toStartOf="@+id/name_en_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/name_en_tv"
+                    app:srb_drawBorderEnabled="false"
+                    app:srb_fillColor="@color/color_blue"
+                    app:srb_isIndicator="true"
+                    app:srb_rating="@{info.overallRating}"
+                    app:srb_starBackgroundColor="@android:color/white"
+                    app:srb_starSize="15dp"
+                    app:srb_starsSeparation="@dimen/dp_2"
+                    tools:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/rating_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginStart="@dimen/dp_8"
+                    android:text="@{String.valueOf(info.overallRating)}"
+                    android:textColor="@android:color/white"
+                    android:visibility="@{info.overallRating > 0 ? View.VISIBLE : View.INVISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating_bar"
+                    app:layout_constraintStart_toEndOf="@+id/rating_bar"
+                    app:layout_constraintTop_toTopOf="@+id/rating_bar"
+                    tools:text="7.8"/>
+
+                <com.xw.project.gracefulmovies.ui.widget.TagGroup
+                    android:id="@+id/type_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/rating_bar"
+                    app:layout_constraintTop_toBottomOf="@+id/rating_bar"/>
+
+                <com.xw.project.gracefulmovies.ui.widget.TagGroup
+                    android:id="@+id/format_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/type_container"
+                    app:layout_constraintTop_toBottomOf="@+id/type_container"/>
+
+                <TextView
+                    android:id="@+id/duration_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text='@{info.mins}'
+                    android:textColor="#bbffffff"
+                    app:layout_constraintStart_toStartOf="@+id/format_container"
+                    app:layout_constraintTop_toBottomOf="@+id/format_container"
+                    tools:text="120min"/>
+
+                <TextView
+                    android:id="@+id/release_date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:text="@{MovieDetailActivity.convert(info.releaseDate)}"
+                    android:textColor="#bbffffff"
+                    app:layout_constraintStart_toStartOf="@+id/duration_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/duration_tv"
+                    tools:text="2018-5-13上映"/>
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_40"
+                    android:text="@string/story_brief"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cover_iv"/>
+
+                <com.xw.project.gracefulmovies.ui.widget.QuoteTextView
+                    android:id="@+id/story_brief_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:padding="@dimen/dp_8"
+                    android:text="@{info.story}"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text1"
+                    tools:text="xxx, xxx"/>
+
+                <TextView
+                    android:id="@+id/text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="@string/starring"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/story_brief_tv"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/actors_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text2"/>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/box_office_layout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginRight="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:visibility="@{boxOffice.notReleasedYet() ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/actors_recycler_view">
+
+                    <TextView
+                        android:id="@+id/text3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@string/box_office"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/box_office_ranking_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:onClick="onClick"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        android:text="实时票房榜  ＞"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text3"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <com.xw.project.gracefulmovies.ui.widget.QuoteTextView
+                        android:id="@+id/box_office_bg"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/today_box_office_hint_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/today_box_office_tv"/>
+
+                    <TextView
+                        android:id="@+id/today_box_office_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:fontFamily="@font/font_number"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:paddingTop="@dimen/dp_8"
+                        android:text="@{boxOffice.todayBoxDes}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/sp_18"
+                        app:layout_constraintEnd_toStartOf="@+id/total_box_office_tv"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text3"
+                        tools:text="4532.05"/>
+
+                    <TextView
+                        android:id="@+id/total_box_office_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_number"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@{boxOffice.totalBoxDes}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/sp_18"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/today_box_office_tv"
+                        app:layout_constraintEnd_toStartOf="@+id/rank_box_office_tv"
+                        app:layout_constraintStart_toEndOf="@+id/today_box_office_tv"
+                        tools:text="14532.05"/>
+
+                    <TextView
+                        android:id="@+id/rank_box_office_tv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_number"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@{String.valueOf(boxOffice.ranking)}"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/sp_18"
+                        android:visibility="@{boxOffice.ranking > 0 ? View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/today_box_office_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/total_box_office_tv"
+                        tools:text="1"/>
+
+                    <TextView
+                        android:id="@+id/today_box_office_hint_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp_8"
+                        android:text="@{boxOffice.todayBoxDesUnit}"
+                        app:layout_constraintEnd_toEndOf="@+id/today_box_office_tv"
+                        app:layout_constraintStart_toStartOf="@+id/today_box_office_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/today_box_office_tv"
+                        tools:text="今日票房（万）"/>
+
+                    <TextView
+                        android:id="@+id/total_box_office_hint_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@{boxOffice.totalBoxUnit}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/today_box_office_hint_tv"
+                        app:layout_constraintEnd_toEndOf="@+id/total_box_office_tv"
+                        app:layout_constraintStart_toStartOf="@+id/total_box_office_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/total_box_office_tv"
+                        tools:text="总计票房（万）"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="今日排名"
+                        android:visibility="@{boxOffice.ranking > 0 ? View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/today_box_office_hint_tv"
+                        app:layout_constraintEnd_toEndOf="@+id/rank_box_office_tv"
+                        app:layout_constraintStart_toStartOf="@+id/rank_box_office_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/rank_box_office_tv"/>
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/text4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_16"
+                    android:text="剧照"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/box_office_layout"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/stills_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_24"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_8"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text4"/>
+            </android.support.constraint.ConstraintLayout>
+        </com.xw.repo.widget.BounceScrollView>
+
+        <View
+            android:id="@+id/title_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_8"
+            android:alpha="0"
+            android:background="@color/colorPrimaryDark"/>
+
+        <LinearLayout
+            android:id="@+id/title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@{statusBarHeight}"
+            android:alpha="0"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_64"
+                android:layout_marginStart="@dimen/dp_64"
+                android:includeFontPadding="false"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_16"
+                tools:text="@string/app_name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_64"
+                android:layout_marginStart="@dimen/dp_64"
+                android:layout_marginTop="@dimen/dp_4"
+                android:includeFontPadding="false"
+                android:text="@{info.nameEn}"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/sp_12"
+                tools:text="@string/app_name"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/go_back_iv"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@{statusBarHeight}"
+            android:background="?attr/selectableItemBackground"
+            android:onClick="onClick"
+            android:scaleType="center"
+            android:src="@drawable/abc_ic_ab_back_material"
+            android:tint="@android:color/white"/>
+    </FrameLayout>
+</layout>

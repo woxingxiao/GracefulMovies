@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/status_loading_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.382"
+        app:srcCompat="@drawable/svg_ic_movie"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/status_hint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dp_16"
+        android:gravity="center"
+        android:textColor="#B4B4B4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.382"
+        tools:text="@string/app_name"/>
+
+    <Button
+        android:id="@+id/status_reload_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_24"
+        android:text="@string/reload_data"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp_16"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@id/status_hint_tv"
+        app:layout_constraintStart_toStartOf="@id/status_hint_tv"
+        app:layout_constraintTop_toBottomOf="@id/status_hint_tv"
+        tools:visibility="visible"/>
+</merge>

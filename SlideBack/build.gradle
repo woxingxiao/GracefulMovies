@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly "com.android.support:appcompat-v7:$rootProject.ext.supportLibraryVersion"
 //    provided 'com.android.support:design:24.2.1'
 }

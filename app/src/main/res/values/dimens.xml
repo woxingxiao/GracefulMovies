@@ -3,21 +3,28 @@
     <dimen name="nav_header_height">160dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="one_px">1px</dimen>
-    <dimen name="two_dp">2dp</dimen>
-    <dimen name="four_dp">4dp</dimen>
-    <dimen name="space">8dp</dimen>
-    <dimen name="space2x">16dp</dimen>
-    <dimen name="space3x">24dp</dimen>
-    <dimen name="space4x">32dp</dimen>
-    <dimen name="space5x">40dp</dimen>
-    <dimen name="space6x">48dp</dimen>
-    <dimen name="app_bar_height">180dp</dimen>
     <dimen name="app_bar_height_large">260dp</dimen>
+    <dimen name="px_1">1px</dimen>
+    <dimen name="dp_2">2dp</dimen>
+    <dimen name="dp_4">4dp</dimen>
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_48">48dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
+    <dimen name="dp_64">64dp</dimen>
+    <dimen name="dp_72">72dp</dimen>
+    <dimen name="dp_96">96dp</dimen>
+    <dimen name="dp_240">240dp</dimen>
+    <dimen name="dp_320">320dp</dimen>
 
-    <dimen name="text_size_10sp">10sp</dimen>
-    <dimen name="text_size_12sp">12sp</dimen>
-    <dimen name="text_size_16sp">16sp</dimen>
-    <dimen name="text_size_18sp">18sp</dimen>
-    <dimen name="text_size_24sp">24sp</dimen>
+    <dimen name="sp_10">10sp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+    <dimen name="sp_18">18sp</dimen>
+    <dimen name="sp_22">22sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
 </resources>

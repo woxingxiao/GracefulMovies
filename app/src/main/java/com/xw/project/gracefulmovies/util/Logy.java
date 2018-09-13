@@ -4,7 +4,7 @@ import android.util.Log;
 
 /**
  * 日志管理类
- * <p/>
+ * <p>
  * Created by woxingxiao on 2017-02-16.
  */
 

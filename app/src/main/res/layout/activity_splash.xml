@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/splash_root_layout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.xw.project.gracefulmovies.view.activity.SplashActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.xw.project.gracefulmovies.ui.activity.SplashActivity">
 
-    <com.flaviofaria.kenburnsview.KenBurnsView
-        android:id="@+id/splash_bg_img"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitCenter"
-        tools:src="@drawable/pic_bg_main"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/splash_app_name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold"/>
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_line_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8"/>
 
-    <TextView
-        android:id="@+id/splash_app_slogan_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/app_slogan"
-        android:textColor="@android:color/white"/>
+        <android.support.constraint.Guideline
+            android:id="@+id/guide_line_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45"/>
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/splash_logo_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        app:srcCompat="@drawable/svg_ic_movie"/>
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/splash_bg_iv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pic_got"
+            app:layout_constraintBottom_toTopOf="@+id/guide_line_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guide_line_1"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_32"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_logo_slogan"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -8,9 +8,9 @@
     <com.xw.repo.VectorCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/space"
+        android:layout_marginRight="@dimen/dp_8"
         android:background="?selectableItemBackground"
-        android:padding="@dimen/space"
+        android:padding="@dimen/dp_8"
         android:textColor="@android:color/white"
         app:drawableLeftCompat="@drawable/svg_ic_box_office"/>
 </FrameLayout>

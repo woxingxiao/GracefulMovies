@@ -2,35 +2,25 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/nav_header_img"
+        android:id="@+id/nav_header_iv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
-        tools:src="@drawable/pic_movies"/>
+        android:src="@drawable/pic_movies"/>
 
-    <com.yalantis.starwarsdemo.widget.BackgroundDrawableSwitchCompat
-        android:id="@+id/day_night_mode_switch"
+    <com.xw.repo.VectorCompatTextView
+        android:id="@+id/nav_city_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="@dimen/space"
-        app:switchMinWidth="60dp"
-        app:thumbTint="@android:color/white"/>
-
-    <com.xw.repo.VectorCompatTextView
-        android:id="@+id/nav_city_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="12dp"
+        android:layout_margin="@dimen/dp_16"
         android:text="@string/location_default"
         android:textColor="@android:color/white"
         app:drawableLeftCompat="@drawable/svg_ic_location"/>
