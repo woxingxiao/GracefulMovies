@@ -24,11 +24,11 @@ import java.util.Map;
 
 /**
  * 捕获Crash，保存至sd:/app_crash/
- * <p/>
+ * <p>
  * Created by woxingxiao on 2017-02-02.
  */
 @SuppressWarnings("unused")
-class CrashHandler implements Thread.UncaughtExceptionHandler {
+public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
     private static final String TAG = "CrashHandler";
 

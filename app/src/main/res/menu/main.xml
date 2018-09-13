@@ -2,14 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/svg_ic_search"
-        android:title="@string/app_name"
-        app:actionLayout="@layout/action_layout_search"
-        app:showAsAction="always"/>
-    <item
         android:id="@+id/action_box_office"
         android:title="@string/app_name"
         app:actionLayout="@layout/action_layout_box_office_text"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 </menu>

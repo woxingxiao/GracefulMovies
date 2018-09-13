@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/space2x"
-    android:paddingRight="@dimen/space2x">
+    android:paddingLeft="@dimen/dp_16"
+    android:paddingRight="@dimen/dp_16">
 
     <android.support.v7.widget.AppCompatImageView
         android:layout_width="wrap_content"
@@ -17,8 +17,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/space"
+        android:layout_margin="@dimen/dp_8"
         android:text="@string/hint_box_office_attention"
         android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_size_16sp"/>
+        android:textSize="@dimen/sp_16"/>
 </LinearLayout>

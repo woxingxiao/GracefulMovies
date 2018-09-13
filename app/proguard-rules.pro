@@ -57,11 +57,6 @@
   public *;
 }
 
-# okhttp
--dontwarn okio.**
--keep class okio.** {*;}
--keep class com.squareup.wire.** {*;}
-
 # retrofit
 -dontwarn okio.**
 -dontwarn javax.annotation.**
@@ -83,9 +78,6 @@
 -dontwarn rx.**
 -dontwarn rx.internal.util.**
 
-# bugly
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.**{*;}
-
 # Model
--keep class com.xw.project.gracefulmovies.model.** { *; }
+-keep class com.xw.project.gracefulmovies.data.ao.** { *; }
+-keep class com.xw.project.gracefulmovies.data.db.entity.** { *; }

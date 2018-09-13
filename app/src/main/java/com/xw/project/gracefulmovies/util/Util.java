@@ -5,7 +5,7 @@ import android.util.TypedValue;
 
 /**
  * 全局助手类
- * <p/>
+ * <p>
  * Created by woxingxiao on 2017-02-11.
  */
 public final class Util {
