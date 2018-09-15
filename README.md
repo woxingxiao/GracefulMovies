@@ -1,10 +1,14 @@
 # 简影讯
-> **这是一枚展示所在城市热映电影资讯和票房的小小应用。简洁的界面高颜值的设计，多色主题自由搭配更有体贴的夜间模式。简约，优雅，精彩，即看即走，全都来自处女座作者的“斤斤计较”。希望你喜欢。o(*￣︶￣*)o**
+> **这是一枚展示当地热映电影资讯和票房榜的小应用，简约、优雅、精彩、即看即走。希望你喜欢。(๑✦ω✦)✨
 
 ![poster1](https://github.com/woxingxiao/GracefulMovies/blob/master/images/poster1.jpg)
 ![poster2](https://github.com/woxingxiao/GracefulMovies/blob/master/images/poster2.jpg)  
 
-这是一个完全`Material Design`风格的Android应用。项目中使用到了`Retrofit`、`RxJava`、`MVP`、`Glide`等方案，换肤框架基于[`Colorful`](https://github.com/garretyoder/Colorful)。图标使用`svg`矢量图，图片使用`webp`格式，最大限度压缩apk尺寸。  
+## 特点
+- 以`Android Architecture Components(LiveData, ViewModel, Room)` + `DataBinding`为基础的**MVVM**架构；
+- 网络请求使用`Retrofit`，结合`RxJava`二次封装；
+- 应用风格采用`Material Design`；
+- 图标使用`svg`矢量图，图片使用`webp`格式，最大限度压缩apk尺寸。
 
 ## APK下载
 1. bugly（微信、QQ直接安装 ）[beta.bugly.qq.com/jianyingxun](https://beta.bugly.qq.com/jianyingxun)
@@ -14,62 +18,42 @@
    - [x] 360手机助手
    - [x] 百度手机助手
 
-## 升级日志  
+## 更新日志
 ### 最新：
-### 2.1.1 (Build 34)
-久等了，重大更新发布！！  
-【全新影讯数据】  
-更多精彩影讯，更丰富的详情可供查看  
-【全新票房数据】  
-更精准的实时票房一手掌握  
-【精选夏日主题】  
-酷爽夏日，清凉来袭  
-【立个flag】  
-将重构项目
+### 3.0.0 (Build 57)
+彻底重构，采用`arch` + `DataBinding`为核心的`MVVM`架构；
+功能精简，保留了最核心的功能。
 
-### 历史：
+### 更新历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
 
 # 致谢
 感谢开源的力量！
 开源库：  
-1. [Colorful](https://github.com/garretyoder/Colorful)  
-1. [Retrofit](https://github.com/square/retrofit)  
-2. [RxJava](https://github.com/ReactiveX/RxJava)  
-3. [RxAndroid](https://github.com/ReactiveX/RxAndroid)  
-4. [Glide](https://github.com/bumptech/glide)  
-5. [Butter Knife](https://github.com/JakeWharton/butterknife)  
-6. [SimpleRatingBar](https://github.com/FlyingPumba/SimpleRatingBar)  
-7. [KenBurnsView](https://github.com/flavioarfaria/KenBurnsView)  
-8. [BubbleSeekBar](https://github.com/woxingxiao/BubbleSeekBar)  
-9. [VectorCompatTextView](https://github.com/woxingxiao/VectorCompatTextView)
-10. [SlideBack](https://github.com/oubowu/SlideBack)
-11. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
-12. [DiscreteScrollView](https://github.com/yarolegovich/DiscreteScrollView)
-13. [PhotoView](https://github.com/chrisbanes/PhotoView)
+1. [Retrofit](https://github.com/square/retrofit)
+1. [RxJava](https://github.com/ReactiveX/RxJava)
+1. [Glide](https://github.com/bumptech/glide)
+1. [AndPermission](https://github.com/yanzhenjie/AndPermission)
+1. [SimpleRatingBar](https://github.com/FlyingPumba/SimpleRatingBar)
+1. [SlideBack](https://github.com/oubowu/SlideBack)
+1. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
+1. [DiscreteScrollView](https://github.com/yarolegovich/DiscreteScrollView)
+1. [PhotoView](https://github.com/chrisbanes/PhotoView)
 
-感谢以下的开源项目为本项目提供了诸多参考：
-- [StarWars.Android](https://github.com/Yalantis/StarWars.Android)
-- [SeeWeather](https://github.com/xcc3641/SeeWeather)
+自己的开源库：
+1. [VectorCompatTextView](https://github.com/woxingxiao/VectorCompatTextView)
+1. [BounceScrollView](https://github.com/woxingxiao/BounceScrollView)
 
 感谢下列酷站和工具为本项目提供帮助：
 - [iconfont](http://iconfont.cn) 提供海量矢量图标资源
-- [dribbble](https://dribbble.com) 提供海量的图片资源。项目中有两张图片来自[JustinMezzell](https://dribbble.com/JustinMezzell)
 - [tinypng](https://tinypng.com) 提供免费并高质量的图片压缩服务
 - [智图](http://zhitu.isux.us) 提供图片转`webp`格式服务
-- [AndroidAssetStudio](https://romannurik.github.io/AndroidAssetStudio) 提供在线图标制作
 - [AndResGuard](https://github.com/shwenzhang/AndResGuard) 资源混淆减小Apk尺寸
 - 手机应用软件 _Screener_ 生成漂亮的手机外观截屏图片
 
-**本项目中影讯数据来自时光网，图片资源均收集自网络，如有侵权，告知后会立即删除。**
-# 彩蛋
-本项目在主题界面埋了一颗彩蛋，进入界面会随机加载一段经典电影台词。
-
-![screenshot1](https://github.com/woxingxiao/GracefulMovies/blob/master/images/screenshot1.jpg)
-
-如果你有喜欢的电影台词，不论中外新旧，欢迎添加并`pull request`，有可能会被收录到下个版本里。入口在此：[arrays_quotes_of_movies.xml](https://github.com/woxingxiao/GracefulMovies/blob/master/app/src/main/res/values/arrays_quotes_of_movies.xml)，文件里有详细的格式说明，have fun.
+**本项目中影讯数据来自时光网，部分图片资源均收集自网络，如有侵权，告知后会立即删除。**
 # 结语
-本项目出自完美主义+强迫症的处女座作者之手，从界面交互设计，到图片大小优化，到图标的选取，每一处细节都讲究，计较，实为诚（过）意（瘾）之作。如果你喜欢本项目，请右上角**star**鼓励作者，或者推荐给周围的人。
+本项目出自完美主义+强迫症的处女座作者之手，从界面交互设计，到图片大小优化，到图标的选取，每一处细节都讲究，计较，实为诚意之作。如果你喜欢本项目，请右上角**star**鼓励作者，或者推荐给周围的人。
 
 老板们请走VIP打赏通道，金额随意：
 
