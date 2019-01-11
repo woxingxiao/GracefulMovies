@@ -1,11 +1,9 @@
 package com.xw.project.gracefulmovies.ui.activity;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -30,7 +28,6 @@ import com.xw.project.gracefulmovies.ui.adapter.TabPagerAdapter;
 import com.xw.project.gracefulmovies.ui.fragment.BaseFragment;
 import com.xw.project.gracefulmovies.ui.fragment.MovieListFragment;
 import com.xw.project.gracefulmovies.util.Util;
-import com.xw.project.gracefulmovies.viewmodel.CityViewModel;
 
 /**
  * 首页
@@ -41,12 +38,6 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
         .OnNavigationItemSelectedListener {
 
     private TextView mCityTv;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        enableSlideBack = false;
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected int contentLayoutRes() {
@@ -100,14 +91,14 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
 
             mBinding.viewPager.setCurrentItem(position);
         });
-        mCityTv.setOnClickListener(v -> showLocatedCityDialog(false));
+        mCityTv.setOnClickListener(v -> showLocatedCityDialog());
 
         LocationService.start(this);
 
-        CityViewModel cityViewModel = ViewModelProviders.of(this).get(CityViewModel.class);
-        cityViewModel.getCity().observe(this, cityEntity ->
-                mCityTv.setText(cityEntity == null ? "位置" : cityEntity.getName())
-        );
+        GMApplication.getInstance().getCityRepository().getCity()
+                .observe(this, cityEntity ->
+                        mCityTv.setText(cityEntity == null ? "位置" : cityEntity.getName())
+                );
     }
 
     @Override
@@ -180,30 +171,20 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
         }
     }
 
-    public void showLocatedCityDialog(final boolean upperCity) {
+    public void showLocatedCityDialog() {
+        CityEntity city = GMApplication.getInstance().getCityRepository().getCityEntity();
+        if (city == null)
+            return;
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.location_default));
         final View view = getLayoutInflater().inflate(R.layout.layout_location_dialog, null);
         final TextView msgTv = view.findViewById(R.id.dialog_loc_msg_tv);
-
-        CityEntity city = GMApplication.getInstance().getCityRepository().getCityEntity();
-        if (upperCity) {
-            CityEntity upper = GMApplication.getInstance().getCityRepository().getUpperCityEntity();
-            msgTv.setText(getString(R.string.hint_query_by_upper_city, city.getName(),
-                    upper.getName()));
-        } else {
-            msgTv.setText(getString(R.string.hint_located_city, city.getName()));
-        }
-
+        msgTv.setText(getString(R.string.hint_located_city, city.getName()));
         builder.setView(view);
         builder.setNegativeButton(getString(R.string.locate_again), (dialogInterface, i) ->
                 LocationService.relocate(this));
-        builder.setPositiveButton(getString(R.string.confirm), (dialogInterface, i) -> {
-            if (upperCity) {
-                CityEntity upper = GMApplication.getInstance().getCityRepository().getUpperCityEntity();
-                GMApplication.getInstance().getCityRepository().updateCity(upper);
-            }
-        });
+        builder.setPositiveButton(getString(R.string.confirm), null);
         builder.show();
     }
 }

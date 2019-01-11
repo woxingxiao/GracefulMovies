@@ -3,7 +3,6 @@ package com.xw.project.gracefulmovies;
 import android.app.Application;
 import android.support.v7.app.AppCompatDelegate;
 
-import com.oubowu.slideback.ActivityHelper;
 import com.xw.project.gracefulmovies.data.db.GMDatabase;
 import com.xw.project.gracefulmovies.repository.CityRepository;
 import com.xw.project.gracefulmovies.rx.RxSchedulers;
@@ -27,7 +26,6 @@ public class GMApplication extends Application {
 
     private GMDatabase mDatabase;
     private CityRepository mCityRepository;
-    private ActivityHelper mActivityHelper;
 
     @Override
     public void onCreate() {
@@ -36,15 +34,11 @@ public class GMApplication extends Application {
         sApplication = this;
 
         Observable.just("")
-                .map(s -> {
-                    mDatabase = GMDatabase.createAsync(sApplication);
-                    return true;
-                })
                 .compose(RxSchedulers.applyIO())
-                .subscribe(new SimpleConsumer<Boolean>() {
+                .subscribe(new SimpleConsumer<String>() {
                     @Override
-                    public void accept(Boolean it) {
-                        GMApplication.getInstance().getCityRepository().init();
+                    public void accept(String it) {
+                        mDatabase = GMDatabase.createAsync(sApplication);
                     }
                 });
         Observable.just("")
@@ -56,17 +50,10 @@ public class GMApplication extends Application {
 //                        CrashHandler.getInstance().init(getApplicationContext());
                     }
                 });
-
-        mActivityHelper = new ActivityHelper();
-        registerActivityLifecycleCallbacks(mActivityHelper);
     }
 
     public static GMApplication getInstance() {
         return sApplication;
-    }
-
-    public static ActivityHelper getActivityHelper() {
-        return sApplication.mActivityHelper;
     }
 
     public GMDatabase getDatabase() {

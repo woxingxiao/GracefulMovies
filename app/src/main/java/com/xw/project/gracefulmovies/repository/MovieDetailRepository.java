@@ -1,7 +1,6 @@
 package com.xw.project.gracefulmovies.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.xw.project.gracefulmovies.data.ApiResponse;
@@ -22,20 +21,10 @@ public class MovieDetailRepository {
 
             @Nullable
             @Override
-            protected LiveData<MovieDetail> loadFromLocal() {
-                return null;
-            }
-
-            @Nullable
-            @Override
             protected LiveData<ApiResponse<MovieDetail>> requestApi() {
                 MovieService service = new ApiClient().createApi("https://ticket-api-m.mtime.cn/", MovieService.class);
                 ApiResponse<MovieDetail> response = new ApiResponse<>();
                 return response.map(service.movieDetailGet(locationId, movieId));
-            }
-
-            @Override
-            protected void saveRemoteResult(@NonNull MovieDetail data) {
             }
         }.getAsLiveData();
     }

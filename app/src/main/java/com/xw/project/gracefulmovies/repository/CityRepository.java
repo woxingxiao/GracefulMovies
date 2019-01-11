@@ -16,51 +16,7 @@ import io.reactivex.Observable;
  */
 public class CityRepository {
 
-    private final MutableLiveData<CityEntity> mUpperCity = new MutableLiveData<>();
     private final MutableLiveData<CityEntity> mCity = new MutableLiveData<>();
-
-    public void init() {
-        Observable.just("")
-                .compose(RxSchedulers.applyIO())
-                .subscribe(new SimpleConsumer<String>() {
-                    @Override
-                    public void accept(String it) {
-                        LiveData<CityEntity> upperCity = GMApplication.getInstance().getDatabase().cityDao().loadUpperCity();
-                        if (upperCity.getValue() == null) {
-                            CityEntity entity = new CityEntity();
-                            entity.setId(880);
-                            entity.setName("成都");
-
-                            updateUpperCity(entity);
-                        }
-                        LiveData<CityEntity> city = GMApplication.getInstance().getDatabase().cityDao().loadCity();
-                        if (city.getValue() == null) {
-                            CityEntity entity = new CityEntity();
-                            entity.setId(880);
-                            entity.setName("成都");
-
-                            updateCity(entity);
-                        }
-                    }
-                });
-    }
-
-    public LiveData<CityEntity> getUpperCity() {
-        return mUpperCity;
-    }
-
-    public void updateUpperCity(CityEntity city) {
-        mUpperCity.postValue(city);
-
-        Observable.just("")
-                .compose(RxSchedulers.applyIO())
-                .subscribe(new SimpleConsumer<String>() {
-                    @Override
-                    public void accept(String it) {
-                        GMApplication.getInstance().getDatabase().cityDao().updateCity(city);
-                    }
-                });
-    }
 
     public LiveData<CityEntity> getCity() {
         return mCity;
@@ -79,17 +35,17 @@ public class CityRepository {
                 });
     }
 
-    public CityEntity getUpperCityEntity() {
-        if (mUpperCity.getValue() != null) {
-            return mUpperCity.getValue();
-        }
-        return null;
-    }
-
     public CityEntity getCityEntity() {
         if (mCity.getValue() != null) {
             return mCity.getValue();
         }
         return null;
+    }
+
+    public CityEntity genDefaultCity() {
+        CityEntity city = new CityEntity();
+        city.setId(880);
+        city.setName("成都");
+        return city;
     }
 }

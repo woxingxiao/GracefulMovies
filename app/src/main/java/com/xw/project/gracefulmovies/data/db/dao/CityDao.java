@@ -22,9 +22,6 @@ public abstract class CityDao {
     @Query("SELECT * FROM cities WHERE isUpper = 0 LIMIT 1")
     public abstract LiveData<CityEntity> loadCity();
 
-    @Query("SELECT * FROM cities WHERE isUpper = 1 LIMIT 1")
-    public abstract LiveData<CityEntity> loadUpperCity();
-
     @Query("DELETE FROM cities")
     public abstract void delete();
 

@@ -25,7 +25,7 @@ public abstract class BoxOfficeDao {
     public abstract LiveData<List<BoxOfficeEntity>> loadBoxOfficeList();
 
     @Query("DELETE FROM box_offices")
-    abstract void delete();
+    public abstract void delete();
 
     @Transaction
     public void update(List<BoxOfficeEntity> boxOffices) {

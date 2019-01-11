@@ -1,11 +1,8 @@
 package com.xw.project.gracefulmovies.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.data.ApiResponse;
 import com.xw.project.gracefulmovies.data.DataResource;
@@ -30,7 +27,7 @@ public class BoxOfficeRepository {
     public LiveData<DataResource<List<BoxOfficeEntity>>> getBoxOffices() {
         return new NetworkBoundResource<List<BoxOfficeEntity>>() {
             @Override
-            protected boolean returnLocalDataIfNetworkDataEmpty() {
+            protected boolean ifFetchNetworkFailedThenLoadLocalData() {
                 return true;
             }
 
@@ -49,23 +46,27 @@ public class BoxOfficeRepository {
             }
 
             @Override
-            protected void saveRemoteResult(@NonNull List<BoxOfficeEntity> data) {
-                Observable.just(data)
-                        .map(rawList -> {
-                            Gson gson = new Gson();
-                            String json = gson.toJson(rawList);
-                            List<BoxOfficeEntity> newList;
-                            newList = gson.fromJson(json, new TypeToken<ArrayList<BoxOfficeEntity>>() {
-                            }.getType());
-                            return newList;
-                        })
-                        .compose(RxSchedulers.applyIO())
-                        .subscribe(new SimpleConsumer<List<BoxOfficeEntity>>() {
-                            @Override
-                            public void accept(List<BoxOfficeEntity> list) {
-                                GMApplication.getInstance().getDatabase().boxOfficeDao().update(list);
-                            }
-                        });
+            protected void saveRemoteResult(List<BoxOfficeEntity> data) {
+                if (data != null && !data.isEmpty()) {
+                    Observable.just(data)
+                            .map(ArrayList::new)
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<List<BoxOfficeEntity>>() {
+                                @Override
+                                public void accept(List<BoxOfficeEntity> list) {
+                                    GMApplication.getInstance().getDatabase().boxOfficeDao().update(list);
+                                }
+                            });
+                } else {
+                    Observable.just("")
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<String>() {
+                                @Override
+                                public void accept(String it) {
+                                    GMApplication.getInstance().getDatabase().boxOfficeDao().delete();
+                                }
+                            });
+                }
             }
         }.getAsLiveData();
     }

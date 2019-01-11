@@ -21,8 +21,7 @@ import java.util.List;
  * <p>
  * Created by woxignxiao on 2018-09-01.
  */
-public abstract class BaseBindingListAdapter<T, V extends ViewDataBinding> extends
-        ListAdapter<T, BaseBindingListAdapter.DataBindingVH<V>> {
+public abstract class BaseBindingListAdapter<T> extends ListAdapter<T, BaseBindingListAdapter.BaseBindingVH> {
 
     private Context mContext;
     private List<T> mData;
@@ -45,24 +44,33 @@ public abstract class BaseBindingListAdapter<T, V extends ViewDataBinding> exten
     @NonNull
     @Override
     @SuppressWarnings("unchecked")
-    public DataBindingVH<V> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BaseBindingVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(mContext),
                 itemLayoutRes(), parent, false);
-        return new DataBindingVH(binding);
+        return new BaseBindingVH(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DataBindingVH<V> holder, int position) {
-        bind(holder.getBinding(), getItem(position), position);
+    public void onBindViewHolder(@NonNull BaseBindingVH holder, int position) {
+        onBind(holder, holder.getBinding(), getItem(position), position, holder.getItemViewType());
         holder.getBinding().executePendingBindings();
     }
 
     @LayoutRes
     protected abstract int itemLayoutRes();
 
-    protected void bind(V binding, T item, int position) {
+    protected void onBind(@NonNull BaseBindingVH holder, @NonNull ViewDataBinding binding, T item, int position, int viewType) {
+        onBind(holder, binding, item, position);
+        onBind(binding, item, position);
+
         binding.setVariable(BR.model, item);
+    }
+
+    protected void onBind(@NonNull BaseBindingVH holder, @NonNull ViewDataBinding binding, T item, int position) {
+    }
+
+    protected void onBind(@NonNull ViewDataBinding binding, T item, int position) {
     }
 
     @Override
@@ -85,17 +93,17 @@ public abstract class BaseBindingListAdapter<T, V extends ViewDataBinding> exten
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class DataBindingVH<V extends ViewDataBinding> extends RecyclerView.ViewHolder {
+    public static class BaseBindingVH extends RecyclerView.ViewHolder {
 
-        private final V binding;
+        private final ViewDataBinding binding;
 
-        DataBindingVH(V binding) {
+        BaseBindingVH(ViewDataBinding binding) {
             super(binding.getRoot());
 
             this.binding = binding;
         }
 
-        public V getBinding() {
+        public ViewDataBinding getBinding() {
             return binding;
         }
     }

@@ -1,11 +1,8 @@
 package com.xw.project.gracefulmovies.repository;
 
 import android.arch.lifecycle.LiveData;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.data.ApiResponse;
 import com.xw.project.gracefulmovies.data.DataResource;
@@ -20,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * <p>
@@ -56,27 +52,39 @@ public class MovieRepository {
             }
 
             @Override
-            protected void saveRemoteResult(@NonNull List<MovieEntity> data) {
-                Observable.just(data)
-                        .map(rawList -> {
-                            Gson gson = new Gson();
-                            String json = gson.toJson(rawList);
-                            List<MovieEntity> newList;
-                            newList = gson.fromJson(json, new TypeToken<ArrayList<MovieEntity>>() {
-                            }.getType());
-                            return newList;
-                        })
-                        .compose(RxSchedulers.applyIO())
-                        .subscribe(new SimpleConsumer<List<MovieEntity>>() {
-                            @Override
-                            public void accept(List<MovieEntity> list) {
-                                for (int i = 0, size = list.size(); i < size; i++) {
-                                    list.get(i).setRank(i);
-                                    list.get(i).setNow(true);
+            protected void saveRemoteResult(List<MovieEntity> data) {
+                if (data != null && !data.isEmpty()) {
+                    Observable.just(data)
+                            .map(rawList -> {
+                                List<MovieEntity> newList = new ArrayList<>();
+                                for (MovieEntity entity : rawList) {
+                                    if (entity.getRating() > 0) {
+                                        newList.add(entity);
+                                    }
                                 }
-                                GMApplication.getInstance().getDatabase().movieDao().updateMovieNowList(list);
-                            }
-                        });
+                                return newList;
+                            })
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<List<MovieEntity>>() {
+                                @Override
+                                public void accept(List<MovieEntity> list) {
+                                    for (int i = 0, size = list.size(); i < size; i++) {
+                                        list.get(i).setRank(i);
+                                        list.get(i).setNow(true);
+                                    }
+                                    GMApplication.getInstance().getDatabase().movieDao().updateMovieNowList(list);
+                                }
+                            });
+                } else {
+                    Observable.just("")
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<String>() {
+                                @Override
+                                public void accept(String it) {
+                                    GMApplication.getInstance().getDatabase().movieDao().deleteNow();
+                                }
+                            });
+                }
             }
         }.getAsLiveData();
     }
@@ -98,26 +106,30 @@ public class MovieRepository {
             }
 
             @Override
-            protected void saveRemoteResult(@NonNull List<MovieEntity> data) {
-                Observable.just(data)
-                        .map(rawList -> {
-                            Gson gson = new Gson();
-                            String json = gson.toJson(rawList);
-                            List<MovieEntity> newList;
-                            newList = gson.fromJson(json, new TypeToken<ArrayList<MovieEntity>>() {
-                            }.getType());
-                            return newList;
-                        })
-                        .observeOn(Schedulers.io())
-                        .subscribe(new SimpleConsumer<List<MovieEntity>>() {
-                            @Override
-                            public void accept(List<MovieEntity> list) {
-                                for (int i = 0, size = list.size(); i < size; i++) {
-                                    list.get(i).setRank(i);
+            protected void saveRemoteResult(List<MovieEntity> data) {
+                if (data != null && !data.isEmpty()) {
+                    Observable.just(data)
+                            .map(ArrayList::new)
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<List<MovieEntity>>() {
+                                @Override
+                                public void accept(List<MovieEntity> list) {
+                                    for (int i = 0, size = list.size(); i < size; i++) {
+                                        list.get(i).setRank(i);
+                                    }
+                                    GMApplication.getInstance().getDatabase().movieDao().updateMovieFutureList(list);
                                 }
-                                GMApplication.getInstance().getDatabase().movieDao().updateMovieFutureList(list);
-                            }
-                        });
+                            });
+                } else {
+                    Observable.just("")
+                            .compose(RxSchedulers.applyIO())
+                            .subscribe(new SimpleConsumer<String>() {
+                                @Override
+                                public void accept(String it) {
+                                    GMApplication.getInstance().getDatabase().movieDao().deleteFuture();
+                                }
+                            });
+                }
             }
         }.getAsLiveData();
     }

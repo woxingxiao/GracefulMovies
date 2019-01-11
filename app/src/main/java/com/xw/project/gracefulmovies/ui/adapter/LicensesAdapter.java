@@ -1,10 +1,10 @@
 package com.xw.project.gracefulmovies.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.data.ao.OpenProject;
-import com.xw.project.gracefulmovies.databinding.ItemLicenseBinding;
 import com.xw.project.gracefulmovies.ui.adapter.base.BaseBindingListAdapter;
 
 import java.util.List;
@@ -14,17 +14,17 @@ import java.util.List;
  * <p>
  * Created by woxignxiao on 2018-09-02.
  */
-public class LicensesAdapter extends BaseBindingListAdapter<OpenProject, ItemLicenseBinding> {
+public class LicensesAdapter extends BaseBindingListAdapter<OpenProject> {
 
     public LicensesAdapter(List<OpenProject> data) {
         super(data, new DiffUtil.ItemCallback<OpenProject>() {
             @Override
-            public boolean areItemsTheSame(OpenProject oldItem, OpenProject newItem) {
+            public boolean areItemsTheSame(@NonNull OpenProject oldItem, @NonNull OpenProject newItem) {
                 return oldItem.name.equals(newItem.name);
             }
 
             @Override
-            public boolean areContentsTheSame(OpenProject oldItem, OpenProject newItem) {
+            public boolean areContentsTheSame(@NonNull OpenProject oldItem, @NonNull OpenProject newItem) {
                 return oldItem.name.equals(newItem.name);
             }
         });

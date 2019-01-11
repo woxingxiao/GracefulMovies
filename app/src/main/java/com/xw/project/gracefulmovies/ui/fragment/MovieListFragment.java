@@ -1,5 +1,6 @@
 package com.xw.project.gracefulmovies.ui.fragment;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,15 +9,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.data.DataResource;
+import com.xw.project.gracefulmovies.data.db.dao.MovieDao;
 import com.xw.project.gracefulmovies.data.db.entity.MovieEntity;
 import com.xw.project.gracefulmovies.databinding.FragmentMovieListBinding;
-import com.xw.project.gracefulmovies.databinding.ItemMovieBinding;
-import com.xw.project.gracefulmovies.ui.activity.MainActivity;
 import com.xw.project.gracefulmovies.ui.adapter.MoviesAdapter;
 import com.xw.project.gracefulmovies.ui.widget.BlurTransformation;
-import com.xw.project.gracefulmovies.viewmodel.CityViewModel;
 import com.xw.project.gracefulmovies.viewmodel.MovieViewModel;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by woxingxiao on 2017-01-23.
  */
 public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> implements
-        DiscreteScrollView.ScrollStateChangeListener<MoviesAdapter.DataBindingVH<ItemMovieBinding>> {
+        DiscreteScrollView.ScrollStateChangeListener<MoviesAdapter.BaseBindingVH> {
 
     private boolean isNow;
     private boolean isIntentTriggered;
@@ -67,7 +67,7 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
         mBinding.bgIv1.setAlpha(0f);
 
         mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        mMovieViewModel.getMovieList(isNow).observe(this, resource -> {
+        mMovieViewModel.getMovieList(isNow).observe(getViewLifecycleOwner(), resource -> {
             assert resource != null;
 
             processStatusView(mBinding.container, resource);
@@ -75,24 +75,33 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
             if (resource.getStatus() == DataResource.Status.LOADING) {
                 mBinding.infiniteViewPager.setVisibility(View.INVISIBLE);
             } else if (resource.getStatus() == DataResource.Status.SUCCESS) {
-                mBinding.infiniteViewPager.setVisibility(View.VISIBLE);
+                MovieDao dao = GMApplication.getInstance().getDatabase().movieDao();
+                Observer<List<MovieEntity>> observer = movies -> {
+                    if (mAdapter == null) {
+                        mAdapter = new MoviesAdapter(isNow, movies);
+                        mBinding.infiniteViewPager.setAdapter(mAdapter);
+                    } else {
+                        mAdapter.setData(movies);
+                        try {
+                            mBinding.infiniteViewPager.smoothScrollToPosition(0);
+                        } catch (IllegalArgumentException ignored) {
+                        }
+                    }
 
-                if (mAdapter == null) {
-                    mAdapter = new MoviesAdapter(isNow, resource.getData());
-                    mBinding.infiniteViewPager.setAdapter(mAdapter);
+                    mBinding.infiniteViewPager.setVisibility(View.VISIBLE);
+                    mBinding.bgIv1.animate().alpha(1).setDuration(1000)
+                            .withStartAction(() -> displayBgImage(0, mBinding.bgIv1));
+                    mBinding.bgIv2.animate().alpha(0).setDuration(1000)
+                            .withEndAction(() -> displayBgImage(1, mBinding.bgIv2));
+                };
+                if (isNow) {
+                    dao.loadMovieNowList().observe(getViewLifecycleOwner(), observer);
                 } else {
-                    mAdapter.setData(resource.getData());
+                    dao.loadMovieFutureList().observe(getViewLifecycleOwner(), observer);
                 }
-                mBinding.bgIv1.animate().alpha(1).setDuration(1000)
-                        .withStartAction(() -> displayBgImage(0, mBinding.bgIv1));
-                mBinding.bgIv2.animate().alpha(0).setDuration(1000)
-                        .withEndAction(() -> displayBgImage(1, mBinding.bgIv2));
-            } else if (resource.getStatus() == DataResource.Status.EMPTY) {
-                ((MainActivity) mActivity).showLocatedCityDialog(true);
             }
         });
-        CityViewModel cityViewModel = ViewModelProviders.of(this).get(CityViewModel.class);
-        cityViewModel.getCity().observe(this, mMovieViewModel::setCity);
+        GMApplication.getInstance().getCityRepository().getCity().observe(this, mMovieViewModel::setCity);
 
         mMovieViewModel.load();
     }
@@ -105,7 +114,7 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
             return;
 
         Glide.with(mActivity)
-                .load(mAdapter.getItem(index).getImageTiny())
+                .load(data.get(index).getImageTiny())
                 .transform(mBlurTransformation)
                 .placeholder(R.drawable.pic_got)
                 .error(R.drawable.pic_got)
@@ -118,13 +127,12 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
     }
 
     @Override
-    public void onScrollStart(@NonNull MoviesAdapter.DataBindingVH<ItemMovieBinding> currentItemHolder, int adapterPosition) {
+    public void onScrollStart(@NonNull MoviesAdapter.BaseBindingVH currentItemHolder, int adapterPosition) {
         isIntentTriggered = true;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void onScrollEnd(@NonNull MoviesAdapter.DataBindingVH<ItemMovieBinding> currentItemHolder, int adapterPosition) {
+    public void onScrollEnd(@NonNull MoviesAdapter.BaseBindingVH currentItemHolder, int adapterPosition) {
         List<MovieEntity> data = mAdapter.getData();
         if (data == null || data.isEmpty())
             return;
@@ -150,8 +158,8 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
 
     @Override
     public void onScroll(float scrollPosition, int currentPosition, int newPosition,
-                         @Nullable MoviesAdapter.DataBindingVH<ItemMovieBinding> currentHolder,
-                         @Nullable MoviesAdapter.DataBindingVH<ItemMovieBinding> newCurrent) {
+                         @Nullable MoviesAdapter.BaseBindingVH currentHolder,
+                         @Nullable MoviesAdapter.BaseBindingVH newCurrent) {
         List<MovieEntity> data = mAdapter.getData();
         if (data == null || data.isEmpty())
             return;

@@ -77,9 +77,7 @@ public abstract class NetworkBoundResource<T> {
             } else if (response instanceof ApiResponse.ApiResponseError) {
                 onFetchFailed();
 
-                setValue(DataResource.error(response.getException()));
-            } else {
-                if (returnLocalDataIfNetworkDataEmpty()) {
+                if (ifFetchNetworkFailedThenLoadLocalData()) {
                     LiveData<T> localData = loadFromLocal();
                     if (localData != null) {
                         mResult.addSource(localData, newData -> {
@@ -91,8 +89,12 @@ public abstract class NetworkBoundResource<T> {
                         });
                     }
                 } else {
-                    setValue(DataResource.empty());
+                    setValue(DataResource.error(response.getException()));
                 }
+            } else if (response instanceof ApiResponse.ApiResponseEmpty) {
+                setValue(DataResource.empty());
+
+                saveRemoteResult(null);
             }
         });
     }
@@ -103,8 +105,14 @@ public abstract class NetworkBoundResource<T> {
             if (newValue.getStatus() == DataResource.Status.LOADING) {
                 mResult.setValue(newValue);
             } else {
+                int friendlyDelay = friendlyWaitingTimeInMills();
+                if (friendlyDelay <= 0) {
+                    mResult.setValue(newValue);
+                    return;
+                }
+
                 long delay = System.currentTimeMillis() - mStartMills;
-                delay = friendlyWaitingTimeInMills() - delay;
+                delay = friendlyDelay - delay;
                 if (delay < 0)
                     delay = 0;
                 Observable.just(newValue)
@@ -120,17 +128,24 @@ public abstract class NetworkBoundResource<T> {
         }
     }
 
+    @NonNull
+    protected ApiResponse<T> getApiResponse() {
+        return new ApiResponse<>();
+    }
+
     protected boolean shouldFetchFromNetwork() {
         return true;
     }
 
-    protected boolean returnLocalDataIfNetworkDataEmpty() {
+    protected boolean ifFetchNetworkFailedThenLoadLocalData() {
         return false;
     }
 
     @Nullable
-    @MainThread
-    protected abstract LiveData<T> loadFromLocal();
+    @WorkerThread
+    protected LiveData<T> loadFromLocal() {
+        return null;
+    }
 
     @Nullable
     @MainThread
@@ -138,11 +153,12 @@ public abstract class NetworkBoundResource<T> {
 
     @IntRange(from = 0)
     protected int friendlyWaitingTimeInMills() {
-        return 500;
+        return 0;
     }
 
     @WorkerThread
-    protected abstract void saveRemoteResult(@NonNull T data);
+    protected void saveRemoteResult(T data) {
+    }
 
     @MainThread
     protected void onFetchFailed() {

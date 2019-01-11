@@ -2,7 +2,6 @@ package com.xw.project.gracefulmovies.service;
 
 import android.Manifest;
 import android.app.IntentService;
-import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,14 +12,16 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xw.project.gracefulmovies.GMApplication;
+import com.xw.project.gracefulmovies.data.ao.ReGeoResult;
 import com.xw.project.gracefulmovies.data.api.ApiObserver;
-import com.xw.project.gracefulmovies.data.ao.NetLocResult;
 import com.xw.project.gracefulmovies.data.db.entity.CityEntity;
+import com.xw.project.gracefulmovies.repository.CityRepository;
 import com.xw.project.gracefulmovies.repository.LocationRepository;
 import com.xw.project.gracefulmovies.rx.RxSchedulers;
 import com.xw.project.gracefulmovies.rx.SimpleConsumer;
@@ -41,8 +42,7 @@ import io.reactivex.disposables.Disposable;
  * 定位服务
  * <p>
  * 由于本项目对位置精度要求不高，故采用网络接口转换经纬度得到位置信息，既减小apk大小，又可适配所有手机
- * 转换api来自阿里地图开发平台（大厂表示你们随便用，挤爆算我输<(￣︶￣)>）：
- * http://gc.ditu.aliyun.com/regeocoding?l=39.938133,116.395739&type=010
+ * 经纬度转位置信息采用高德web服务
  * <p>
  * 手机GPS采集的是WGS84坐标系，需要通过偏移算法转为国测局的GCJ02坐标（俗称火星坐标，貌似国产地图除百度外都是
  * 这个坐标系），算法来源地址：
@@ -52,10 +52,6 @@ import io.reactivex.disposables.Disposable;
  */
 public class LocationService extends IntentService {
 
-    // 直辖市、省会城市
-    private static final String CAPITAL_CITIES = "北京，天津，上海，重庆，石家庄，太原，呼和浩特，沈阳，" +
-            "长春，哈尔滨，南京，杭州，合肥，福州，南昌，济南，郑州，武汉，长沙，广州，南宁，海口，成都，" +
-            "贵阳，昆明，西安，兰州，西宁，拉萨，银川，乌鲁木齐";
     private static final double pi = 3.1415926535897932384626; // π
     private static final double a = 6378245.0; // 长半轴
     private static final double ee = 0.00669342162296594323; // 扁率
@@ -143,56 +139,44 @@ public class LocationService extends IntentService {
                 mDisposable.clear();
             }
 
-            Logy.i("LocationService", "------------ 原生经纬度：" + location.getLatitude() + "," + location.getLongitude());
+            Logy.i("LocationService", "---------- 原生经纬度：" + location.getLatitude() + "," + location.getLongitude());
             double[] latLng = WGS84ToGCJ02(location.getLatitude(), location.getLongitude());
-            Logy.i("LocationService", "---------- 转换后经纬度：" + latLng[0] + "," + latLng[1]);
+            Logy.i("LocationService", "---------- 转换后经纬度：" + latLng[1] + "," + latLng[0]);
 
-            Disposable disposable = mRepository.fetchLocationInfo(latLng[0] + "," + latLng[1])
+            Disposable disposable = mRepository.fetchLocationInfo(latLng[1] + "," + latLng[0])
                     .compose(RxSchedulers.applyIO())
-                    .subscribeWith(new ApiObserver<NetLocResult>() {
+                    .subscribeWith(new ApiObserver<ReGeoResult.ReGeoInfo>() {
                         @Override
-                        public void onNext(NetLocResult netLocResult) {
-                            if (netLocResult.getUpperCity() != null && !netLocResult.getUpperCity().isEmpty()) {
-                                String cityName = Util.trimCity(netLocResult.getUpperCity());
+                        public void onNext(ReGeoResult.ReGeoInfo info) {
+                            String cityName;
+                            CityRepository repository = GMApplication.getInstance().getCityRepository();
+                            if (TextUtils.isEmpty(info.city) && TextUtils.isEmpty(info.province)) {
+                                cityName = repository.genDefaultCity().getName();
+                            } else if (TextUtils.isEmpty(info.city)) {
+                                cityName = Util.trimCity(info.province);
+                            } else {
+                                cityName = Util.trimCity(info.city);
+                            }
 
-                                LiveData<CityEntity> liveData = GMApplication.getInstance().getCityRepository().getUpperCity();
-                                CityEntity city = liveData.getValue();
-                                boolean diffUpper = city == null || !cityName.equals(city.getName());
-                                if (diffUpper) {
-                                    city = new CityEntity();
-                                    city.setUpper(true);
-                                    city.setId(findIdByCityName(cityName));
-                                    city.setName(cityName);
-                                    GMApplication.getInstance().getCityRepository().updateUpperCity(city);
-                                }
+                            CityEntity preCity = repository.getCityEntity();
+                            if (preCity == null || !TextUtils.equals(cityName, preCity.getName())) {
+                                CityEntity city = new CityEntity();
+                                city.setId(findIdByCityName(cityName));
+                                city.setName(cityName);
+                                repository.updateCity(city);
+                            }
 
-                                /**
-                                 * 非直辖市和省会城市，使用定位城市的下级城市
-                                 */
-                                if (!CAPITAL_CITIES.contains(Util.trimCity(cityName))) {
-                                    cityName = Util.trimCity(netLocResult.getCity());
-                                }
-                                Logy.i("LocationService", "------------定位成功：" + netLocResult.getUpperCity() + "，" + cityName);
+                            Logy.i("LocationService", "------------定位成功：" + cityName);
 
-                                liveData = GMApplication.getInstance().getCityRepository().getCity();
-                                city = liveData.getValue();
-                                if (diffUpper && (city == null || !cityName.equals(city.getName()))) {
-                                    city = new CityEntity();
-                                    city.setId(findIdByCityName(cityName));
-                                    city.setName(cityName);
-                                    GMApplication.getInstance().getCityRepository().updateCity(city);
-                                }
-
-                                if (isRelocate) {
-                                    Observable.just(cityName)
-                                            .compose(RxSchedulers.apply())
-                                            .subscribe(new SimpleConsumer<String>() {
-                                                @Override
-                                                public void accept(String it) {
-                                                    Toast.makeText(LocationService.this, "定位成功：" + it, Toast.LENGTH_LONG).show();
-                                                }
-                                            });
-                                }
+                            if (isRelocate) {
+                                Observable.just(cityName)
+                                        .compose(RxSchedulers.apply())
+                                        .subscribe(new SimpleConsumer<String>() {
+                                            @Override
+                                            public void accept(String it) {
+                                                Toast.makeText(LocationService.this, "定位成功：" + it, Toast.LENGTH_LONG).show();
+                                            }
+                                        });
                             }
                         }
 
@@ -333,73 +317,4 @@ public class LocationService extends IntentService {
         super.onDestroy();
         Logy.w("LocationService", "=============== onDestroy ==============");
     }
-
-//    private void task() {
-//        Observable.just("")
-//                .flatMap(new Func1<String, Observable<ArrayList<CityModel>>>() {
-//                    @Override
-//                    public Observable<ArrayList<CityModel>> call(String s) {
-//                        StringBuilder sBuilder = new StringBuilder();
-//                        try {
-//                            AssetManager assetManager = getAssets();
-//                            BufferedReader bf = new BufferedReader(new InputStreamReader(assetManager.open("city.json")));
-//                            String line;
-//                            while ((line = bf.readLine()) != null) {
-//                                sBuilder.append(line);
-//                            }
-//                        } catch (IOException exception) {
-//                            exception.printStackTrace();
-//                        }
-//
-//                        ArrayList<CityModel> list = new Gson().fromJson(sBuilder.toString(), new TypeToken<List<CityModel>>() {
-//                        }.getType());
-//
-//                        return Observable.just(list);
-//                    }
-//                })
-//                .map(new Func1<ArrayList<CityModel>, Boolean>() {
-//                    @Override
-//                    public Boolean call(ArrayList<CityModel> cityModels) {
-//                        BufferedWriter writer = null;
-//
-//                        try {
-//                            boolean ok = true;
-//
-//                            File file = new File(Environment.getExternalStorageDirectory() + "/city.json");
-//                            if (!file.exists()) {
-//                                ok = file.createNewFile();
-//                            }
-//
-//                            if (!ok) {
-//                                return false;
-//                            }
-//
-//                            writer = new BufferedWriter(new FileWriter(file));
-//                            writer.write(new Gson().toJson(cityModels));
-//
-//                            return true;
-//                        } catch (Exception exception) {
-//                            //
-//                        } finally {
-//                            if (writer != null) {
-//                                try {
-//                                    writer.close();
-//                                } catch (IOException exception) {
-//                                    exception.printStackTrace();
-//                                }
-//                            }
-//                        }
-//
-//                        return false;
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Action1<Boolean>() {
-//                    @Override
-//                    public void call(Boolean aBoolean) {
-//                        Log.d("", "成功");
-//                    }
-//                });
-//    }
 }

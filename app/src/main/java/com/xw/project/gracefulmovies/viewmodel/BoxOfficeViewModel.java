@@ -16,14 +16,7 @@ import java.util.List;
  */
 public class BoxOfficeViewModel extends BaseViewModel {
 
-    private final LiveData<DataResource<List<BoxOfficeEntity>>> mBoxOffices;
-    private BoxOfficeRepository mRepository = new BoxOfficeRepository();
-
-    public BoxOfficeViewModel() {
-        mBoxOffices = Transformations.switchMap(getLoadLive(), input -> mRepository.getBoxOffices());
-    }
-
     public LiveData<DataResource<List<BoxOfficeEntity>>> getBoxOffices() {
-        return mBoxOffices;
+        return Transformations.switchMap(getLoadLive(), input -> new BoxOfficeRepository().getBoxOffices());
     }
 }

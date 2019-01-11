@@ -16,6 +16,7 @@ public class CityEntity {
     private int id;
     @SerializedName("n")
     private String name;
+    @Deprecated
     private boolean isUpper;
 
     public int getId() {

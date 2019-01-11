@@ -1,6 +1,7 @@
 package com.xw.project.gracefulmovies.ui.activity;
 
 import android.Manifest;
+import android.arch.lifecycle.LiveData;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -10,10 +11,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.R;
+import com.xw.project.gracefulmovies.data.db.dao.CityDao;
+import com.xw.project.gracefulmovies.data.db.entity.CityEntity;
 import com.xw.project.gracefulmovies.databinding.ActivitySplashBinding;
+import com.xw.project.gracefulmovies.rx.RxSchedulers;
+import com.xw.project.gracefulmovies.rx.SimpleConsumer;
 import com.xw.project.gracefulmovies.ui.activity.base.BaseActivity;
 import com.yanzhenjie.permission.AndPermission;
+
+import io.reactivex.Observable;
 
 /**
  * 启动页
@@ -43,6 +51,24 @@ public class SplashActivity extends AppCompatActivity {
                 mBinding.getRoot().removeOnLayoutChangeListener(this);
 
                 mHandler.postDelayed(SplashActivity.this::requestPermission, 2000);
+            }
+        });
+
+        CityDao dao = GMApplication.getInstance().getDatabase().cityDao();
+        LiveData<CityEntity> liveData = dao.loadCity();
+        liveData.observe(this, cityEntity -> {
+            liveData.removeObservers(this);
+
+            if (cityEntity == null) {
+                cityEntity = GMApplication.getInstance().getCityRepository().genDefaultCity();
+                Observable.just(cityEntity)
+                        .compose(RxSchedulers.applyIO())
+                        .subscribe(new SimpleConsumer<CityEntity>() {
+                            @Override
+                            public void accept(CityEntity it) {
+                                dao.insert(it);
+                            }
+                        });
             }
         });
     }

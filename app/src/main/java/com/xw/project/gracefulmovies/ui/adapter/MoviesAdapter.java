@@ -1,5 +1,7 @@
 package com.xw.project.gracefulmovies.ui.adapter;
 
+import android.databinding.ViewDataBinding;
+import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.view.View;
 
@@ -17,19 +19,19 @@ import java.util.List;
  * <p>
  * Created by woxignxiao on 2018-09-03.
  */
-public class MoviesAdapter extends BaseBindingListAdapter<MovieEntity, ItemMovieBinding> {
+public class MoviesAdapter extends BaseBindingListAdapter<MovieEntity> {
 
     private boolean isNow;
 
     public MoviesAdapter(boolean isNow, List<MovieEntity> data) {
         super(data, new DiffUtil.ItemCallback<MovieEntity>() {
             @Override
-            public boolean areItemsTheSame(MovieEntity oldItem, MovieEntity newItem) {
+            public boolean areItemsTheSame(@NonNull MovieEntity oldItem, @NonNull MovieEntity newItem) {
                 return oldItem.getId() == newItem.getId();
             }
 
             @Override
-            public boolean areContentsTheSame(MovieEntity oldItem, MovieEntity newItem) {
+            public boolean areContentsTheSame(@NonNull MovieEntity oldItem, @NonNull MovieEntity newItem) {
                 return oldItem.getId() == newItem.getId() && oldItem.getTitle().equals(newItem.getTitle());
             }
         });
@@ -43,38 +45,38 @@ public class MoviesAdapter extends BaseBindingListAdapter<MovieEntity, ItemMovie
     }
 
     @Override
-    protected void bind(ItemMovieBinding binding, MovieEntity item, int position) {
-        super.bind(binding, item, position);
+    protected void onBind(@NonNull ViewDataBinding binding, MovieEntity item, int position) {
+        super.onBind(binding, item, position);
 
-        binding.getRoot().setAlpha(position == 0 ? 1f : 0.5f);
-        binding.typeContainer.setTagData(item.getTypeList(), R.color.color_text_dark, R.color.color_blue);
+        ItemMovieBinding binding_ = (ItemMovieBinding) binding;
+        binding_.getRoot().setAlpha(position == 0 ? 1f : 0.5f);
+        binding_.typeContainer.setTagData(item.getTypeList(), R.color.color_text_dark, R.color.color_blue);
         if (isNow) {
-            binding.ratingBar.setVisibility(View.VISIBLE);
-            binding.gradeTv.setVisibility(View.VISIBLE);
-            binding.releaseDateTv.setVisibility(View.GONE);
+            binding_.ratingBar.setVisibility(View.VISIBLE);
+            binding_.gradeTv.setVisibility(View.VISIBLE);
+            binding_.releaseDateTv.setVisibility(View.GONE);
             if (item.getRating() <= 0) {
-                binding.ratingBar.setVisibility(View.GONE);
-                binding.gradeTv.setVisibility(View.GONE);
+                binding_.ratingBar.setVisibility(View.GONE);
+                binding_.gradeTv.setVisibility(View.GONE);
             } else {
-                binding.ratingBar.setVisibility(View.VISIBLE);
-                binding.gradeTv.setVisibility(View.VISIBLE);
-                binding.ratingBar.setRating((float) (item.getRating() / 2));
+                binding_.ratingBar.setVisibility(View.VISIBLE);
+                binding_.gradeTv.setVisibility(View.VISIBLE);
             }
-            binding.castTv.setText(item.getActors());
+            binding_.castTv.setText(item.getActors());
         } else {
-            binding.ratingBar.setVisibility(View.GONE);
-            binding.gradeTv.setVisibility(View.GONE);
-            binding.releaseDateTv.setVisibility(View.VISIBLE);
+            binding_.ratingBar.setVisibility(View.GONE);
+            binding_.gradeTv.setVisibility(View.GONE);
+            binding_.releaseDateTv.setVisibility(View.VISIBLE);
             String txt = item.getYear() + "-";
             txt += item.getMonth() < 10 ? "0" + item.getMonth() : item.getMonth();
             txt += "-";
             txt += item.getDay() < 10 ? "0" + item.getDay() : item.getDay();
-            binding.releaseDateTv.setText(txt);
-            binding.releaseDateTv.append(" 上映");
+            binding_.releaseDateTv.setText(txt);
+            binding_.releaseDateTv.append(" 上映");
             txt = item.getActor1() + "，" + item.getActor2();
-            binding.castTv.setText(txt);
+            binding_.castTv.setText(txt);
         }
-        binding.posterIv.setOnClickListener(v ->
+        binding.getRoot().setOnClickListener(v ->
                 BaseActivity.navigate(getContext(), MovieDetailActivity.class, item.getId(),
                         new String[]{item.getImageTiny(), item.getImage(), item.getTitle()}));
     }

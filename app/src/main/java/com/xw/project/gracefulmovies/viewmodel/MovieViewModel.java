@@ -19,7 +19,6 @@ import java.util.List;
 public class MovieViewModel extends BaseViewModel {
 
     private final MutableLiveData<CityEntity> mCity = new MutableLiveData<>();
-    private LiveData<DataResource<List<MovieEntity>>> mMovieList;
 
     public void setCity(CityEntity city) {
         if (mCity.getValue() == null || mCity.getValue().getId() != city.getId()) {
@@ -28,18 +27,15 @@ public class MovieViewModel extends BaseViewModel {
     }
 
     public LiveData<DataResource<List<MovieEntity>>> getMovieList(boolean now) {
-        if (mMovieList == null) {
-            mMovieList = Transformations.switchMap(mCity, input ->
-                    Transformations.switchMap(getLoadLive(), aBoolean -> {
-                                if (now) {
-                                    return MovieRepository.getInstance().getMovieNowList(input.getId());
-                                } else {
-                                    return MovieRepository.getInstance().getMovieFutureList(input.getId());
-                                }
+        return Transformations.switchMap(mCity, input ->
+                Transformations.switchMap(getLoadLive(), aBoolean -> {
+                            if (now) {
+                                return MovieRepository.getInstance().getMovieNowList(input.getId());
+                            } else {
+                                return MovieRepository.getInstance().getMovieFutureList(input.getId());
                             }
-                    )
-            );
-        }
-        return mMovieList;
+                        }
+                )
+        );
     }
 }
