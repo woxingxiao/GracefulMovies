@@ -150,12 +150,12 @@ public class LocationService extends IntentService {
                         public void onNext(ReGeoResult.ReGeoInfo info) {
                             String cityName;
                             CityRepository repository = GMApplication.getInstance().getCityRepository();
-                            if (TextUtils.isEmpty(info.city) && TextUtils.isEmpty(info.province)) {
+                            if (info.city == null && TextUtils.isEmpty(info.province)) {
                                 cityName = repository.genDefaultCity().getName();
-                            } else if (TextUtils.isEmpty(info.city)) {
+                            } else if (info.city instanceof ArrayList) {
                                 cityName = Util.trimCity(info.province);
                             } else {
-                                cityName = Util.trimCity(info.city);
+                                cityName = Util.trimCity(info.city.toString());
                             }
 
                             CityEntity preCity = repository.getCityEntity();

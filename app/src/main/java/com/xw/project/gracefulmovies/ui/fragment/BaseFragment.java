@@ -45,6 +45,9 @@ public abstract class BaseFragment<VDB extends ViewDataBinding> extends Fragment
     protected FragmentActivity mActivity;
     protected VDB mBinding;
     private StatusView mStatusView;
+    private boolean isVisibleToUser;
+    private boolean isViewPrepared;
+    private boolean isDataHasLoaded;
 
     @Override
     public void onAttach(Context context) {
@@ -64,10 +67,50 @@ public abstract class BaseFragment<VDB extends ViewDataBinding> extends Fragment
         return mBinding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        isViewPrepared = true;
+        lazyLoad();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        this.isVisibleToUser = isVisibleToUser;
+        lazyLoad();
+    }
+
+    private void lazyLoad() {
+        if (!isDataHasLoaded && isViewPrepared && isVisibleToUser) {
+            isDataHasLoaded = true;
+            onLazyLoad();
+        }
+    }
+
+    protected void onLazyLoad() {
+    }
+
     @LayoutRes
     protected abstract int viewLayoutRes();
 
     protected abstract void afterInflateView();
+
+    @Override
+    public void onDestroy() {
+        isDataHasLoaded = false;
+        isViewPrepared = false;
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        isDataHasLoaded = false;
+        isViewPrepared = false;
+        super.onDestroyView();
+    }
 
     public static Fragment newInstance(@NonNull Class<? extends Fragment> cls) {
         try {

@@ -51,6 +51,6 @@ public class ReGeoResult {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     public static class ReGeoInfo {
         public String province;
-        public String city;
+        public Object city;
     }
 }

@@ -20,9 +20,9 @@
 
 ## 更新日志
 ### 最新：
-### 3.0.0 (Build 57)
-彻底重构，采用`arch` + `DataBinding`为核心的`MVVM`架构；
-功能精简，保留了最核心的功能。
+### 3.1.0 (Build 58)
+移除右滑返回库，提高兼容和稳定性；
+数据优化，定位优化，大量代码优化。
 
 ### 更新历史：
 [**UpdateLog**](https://github.com/woxingxiao/GracefulMovies/blob/master/UpdateLog.md)  
@@ -35,7 +35,6 @@
 1. [Glide](https://github.com/bumptech/glide)
 1. [AndPermission](https://github.com/yanzhenjie/AndPermission)
 1. [SimpleRatingBar](https://github.com/FlyingPumba/SimpleRatingBar)
-1. [SlideBack](https://github.com/oubowu/SlideBack)
 1. [LoggingInterceptor](https://github.com/ihsanbal/LoggingInterceptor)
 1. [DiscreteScrollView](https://github.com/yarolegovich/DiscreteScrollView)
 1. [PhotoView](https://github.com/chrisbanes/PhotoView)

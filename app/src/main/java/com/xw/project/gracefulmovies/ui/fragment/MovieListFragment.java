@@ -101,8 +101,12 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
                 }
             }
         });
-        GMApplication.getInstance().getCityRepository().getCity().observe(this, mMovieViewModel::setCity);
+        GMApplication.getInstance().getCityRepository().getCity()
+                .observe(getViewLifecycleOwner(), mMovieViewModel::setCity);
+    }
 
+    @Override
+    protected void onLazyLoad() {
         mMovieViewModel.load();
     }
 
