@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -111,13 +112,14 @@ public class MovieListFragment extends BaseFragment<FragmentMovieListBinding> im
     }
 
     private void displayBgImage(int index, ImageView imageView) {
-        if (mActivity == null)
+        FragmentActivity activity = getActivity();
+        if (activity == null)
             return;
         List<MovieEntity> data = mAdapter.getData();
         if (data == null || data.isEmpty() || index >= data.size())
             return;
 
-        Glide.with(mActivity)
+        Glide.with(activity)
                 .load(data.get(index).getImageTiny())
                 .transform(mBlurTransformation)
                 .placeholder(R.drawable.pic_got)

@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.xw.project.gracefulmovies.GMApplication;
 import com.xw.project.gracefulmovies.R;
 import com.xw.project.gracefulmovies.data.DataResource;
 import com.xw.project.gracefulmovies.databinding.ActivityBoxOfficeBinding;
@@ -51,6 +52,9 @@ public class BoxOfficeActivity extends BaseActivity<ActivityBoxOfficeBinding> im
         mAdapter = new BoxOfficeAdapter();
         mBinding.recyclerView.setAdapter(mAdapter);
 
+        GMApplication.getInstance().getDatabase().boxOfficeDao().loadBoxOfficeList()
+                .observe(this, list -> mAdapter.setData(list));
+
         mViewModel = ViewModelProviders.of(this).get(BoxOfficeViewModel.class);
         mViewModel.getBoxOffices().observe(this, resource -> {
             assert resource != null;
@@ -58,7 +62,6 @@ public class BoxOfficeActivity extends BaseActivity<ActivityBoxOfficeBinding> im
 
             if (resource.getStatus() != DataResource.Status.LOADING) {
                 mBinding.swipeRefreshLayout.setRefreshing(false);
-                mAdapter.setData(resource.getData());
             }
         });
 

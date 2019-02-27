@@ -26,8 +26,7 @@ public class BoxOfficeAdapter extends BaseBindingListAdapter<BoxOfficeEntity> {
 
             @Override
             public boolean areContentsTheSame(@NonNull BoxOfficeEntity oldItem, @NonNull BoxOfficeEntity newItem) {
-                return oldItem.getIrank().equals(newItem.getIrank()) &&
-                        oldItem.getMovieName().equals(newItem.getMovieName());
+                return oldItem.toString().equals(newItem.toString());
             }
         });
     }

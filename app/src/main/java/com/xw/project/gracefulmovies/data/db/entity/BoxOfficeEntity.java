@@ -83,4 +83,17 @@ public class BoxOfficeEntity {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "BoxOfficeEntity{" +
+                "Irank='" + Irank + '\'' +
+                ", MovieName='" + MovieName + '\'' +
+                ", BoxOffice='" + BoxOffice + '\'' +
+                ", sumBoxOffice='" + sumBoxOffice + '\'' +
+                ", movieDay='" + movieDay + '\'' +
+                ", boxPer='" + boxPer + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }
